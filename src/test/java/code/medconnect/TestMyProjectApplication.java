@@ -1,4 +1,4 @@
-package group.myProject;
+package code.medconnect;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -16,7 +16,7 @@ public class TestMyProjectApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(MyProjectApplication::main).with(TestMyProjectApplication.class).run(args);
+		SpringApplication.from(MedConnectApp::main).with(TestMyProjectApplication.class).run(args);
 	}
 
 }

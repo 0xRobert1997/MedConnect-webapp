@@ -1,13 +1,13 @@
-package group.myProject;
+package code.medconnect;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MyProjectApplication {
+public class MedConnectApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyProjectApplication.class, args);
+		SpringApplication.run(MedConnectApp.class, args);
 	}
 
 }

@@ -1,21 +1,21 @@
 server:
   port: 8087
   servlet:
-    context-path: /zajavka
+    context-path: /medconnect
 
 
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/w20
+    url: jdbc:postgresql://localhost:5432/med_connect
     username: postgres
     password: postgres
     hikari:
       idle-timeout: 10000
       connectionTimeout: 20000
-      minimumIdle: 10
-      maximumPoolSize: 20
+      minimumIdle: 5
+      maximumPoolSize: 25
   jpa:
     hibernate:
       ddl-auto: none
@@ -27,9 +27,4 @@ spring:
       filter:
         enabled: true
 
-
-#logging:
-#  level:
-#    root: WARN
-#    pl.zajavka.api.controller: DEBUG
 
