@@ -1,78 +1,123 @@
-CREATE TABLE Patient (
-    patient_id        SERIAL        NOT NULL    PRIMARY KEY,
+CREATE TABLE address
+(
+    address_id  SERIAL      PRIMARY KEY,
+    country     VARCHAR(32) NOT NULL,
+    city        VARCHAR(32) NOT NULL,
+    postal_code VARCHAR(32) NOT NULL,
+    address     VARCHAR(32) NOT NULL
+);
+CREATE TABLE patient (
+    patient_id        SERIAL        PRIMARY KEY,
     name              VARCHAR(20)   NOT NULL,
     surname           VARCHAR(20)   NOT NULL,
+    pesel             VARCHAR(11)   NOT NULL    UNIQUE,
     date_of_birth     DATE          NOT NULL,
-    address           VARCHAR(100)  NOT NULL,
+    sex               VARCHAR(256),
+    address_id        INT           NOT NULL,
+    phone             VARCHAR(32),
     email             VARCHAR(32)   NOT NULL    UNIQUE,
-    photo             BYTEA
+    photo             BYTEA,
+    FOREIGN KEY (address_id)
+        REFERENCES address(address_id)
 );
 
-CREATE TABLE Doctor (
-    doctor_id          SERIAL       NOT NULL    PRIMARY KEY,
+CREATE TABLE doctor (
+    doctor_id          SERIAL       PRIMARY KEY,
     name               VARCHAR(20)  NOT NULL,
     surname            VARCHAR(20)  NOT NULL,
     specialization     VARCHAR(256),
+    phone              VARCHAR(32)  NOT NULL,
     email              VARCHAR(32)  NOT NULL    UNIQUE,
-    photo              BYTEA
+    address_id         INT          NOT NULL,
+    doctor_availability_id INT,
+    photo              BYTEA,
+    visit_id           INT,
+    FOREIGN KEY (address_id)
+         REFERENCES address(address_id)
+     FOREIGN KEY (doctor_availability_id)
+        REFERENCES doctor_availability(doctor_availability_id)
+    FOREIGN KEY(visit_id)
+        REFERENCES visit(visit_id)
 );
 
-CREATE TABLE AppUser (
+CREATE TABLE doctor_availability (
+    doctor_availability_id    SERIAL        PRIMARY KEY,
+    doctor_id                 INT           NOT NULL,
+    day_of_week               VARCHAR(10)   NOT NULL,
+    start_time                TIME          NOT NULL,
+    end_time                  TIME          NOT NULL,
+    FOREIGN KEY (doctor_id)
+        REFERENCES doctor(doctor_id)
+);
+
+CREATE TABLE app_user (
     user_id            SERIAL       PRIMARY KEY,
-    username           VARCHAR(20)  NOT NULL  UNIQUE,
-    password           VARCHAR(256) NOT NULL
+    username           VARCHAR(20)  NOT NULL        UNIQUE,
+    password           VARCHAR(256) NOT NULL,
+    email              VARCHAR(32)  NOT NULL        UNIQUE,
+    patient_id         INT,
+    doctor_id          INT,
+    FOREIGN KEY (patient_id)
+        REFERENCES patient(patient_id),
+    FOREIGN KEY (doctor_id)
+        REFERENCES doctor(doctor_id)
 );
 
-CREATE TABLE Role (
+CREATE TABLE role (
     role_id             SERIAL      PRIMARY KEY,
-    role_name           VARCHAR(50) NOT NULL
+    role_name           VARCHAR(20) NOT NULL
 );
 
-CREATE TABLE User_Role (
+CREATE TABLE user_role (
     user_id             INT     NOT NULL,
     role_id             INT     NOT NULL,
     PRIMARY KEY (user_id, role_id),
     FOREIGN KEY (user_id)
-        REFERENCES AppUser(user_id),
+        REFERENCES app_user(user_id),
     FOREIGN KEY (role_id)
-        REFERENCES Role(role_id)
+        REFERENCES role(role_id)
+);
+
+CREATE TABLE notes (
+    note_id         SERIAL     PRIMARY KEY,
+    note_content    TEXT       NOT NULL,
+    date_time       TIMESTAMP  NOT NULL
 );
 
 CREATE TABLE Visit (
     visit_id            SERIAL      PRIMARY KEY,
     patient_id          INT         NOT NULL,
     doctor_id           INT         NOT NULL,
-    date_time_of_visit  TIMESTAMP   NOT NULL,
-    visit_status        VARCHAR(50) NOT NULL,
+    date_time           TIMESTAMP   NOT NULL,
+    cancelled           BOOLEAN     NOT NULL    DEFAULT false,
+    notes_id            INT         NOT NULL,
     FOREIGN KEY (patient_id)
-        REFERENCES Patient(patient_id),
+        REFERENCES patient(patient_id),
     FOREIGN KEY (doctor_id)
-        REFERENCES Doctor(doctor_id)
+        REFERENCES doctor(doctor_id),
+    FOREIGN KEY (notes_id)
+            REFERENCES notes(notes_id)
 );
 
-CREATE TABLE DiseaseHistory (
+
+CREATE TABLE disease_history (
     disease_history_id        SERIAL        PRIMARY KEY,
     patient_id                INT           NOT NULL,
     disease_name              VARCHAR(64)   NOT NULL,
     diagnosis_date            DATE,
+    description               TEXT,
     FOREIGN KEY (patient_id)
-        REFERENCES Patient(patient_id)
+        REFERENCES patient(patient_id)
 );
 
-CREATE TABLE VisitHistory (
-    visit_history_id    SERIAL PRIMARY KEY,
-    patient_id          INT    NOT NULL,
-    visit_id            INT    NOT NULL,
+CREATE TABLE visit_history (
+    visit_history_id    SERIAL  PRIMARY KEY,
+    patient_id          INT     NOT NULL,
+    visit_id            INT     NOT NULL,
     FOREIGN KEY (patient_id)
-        REFERENCES Patient(patient_id),
+        REFERENCES patient(patient_id),
     FOREIGN KEY (visit_id)
-        REFERENCES Visit(visit_id)
+        REFERENCES visit(visit_id)
 );
 
-CREATE TABLE Notes (
-    note_id         SERIAL  PRIMARY KEY,
-    visit_id        INT     NOT NULL,
-    note_content    TEXT,
-    FOREIGN KEY (visit_id)
-        REFERENCES Visit(visit_id)
-);
+
