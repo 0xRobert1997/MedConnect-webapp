@@ -18,7 +18,7 @@ public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id")
-    private Integer doctorId;
+    private Long doctorId;
 
     @Column(name = "name")
     private String name;
@@ -40,12 +40,13 @@ public class DoctorEntity {
     @Column(name = "photo")
     private byte[] photo;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "addressId")
+    @OneToOne(fetch = FetchType.LAZY)
     private AddressEntity addressId;
 
     @OneToMany(mappedBy = "doctorId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DoctorAvailabilityEntity> availabilityEntitySet;
+    private Set<DoctorAvailabilityEntity> availabilitySet;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
+    @JoinColumn(name="doctor")
     private Set<VisitEntity> visits;
 }

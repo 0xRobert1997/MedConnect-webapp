@@ -13,31 +13,34 @@ CREATE TABLE patient (
     pesel             VARCHAR(11)   NOT NULL    UNIQUE,
     date_of_birth     DATE          NOT NULL,
     sex               VARCHAR(256),
-    address_id        INT           NOT NULL,
-    phone             VARCHAR(32),
+    phone             VARCHAR(32)   NOT NULL,
     email             VARCHAR(32)   NOT NULL    UNIQUE,
     photo             BYTEA,
+    address_id        INT           NOT NULL,
+    visit_history_id  INT,
     FOREIGN KEY (address_id)
         REFERENCES address(address_id)
+    FOREIGN KEY (visit_id)
+        REFERENCES visit(visit_id)
+    FOREIGN KEY (visit_history_id)
+        REFERENCES visit_history(visit_history_id)
 );
 
 CREATE TABLE doctor (
-    doctor_id          SERIAL       PRIMARY KEY,
-    name               VARCHAR(20)  NOT NULL,
-    surname            VARCHAR(20)  NOT NULL,
-    specialization     VARCHAR(256),
-    phone              VARCHAR(32)  NOT NULL,
-    email              VARCHAR(32)  NOT NULL    UNIQUE,
-    address_id         INT          NOT NULL,
-    doctor_availability_id INT,
-    photo              BYTEA,
-    visit_id           INT,
+    doctor_id               SERIAL       PRIMARY KEY,
+    name                    VARCHAR(20)  NOT NULL,
+    surname                 VARCHAR(20)  NOT NULL,
+    specialization          VARCHAR(256),
+    phone                   VARCHAR(32)  NOT NULL,
+    email                   VARCHAR(32)  NOT NULL    UNIQUE,
+    address_id              INT          NOT NULL,
+    doctor_availability_id  INT,
+    photo                   BYTEA,
     FOREIGN KEY (address_id)
          REFERENCES address(address_id)
      FOREIGN KEY (doctor_availability_id)
         REFERENCES doctor_availability(doctor_availability_id)
-    FOREIGN KEY(visit_id)
-        REFERENCES visit(visit_id)
+
 );
 
 CREATE TABLE doctor_availability (
@@ -100,8 +103,8 @@ CREATE TABLE Visit (
 );
 
 
-CREATE TABLE disease_history (
-    disease_history_id        SERIAL        PRIMARY KEY,
+CREATE TABLE disease (
+    disease_id        SERIAL        PRIMARY KEY,
     patient_id                INT           NOT NULL,
     disease_name              VARCHAR(64)   NOT NULL,
     diagnosis_date            DATE,
@@ -113,11 +116,8 @@ CREATE TABLE disease_history (
 CREATE TABLE visit_history (
     visit_history_id    SERIAL  PRIMARY KEY,
     patient_id          INT     NOT NULL,
-    visit_id            INT     NOT NULL,
     FOREIGN KEY (patient_id)
         REFERENCES patient(patient_id),
-    FOREIGN KEY (visit_id)
-        REFERENCES visit(visit_id)
 );
 
 

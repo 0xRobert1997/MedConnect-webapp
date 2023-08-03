@@ -3,6 +3,8 @@ package code.medconnect.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.OffsetDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -16,4 +18,11 @@ public class NotesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notes_id")
     private Integer notesId;
+
+    @Column(name = "note_content")
+    private String noteContent;
+
+    @Column(name = "date_time")
+    private OffsetDateTime dateTime;
+
 }
