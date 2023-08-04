@@ -1,4 +1,4 @@
-package code.medconnect.infrastructure.database.entity;
+/*package code.medconnect.infrastructure.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +18,7 @@ public class VisitHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "visitHistory_id")
-    private Long visitHistoryId;
+    private Integer visitHistoryId;
 
     @OneToOne(mappedBy = "visitHistory")
     private PatientEntity patient;
@@ -28,4 +28,4 @@ public class VisitHistoryEntity {
     private Set<VisitEntity> visits = new HashSet<>();
 
 
-}
+}*/

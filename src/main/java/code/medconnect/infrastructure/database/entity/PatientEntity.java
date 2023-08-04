@@ -3,6 +3,7 @@ package code.medconnect.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -18,7 +19,7 @@ public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patient_id")
-    private Long patientId;
+    private Integer patientId;
 
     @Column(name = "name")
     private String name;
@@ -30,7 +31,7 @@ public class PatientEntity {
     private String pesel;
 
     @Column(name = "date_of_birth", nullable = false)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @Column(name = "sex")
     private String sex;
@@ -41,20 +42,20 @@ public class PatientEntity {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Lob
-    @Column(name = "photo")
-    private byte[] photo;
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Column(name = "photo_data", columnDefinition = "bytea")
+    private byte[] photoData;
 
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-    private AddressEntity addressId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private AddressEntity address;
 
-    @OneToMany
-    @JoinColumn(name="patient_id")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<VisitEntity> visits;
 
-    @OneToOne
-    private VisitHistoryEntity visitHistory;
+/*    @OneToOne
+    private VisitHistoryEntity visitHistory;*/
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "patient",fetch = FetchType.LAZY)
     private Set<DiseaseEntity> diseases;
 }

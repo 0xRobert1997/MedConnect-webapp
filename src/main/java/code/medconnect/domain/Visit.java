@@ -1,4 +1,4 @@
-package code.medconnect.infrastructure.database.entity;
+package code.medconnect.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "visit")
-public class VisitEntity {
+public class Visit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,16 +29,16 @@ public class VisitEntity {
 
     @OneToOne
     @JoinColumn(name = "notes_id")
-    private NoteEntity notes;
+    private Note notes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
-    private PatientEntity patient;
+    private Patient patient;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
-    private DoctorEntity doctor;
+    private Doctor doctor;
 
 
 }

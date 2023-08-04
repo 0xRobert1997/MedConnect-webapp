@@ -18,7 +18,7 @@ public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id")
-    private Long doctorId;
+    private Integer doctorId;
 
     @Column(name = "name")
     private String name;
@@ -29,24 +29,27 @@ public class DoctorEntity {
     @Column(name = "specialization")
     private String specialization;
 
-    // walidacja była na poziomie dtosów
     @Column(name = "phone")
     private String phone;
 
     @Column(name = "email")
     private String email;
 
+
     @Lob
-    @Column(name = "photo")
-    private byte[] photo;
+    @Column(name = "photo_data", columnDefinition = "bytea")
+    private byte[] photoData;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private AddressEntity addressId;
 
-    @OneToMany(mappedBy = "doctorId", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private AddressEntity address;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "doctor_id")
     private Set<DoctorAvailabilityEntity> availabilitySet;
 
-    @OneToMany
-    @JoinColumn(name="doctor")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)
     private Set<VisitEntity> visits;
 }

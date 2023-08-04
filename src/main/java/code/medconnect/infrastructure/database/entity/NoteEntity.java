@@ -12,12 +12,12 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "notes")
-public class NotesEntity {
+public class NoteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notes_id")
-    private Integer notesId;
+    @Column(name = "note_id")
+    private Integer noteId;
 
     @Column(name = "note_content")
     private String noteContent;
@@ -25,4 +25,6 @@ public class NotesEntity {
     @Column(name = "date_time")
     private OffsetDateTime dateTime;
 
+    @OneToOne(mappedBy = "notes")
+    private VisitEntity visit;
 }
