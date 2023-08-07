@@ -29,7 +29,7 @@ public class VisitEntity {
 
     @OneToOne
     @JoinColumn(name = "notes_id")
-    private NoteEntity notes;
+    private NoteEntity note;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")

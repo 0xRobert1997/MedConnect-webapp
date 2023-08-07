@@ -9,6 +9,5 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface PatientMapper {
 
-    @Mapping(target = "serviceMechanics", ignore = true)
     Patient map(PatientEntity entity);
 }

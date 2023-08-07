@@ -13,6 +13,10 @@ import java.time.OffsetDateTime;
 
 public class Disease {
 
-
+    Integer diseaseId;
+    String diseaseName;
+    OffsetDateTime diagnosisDate;
+    String description;
+    Patient patient;
 
 }
