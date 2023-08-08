@@ -1,7 +1,6 @@
 package code.medconnect.infrastructure.database.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.*;
 
 import java.util.Set;
@@ -36,7 +35,7 @@ public class DoctorEntity {
     private String email;
 
 
-    @Lob
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "photo_data", columnDefinition = "bytea")
     private byte[] photoData;
 
@@ -47,7 +46,7 @@ public class DoctorEntity {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "doctor_id")
-    private Set<DoctorAvailabilityEntity> availabilitySet;
+    private Set<DoctorAvailabilityEntity> availabilities;
 
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)

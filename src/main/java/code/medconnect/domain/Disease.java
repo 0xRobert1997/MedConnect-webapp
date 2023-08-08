@@ -10,7 +10,6 @@ import java.time.OffsetDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Disease {
 
     Integer diseaseId;

@@ -10,10 +10,18 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class Doctor {
 
-
+    Integer doctorId;
+    String name;
+    String surname;
+    String specialization;
+    String phone;
+    String email;
+    byte[] photoData;
+    Address address;
+    Set<DoctorAvailability> availabilities;
+    Set<Visit> visits;
 
 
 }

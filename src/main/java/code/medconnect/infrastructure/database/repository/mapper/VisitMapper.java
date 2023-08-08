@@ -9,4 +9,6 @@ import org.mapstruct.ReportingPolicy;
 public interface VisitMapper {
 
     Visit map(VisitEntity visitEntity);
+
+    VisitEntity map(Visit visit);
 }

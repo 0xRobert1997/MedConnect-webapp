@@ -42,7 +42,7 @@ public class PatientEntity {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Lob @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "photo_data", columnDefinition = "bytea")
     private byte[] photoData;
 

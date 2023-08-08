@@ -10,4 +10,6 @@ import org.mapstruct.ReportingPolicy;
 public interface PatientMapper {
 
     Patient map(PatientEntity entity);
+
+    PatientEntity map(Patient patient);
 }

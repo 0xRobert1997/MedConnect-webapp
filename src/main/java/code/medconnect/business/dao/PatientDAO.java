@@ -12,6 +12,7 @@ public interface PatientDAO {
     Optional<Patient> findByEmail(String email);
     Optional<Patient> findByPesel(String pesel);
     Patient savePatient(Patient patient);
-    Visit saveVisit(Visit visit);
-    Visit cancelVisit(Visit visit);
+
+
+
 }

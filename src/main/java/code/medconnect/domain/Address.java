@@ -8,9 +8,13 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Address {
 
+    Integer addressId;
+    String country;
+    String city;
+    String postalCode;
+    String address;
 
 
 

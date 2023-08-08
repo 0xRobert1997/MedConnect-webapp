@@ -1,5 +1,6 @@
 package code.medconnect.business.dao;
 
+import code.medconnect.domain.Note;
 import code.medconnect.domain.Visit;
 
 import java.util.Date;
@@ -9,7 +10,9 @@ public interface VisitDAO {
 
     List<Visit> findVisitByPatientPesel(String patientPesel);
 
-    void saveVisit(Date date, String startHour, String endHour, String patientEmail, String DoctorEmail);
+    Visit saveVisit(Visit visit);
 
-    void saveNote(String noteContent, Visit visit);
+    void saveNote(Note note, Visit visit);
+
+    void cancelVisit(Visit visit);
 }

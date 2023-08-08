@@ -10,12 +10,12 @@ import java.time.OffsetDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Note {
 
-
-
-
+    Integer noteId;
+    String noteContent;
+    OffsetDateTime dateTime;
+    Visit visit;
 
 }
 

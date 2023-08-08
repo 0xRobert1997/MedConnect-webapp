@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "notes")
+@Table(name = "note")
 public class NoteEntity {
 
     @Id
@@ -25,6 +25,6 @@ public class NoteEntity {
     @Column(name = "date_time")
     private OffsetDateTime dateTime;
 
-    @OneToOne(mappedBy = "notes")
+    @OneToOne(mappedBy = "note")
     private VisitEntity visit;
 }

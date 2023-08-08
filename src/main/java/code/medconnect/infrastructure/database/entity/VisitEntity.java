@@ -19,22 +19,19 @@ public class VisitEntity {
     @Column(name = "visit_id")
     private Integer visitId;
 
-
     @Column(name = "date_time", nullable = false)
     private OffsetDateTime dateTime;
 
-    @Column(name = "cancelled", nullable = false)
-    private boolean cancelled;
-
+    @Column(name = "canceled", nullable = false)
+    private boolean canceled;
 
     @OneToOne
-    @JoinColumn(name = "notes_id")
+    @JoinColumn(name = "note_id")
     private NoteEntity note;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
     private PatientEntity patient;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")

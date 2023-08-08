@@ -56,14 +56,14 @@ CREATE TABLE Visit (
     patient_id          INT         NOT NULL,
     doctor_id           INT         NOT NULL,
     date_time           TIMESTAMP   NOT NULL,
-    cancelled           BOOLEAN     NOT NULL    DEFAULT false,
+    canceled           BOOLEAN     NOT NULL    DEFAULT false,
     note_id            INT         NOT NULL,
     FOREIGN KEY (patient_id)
         REFERENCES patient(patient_id),
     FOREIGN KEY (doctor_id)
         REFERENCES doctor(doctor_id),
     FOREIGN KEY (note_id)
-        REFERENCES notes(note_id)
+        REFERENCES note(note_id)
 
 );
 

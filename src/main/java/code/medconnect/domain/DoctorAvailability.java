@@ -10,9 +10,13 @@ import java.time.LocalTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class DoctorAvailability {
 
+    Integer doctorAvailabilityId;
+    Doctor doctor;
+    String dayOfWeek;
+    LocalTime startTime;
+    LocalTime endTime;
 
 
 

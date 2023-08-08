@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface DoctorAvailabilityJpaRepository extends JpaRepository<DoctorAvailabilityEntity, Integer> {
-    List<DoctorAvailabilityEntity> findByEmail(String email);
+    List<DoctorAvailabilityEntity> findByDoctorEmail(String email);
 }

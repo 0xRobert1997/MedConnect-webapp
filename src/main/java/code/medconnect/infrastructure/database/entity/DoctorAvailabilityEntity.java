@@ -17,7 +17,7 @@ public class DoctorAvailabilityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_availability_id")
-    private Integer availabilityId;
+    private Integer doctorAvailabilityId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id", nullable = false)

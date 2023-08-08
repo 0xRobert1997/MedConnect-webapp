@@ -18,7 +18,7 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
 
     @Override
     public List<DoctorAvailability> findByDoctorEmail(String email) {
-        return doctorAvailabilityJpaRepository.findByEmail(email)
+        return doctorAvailabilityJpaRepository.findByDoctorEmail(email)
                 .stream()
                 .map(doctorAvailabilityMapper::map)
                 .toList();
