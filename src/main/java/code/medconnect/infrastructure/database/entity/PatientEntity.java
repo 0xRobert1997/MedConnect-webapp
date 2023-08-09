@@ -46,7 +46,7 @@ public class PatientEntity {
     @Column(name = "photo_data", columnDefinition = "bytea")
     private byte[] photoData;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 

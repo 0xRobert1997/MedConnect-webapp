@@ -3,8 +3,9 @@ package code.medconnect.business.dao;
 import code.medconnect.domain.DoctorAvailability;
 
 import java.util.List;
+import java.util.Set;
 
 public interface DoctorAvailabilityDAO {
 
-    List<DoctorAvailability> findByDoctorEmail(final String doctorEmail);
+    Set<DoctorAvailability> findByDoctorEmail(final String doctorEmail);
 }

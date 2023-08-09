@@ -12,7 +12,6 @@ public interface VisitDAO {
 
     Visit saveVisit(Visit visit);
 
-    void saveNote(Note note, Visit visit);
 
     void cancelVisit(Visit visit);
 }

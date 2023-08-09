@@ -24,14 +24,14 @@ public class NoteRepository implements NoteDAO {
     private final VisitMapper visitMapper;
 
     @Override
-    public Note saveNote(Note note) {
-        NoteEntity toSave = noteMapper.map(note);
+    public Note saveNote(Note note, Visit visit) {
+        NoteEntity toSave = noteMapper.map(note.withVisit(visit));
         NoteEntity saved = noteJpaRepository.save(toSave);
         return noteMapper.map(saved);
     }
 
     @Override
-    public Optional<Note> findNote(Integer visitId) {
+    public Optional<Note> findNoteByVisitId(Integer visitId) {
         return visitJpaRepository.findById(visitId)
                 .map(VisitEntity::getNote)
                 .map(noteMapper::map);

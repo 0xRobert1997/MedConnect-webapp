@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface DoctorAvailabilityJpaRepository extends JpaRepository<DoctorAvailabilityEntity, Integer> {
-    List<DoctorAvailabilityEntity> findByDoctorEmail(String email);
+    Set<DoctorAvailabilityEntity> findByDoctorEmail(String email);
 }

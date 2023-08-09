@@ -12,6 +12,8 @@ import code.medconnect.infrastructure.database.repository.mapper.DoctorMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @AllArgsConstructor
 public class DoctorRepository implements DoctorDAO {
@@ -23,8 +25,8 @@ public class DoctorRepository implements DoctorDAO {
     private final DoctorAvailabilityMapper doctorAvailabilityMapper;
 
     @Override
-    public Doctor findByEmail(String email) {
-        return doctorMapper.map(doctorJpaRepository.findByEmail(email));
+    public Optional<Doctor> findByEmail(String email) {
+        return doctorJpaRepository.findByEmail(email).map(doctorMapper::map);
     }
 
     @Override

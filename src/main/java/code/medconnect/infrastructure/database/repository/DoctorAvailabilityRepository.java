@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -17,10 +19,10 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
     private final DoctorAvailabilityMapper doctorAvailabilityMapper;
 
     @Override
-    public List<DoctorAvailability> findByDoctorEmail(String email) {
+    public Set<DoctorAvailability> findByDoctorEmail(String email) {
         return doctorAvailabilityJpaRepository.findByDoctorEmail(email)
                 .stream()
                 .map(doctorAvailabilityMapper::map)
-                .toList();
+                .collect(Collectors.toSet());
     }
 }

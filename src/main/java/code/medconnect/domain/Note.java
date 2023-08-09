@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
+@With
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

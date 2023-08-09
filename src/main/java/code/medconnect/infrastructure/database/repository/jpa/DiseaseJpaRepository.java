@@ -10,9 +10,5 @@ import java.util.Set;
 @Repository
 public interface DiseaseJpaRepository extends JpaRepository<DiseaseEntity, Integer> {
 
-/*    @Query("""
-
-            """)*/
-    // final @Param("x") String
     Set<DiseaseEntity> findByPatientPesel(final String pesel);
 }

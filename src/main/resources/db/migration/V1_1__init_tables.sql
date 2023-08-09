@@ -37,7 +37,7 @@ CREATE TABLE doctor (
 CREATE TABLE doctor_availability (
     doctor_availability_id    SERIAL        PRIMARY KEY,
     doctor_id                 INT           NOT NULL,
-    day_of_week               VARCHAR(10)   NOT NULL,
+    day                       DATE          NOT NULL,
     start_time                TIME          NOT NULL,
     end_time                  TIME          NOT NULL,
     FOREIGN KEY (doctor_id)
@@ -55,9 +55,11 @@ CREATE TABLE Visit (
     visit_id            SERIAL      PRIMARY KEY,
     patient_id          INT         NOT NULL,
     doctor_id           INT         NOT NULL,
-    date_time           TIMESTAMP   NOT NULL,
-    canceled           BOOLEAN     NOT NULL    DEFAULT false,
-    note_id            INT         NOT NULL,
+    day                 DATE        NOT NULL,
+    start_time          TIME        NOT NULL,
+    end_time            TIME        NOT NULL,
+    canceled            BOOLEAN     NOT NULL    DEFAULT false,
+    note_id             INT,
     FOREIGN KEY (patient_id)
         REFERENCES patient(patient_id),
     FOREIGN KEY (doctor_id)

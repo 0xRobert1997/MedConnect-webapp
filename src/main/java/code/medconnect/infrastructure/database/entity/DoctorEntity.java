@@ -49,6 +49,6 @@ public class DoctorEntity {
     private Set<DoctorAvailabilityEntity> availabilities;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = CascadeType.ALL)
     private Set<VisitEntity> visits;
 }

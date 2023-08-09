@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -33,11 +34,6 @@ public class VisitRepository implements VisitDAO {
         return visitMapper.map(saved);
     }
 
-    @Override
-    public void saveNote(Note note, Visit visit) {
-        NoteEntity toSave = noteMapper.map(note);
-        noteJpaRepository.save(toSave);
-    }
 
     @Override
     public void cancelVisit(Visit visit) {
@@ -52,6 +48,11 @@ public class VisitRepository implements VisitDAO {
                 .stream()
                 .map(visitMapper::map)
                 .toList();
+    }
+
+    public Optional<Visit> findVisitById(Integer id) {
+        return visitJpaRepository.findById(id)
+                .map(visitMapper::map);
     }
 
 }

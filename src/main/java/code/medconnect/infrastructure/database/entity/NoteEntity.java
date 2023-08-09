@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
+@With
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +26,6 @@ public class NoteEntity {
     @Column(name = "date_time")
     private OffsetDateTime dateTime;
 
-    @OneToOne(mappedBy = "note")
+    @OneToOne(mappedBy = "note", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private VisitEntity visit;
 }

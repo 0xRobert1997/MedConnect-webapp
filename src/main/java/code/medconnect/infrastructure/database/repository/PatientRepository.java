@@ -20,12 +20,12 @@ public class PatientRepository implements PatientDAO {
 
     @Override
     public Optional<Patient> findByEmail(String email) {
-        return patientJpaRepository.findByEmail(email);
+        return patientJpaRepository.findByEmail(email).map(patientMapper::map);
     }
 
     @Override
     public Optional<Patient> findByPesel(String pesel) {
-        return patientJpaRepository.findByPesel(pesel);
+        return patientJpaRepository.findByPesel(pesel).map(patientMapper::map);
     }
 
     @Override

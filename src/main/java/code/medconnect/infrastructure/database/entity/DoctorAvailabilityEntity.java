@@ -3,10 +3,12 @@ package code.medconnect.infrastructure.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
 @Setter
+@With
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +25,8 @@ public class DoctorAvailabilityEntity {
     @JoinColumn(name = "doctor_id", nullable = false)
     private DoctorEntity doctor;
 
-    @Column(name = "day_of_week", nullable = false)
-    private String dayOfWeek;
+    @Column(name = "day", nullable = false)
+    private LocalDate day;
 
     @Column(name = "start_time", nullable = false)
     private LocalTime startTime;
