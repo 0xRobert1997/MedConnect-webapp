@@ -9,5 +9,6 @@ public interface NoteDAO {
 
 
     Note saveNote(Note note, Visit visit);
+
     Optional<Note> findNoteByVisitId(Integer visitId);
 }

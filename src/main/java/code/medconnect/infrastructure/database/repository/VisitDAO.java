@@ -1,30 +1,35 @@
 package code.medconnect.infrastructure.database.repository;
 
-import code.medconnect.business.dao.VisitDAO;
-import code.medconnect.domain.Note;
+import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Visit;
-import code.medconnect.infrastructure.database.entity.NoteEntity;
+import code.medconnect.infrastructure.database.entity.DoctorEntity;
 import code.medconnect.infrastructure.database.entity.VisitEntity;
+import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.NoteJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.VisitJpaRepository;
+import code.medconnect.infrastructure.database.repository.mapper.DoctorMapper;
 import code.medconnect.infrastructure.database.repository.mapper.NoteMapper;
 import code.medconnect.infrastructure.database.repository.mapper.VisitMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
-public class VisitRepository implements VisitDAO {
+public class VisitDAO implements code.medconnect.business.dao.VisitDAO {
 
     private final VisitJpaRepository visitJpaRepository;
+    private final DoctorJpaRepository doctorJpaRepository;
     private final NoteJpaRepository noteJpaRepository;
 
     private final VisitMapper visitMapper;
     private final NoteMapper noteMapper;
+    private final DoctorMapper doctorMapper;
 
 
     @Override
@@ -50,9 +55,31 @@ public class VisitRepository implements VisitDAO {
                 .toList();
     }
 
+    @Override
     public Optional<Visit> findVisitById(Integer id) {
         return visitJpaRepository.findById(id)
                 .map(visitMapper::map);
     }
+
+    @Override
+    public List<Visit> findByDoctorAndDay(Doctor doctor, LocalDate day) {
+        DoctorEntity doctorEntity = doctorMapper.map(doctor);
+        return visitJpaRepository.findByDoctorAndDay(doctorEntity, day).stream()
+                .map(visitMapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<Visit> findConflictingVisits(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {
+        List<Visit> byDoctorAndDay = findByDoctorAndDay(doctor, day);
+
+        return byDoctorAndDay.stream()
+                .filter(visit ->
+                        (endTime.isAfter(visit.getStartTime()) && startTime.isBefore(visit.getEndTime()))
+                        || (startTime.isBefore(visit.getEndTime()) && endTime.isAfter(visit.getStartTime()))
+                        || (startTime.equals(visit.getStartTime()) && endTime.equals(visit.getEndTime())))
+                .collect(Collectors.toList());
+    }
+
 
 }

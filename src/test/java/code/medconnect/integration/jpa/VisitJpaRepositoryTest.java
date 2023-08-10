@@ -16,6 +16,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -68,4 +70,32 @@ public class VisitJpaRepositoryTest {
         assertNotNull(cancelledVisit);
         assertTrue(cancelledVisit.isCanceled());
     }
+
+    @Test
+    void shouldFindAllDoctorsVisitsByDayCorrectly() {
+        //given
+        DoctorEntity doctor = EntityFixtures.someDoctor1();
+        doctorJpaRepository.saveAndFlush(doctor);
+        PatientEntity patient = EntityFixtures.somePatient1();
+        patientJpaRepository.saveAndFlush(patient);
+
+        VisitEntity visit1 = EntityFixtures.someVisit()
+                .withDoctor(doctor)
+                .withPatient(patient);
+        VisitEntity visit2 = EntityFixtures.someVisit()
+                .withDoctor(doctor)
+                .withPatient(patient)
+                .withStartTime(LocalTime.of(13, 0))
+                .withEndTime(LocalTime.of(13, 30));
+        visitJpaRepository.saveAndFlush(visit1);
+        visitJpaRepository.saveAndFlush(visit2);
+        LocalDate day = visit1.getDay();
+
+        //when
+        List<VisitEntity> result = visitJpaRepository.findByDoctorAndDay(doctor, day);
+
+        //then
+        assertThat(result).hasSize(2);
+    }
+
 }

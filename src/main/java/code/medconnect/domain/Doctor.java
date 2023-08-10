@@ -1,6 +1,5 @@
 package code.medconnect.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
@@ -8,6 +7,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class Doctor {

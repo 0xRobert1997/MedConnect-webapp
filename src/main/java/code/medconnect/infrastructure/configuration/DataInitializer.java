@@ -3,7 +3,6 @@ package code.medconnect.infrastructure.configuration;
 import code.medconnect.domain.Address;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Patient;
-import code.medconnect.infrastructure.database.entity.PatientEntity;
 import code.medconnect.infrastructure.database.repository.DoctorRepository;
 import code.medconnect.infrastructure.database.repository.PatientRepository;
 import code.medconnect.infrastructure.database.repository.jpa.PatientJpaRepository;

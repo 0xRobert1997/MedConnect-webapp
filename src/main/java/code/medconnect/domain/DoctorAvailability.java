@@ -1,8 +1,8 @@
 package code.medconnect.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -14,7 +14,7 @@ public class DoctorAvailability {
 
     Integer doctorAvailabilityId;
     Doctor doctor;
-    String dayOfWeek;
+    LocalDate day;
     LocalTime startTime;
     LocalTime endTime;
 

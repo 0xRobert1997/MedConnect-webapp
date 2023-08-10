@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 @AllArgsConstructor
@@ -46,5 +47,10 @@ public class DoctorRepository implements DoctorDAO {
         DoctorEntity toSave = doctorMapper.map(doctor);
         DoctorEntity saved = doctorJpaRepository.save(toSave);
         return doctorMapper.map(saved);
+    }
+
+    @Override
+    public Set<Doctor> findAll() {
+        return null;
     }
 }
