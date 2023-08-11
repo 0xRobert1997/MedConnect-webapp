@@ -3,7 +3,7 @@ package code.medconnect.business;
 import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.*;
 import code.medconnect.domain.exception.VisitInTakenTimePeriodException;
-import code.medconnect.domain.exception.VisitNotFoundException;
+import code.medconnect.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ public class VisitService {
     @Transactional
     public void cancelVisit(Integer visitId) {
         Visit visit = visitDAO.findVisitById(visitId)
-                .orElseThrow(() -> new VisitNotFoundException("Visit with ID " + visitId + " not found"));
+                .orElseThrow(() -> new NotFoundException("Visit with ID " + visitId + " not found"));
 
         visitDAO.cancelVisit(visit);
         visitDAO.saveVisit(visit);
@@ -32,7 +32,7 @@ public class VisitService {
     @Transactional
     public void addNoteToVisit(Integer visitId, Note note) {
         Visit visit = visitDAO.findVisitById(visitId)
-                .orElseThrow(() -> new VisitNotFoundException("Visit with ID " + visitId + " not found"));
+                .orElseThrow(() -> new NotFoundException("Visit with ID " + visitId + " not found"));
 
         note.setVisit(visit);
         visit.setNote(note);

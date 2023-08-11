@@ -7,9 +7,9 @@ import code.medconnect.infrastructure.database.entity.VisitEntity;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.NoteJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.VisitJpaRepository;
-import code.medconnect.infrastructure.database.repository.mapper.DoctorMapper;
-import code.medconnect.infrastructure.database.repository.mapper.NoteMapper;
-import code.medconnect.infrastructure.database.repository.mapper.VisitMapper;
+import code.medconnect.infrastructure.database.repository.mapper.DoctorEntityMapper;
+import code.medconnect.infrastructure.database.repository.mapper.NoteEntityMapper;
+import code.medconnect.infrastructure.database.repository.mapper.VisitEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -27,16 +27,16 @@ public class VisitDAO implements code.medconnect.business.dao.VisitDAO {
     private final DoctorJpaRepository doctorJpaRepository;
     private final NoteJpaRepository noteJpaRepository;
 
-    private final VisitMapper visitMapper;
-    private final NoteMapper noteMapper;
-    private final DoctorMapper doctorMapper;
+    private final VisitEntityMapper visitEntityMapper;
+    private final NoteEntityMapper noteEntityMapper;
+    private final DoctorEntityMapper doctorEntityMapper;
 
 
     @Override
     public Visit saveVisit(Visit visit) {
-        VisitEntity toSave = visitMapper.map(visit);
+        VisitEntity toSave = visitEntityMapper.map(visit);
         VisitEntity saved = visitJpaRepository.save(toSave);
-        return visitMapper.map(saved);
+        return visitEntityMapper.map(saved);
     }
 
 
@@ -51,21 +51,21 @@ public class VisitDAO implements code.medconnect.business.dao.VisitDAO {
         List<VisitEntity> visits = visitJpaRepository.findVisitByPatientPesel(patientPesel);
         return visits
                 .stream()
-                .map(visitMapper::map)
+                .map(visitEntityMapper::map)
                 .toList();
     }
 
     @Override
     public Optional<Visit> findVisitById(Integer id) {
         return visitJpaRepository.findById(id)
-                .map(visitMapper::map);
+                .map(visitEntityMapper::map);
     }
 
     @Override
     public List<Visit> findByDoctorAndDay(Doctor doctor, LocalDate day) {
-        DoctorEntity doctorEntity = doctorMapper.map(doctor);
+        DoctorEntity doctorEntity = doctorEntityMapper.map(doctor);
         return visitJpaRepository.findByDoctorAndDay(doctorEntity, day).stream()
-                .map(visitMapper::map)
+                .map(visitEntityMapper::map)
                 .toList();
     }
 

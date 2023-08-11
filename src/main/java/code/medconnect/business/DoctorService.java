@@ -3,7 +3,7 @@ package code.medconnect.business;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.DoctorAvailability;
-import code.medconnect.domain.exception.DoctorNotFoundException;
+import code.medconnect.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class DoctorService {
 
-    DoctorDAO doctorDAO;
+    private final DoctorDAO doctorDAO;
 
     @Transactional
     public Set<Doctor> findAllDoctors() {
@@ -27,7 +27,7 @@ public class DoctorService {
     @Transactional
     public Doctor findDoctorByEmail(String email) {
         return doctorDAO.findByEmail(email)
-                .orElseThrow(() -> new DoctorNotFoundException("Doctor with email: " + email + " does not exist"));
+                .orElseThrow(() -> new NotFoundException("Doctor with email: " + email + " does not exist"));
     }
 
     @Transactional

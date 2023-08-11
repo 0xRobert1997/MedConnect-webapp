@@ -6,7 +6,8 @@ import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.Disease;
 import code.medconnect.domain.Patient;
 import code.medconnect.domain.Visit;
-import code.medconnect.domain.exception.PatientNotFoundException;
+import code.medconnect.domain.exception.NotFoundException;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class PatientService {
     public Set<Disease> getPatientsDiseases(String pesel) {
         return patientDAO.findByPesel(pesel)
                 .map(Patient::getDiseases)
-                .orElseThrow(() -> new PatientNotFoundException("Patient with pesel: " + pesel + " doesn't exist"));
+                .orElseThrow(() -> new NotFoundException("Patient with pesel: " + pesel + " doesn't exist"));
     }
 
     @Transactional

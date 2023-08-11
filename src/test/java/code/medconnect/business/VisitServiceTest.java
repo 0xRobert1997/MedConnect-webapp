@@ -2,7 +2,7 @@ package code.medconnect.business;
 
 import code.medconnect.domain.*;
 import code.medconnect.domain.exception.VisitInTakenTimePeriodException;
-import code.medconnect.domain.exception.VisitNotFoundException;
+import code.medconnect.domain.exception.NotFoundException;
 import code.medconnect.fixtures.DomainFixtures;
 import code.medconnect.infrastructure.database.repository.VisitDAO;
 import org.junit.jupiter.api.Test;
@@ -73,7 +73,7 @@ public class VisitServiceTest {
         Mockito.when(visitDAO.findVisitById(visitId)).thenReturn(Optional.empty());
 
         // when, then
-        assertThrows(VisitNotFoundException.class, () -> visitService.addNoteToVisit(visitId, note));
+        assertThrows(NotFoundException.class, () -> visitService.addNoteToVisit(visitId, note));
     }
 
     @Test

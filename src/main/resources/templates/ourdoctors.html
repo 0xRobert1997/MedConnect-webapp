@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>MedConnect</title>
+    <style>
+
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20vh;
+        }
+
+        .doctors-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .object-item {
+            text-align: center;
+            margin: 0 40px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<div class="title-container">
+    <h1>Our Doctors</h1>
+</div>
+<div class="doctors-container">
+    <div th:each="doctor : ${doctors}" class="object-item">
+        <div>
+            <img th:src="${'data:image/jpeg;base64,' + doctor.base64Image}" alt="Doctor's photo" width="100px">
+            <h3 th:text="${doctor.name}"></h3>
+            <h3 th:text="${doctor.surname}"></h3>
+            <p th:text="${'Specialization: ' + doctor.specialization}"></p>
+            <!-- Pozostałe pola informacji o lekarzu -->
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
