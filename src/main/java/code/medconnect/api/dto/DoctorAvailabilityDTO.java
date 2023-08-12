@@ -1,8 +1,6 @@
 package code.medconnect.api.dto;
 
 import code.medconnect.domain.Doctor;
-import code.medconnect.domain.Note;
-import code.medconnect.domain.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,17 +13,12 @@ import java.time.LocalTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VisitDTO {
 
+public class DoctorAvailabilityDTO {
 
-    Integer visitId;
+    Integer doctorAvailabilityId;
+    Doctor doctor;
     LocalDate day;
     LocalTime startTime;
     LocalTime endTime;
-    boolean cancelled;
-    Note note;
-    Patient patient;
-    Doctor doctor;
-
-
 }
