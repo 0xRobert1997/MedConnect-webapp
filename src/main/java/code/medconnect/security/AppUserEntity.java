@@ -1,26 +1,24 @@
 package code.medconnect.security;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Set;
 
 @Data
 @Builder
+@ToString(of = {"id", "userName", "email"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "app_user")
-public class UserEntity {
+public class AppUserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private int id;
+    private Integer id;
 
     @Column(name = "user_name")
     @Length(min = 5)

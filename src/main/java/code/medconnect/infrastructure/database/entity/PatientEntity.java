@@ -1,5 +1,6 @@
 package code.medconnect.infrastructure.database.entity;
 
+import code.medconnect.security.AppUserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,7 @@ public class PatientEntity {
     @Column(name = "pesel")
     private String pesel;
 
-    @Column(name = "date_of_birth", nullable = false)
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
     @Column(name = "sex")
@@ -52,9 +53,11 @@ public class PatientEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<VisitEntity> visits;
 
-/*    @OneToOne
-    private VisitHistoryEntity visitHistory;*/
 
     @OneToMany(mappedBy = "patient",fetch = FetchType.LAZY)
     private Set<DiseaseEntity> diseases;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private AppUserEntity appUserEntity;
 }

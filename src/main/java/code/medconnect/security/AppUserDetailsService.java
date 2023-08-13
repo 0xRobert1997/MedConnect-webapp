@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final AppUserRepository appUserRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByUserName(userName);
+        AppUserEntity user = appUserRepository.findByUserName(userName);
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
     }
@@ -35,7 +35,7 @@ public class AppUserDetailsService implements UserDetailsService {
             .collect(Collectors.toList());
     }
 
-    private UserDetails buildUserForAuthentication(UserEntity user, List<GrantedAuthority> authorities) {
+    private UserDetails buildUserForAuthentication(AppUserEntity user, List<GrantedAuthority> authorities) {
         return new User(
             user.getUserName(),
             user.getPassword(),

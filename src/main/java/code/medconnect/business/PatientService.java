@@ -1,5 +1,7 @@
 package code.medconnect.business;
 
+import code.medconnect.api.dto.PatientDTO;
+import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.business.dao.DiseaseDAO;
 import code.medconnect.business.dao.PatientDAO;
 import code.medconnect.business.dao.VisitDAO;
@@ -26,6 +28,16 @@ public class PatientService {
     PatientDAO patientDAO;
     DiseaseDAO diseaseDAO;
     VisitDAO visitDAO;
+
+    PatientMapper patientMapper;
+
+
+    @Transactional
+    public void createPatient(PatientDTO patientDTO) {
+
+        Patient patient = patientMapper.map(patientDTO);
+        patientDAO.savePatient(patient);
+    }
 
     @Transactional
     public void makeNewDiseaseForPatient(

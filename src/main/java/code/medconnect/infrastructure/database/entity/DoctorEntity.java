@@ -1,5 +1,6 @@
 package code.medconnect.infrastructure.database.entity;
 
+import code.medconnect.security.AppUserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -51,4 +52,8 @@ public class DoctorEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = CascadeType.ALL)
     private Set<VisitEntity> visits;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private AppUserEntity user;
 }

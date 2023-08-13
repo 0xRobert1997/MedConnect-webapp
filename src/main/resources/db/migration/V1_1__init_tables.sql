@@ -8,10 +8,10 @@ CREATE TABLE address
 );
 CREATE TABLE patient (
     patient_id        SERIAL        PRIMARY KEY,
-    name              VARCHAR(20)   NOT NULL,
-    surname           VARCHAR(20)   NOT NULL,
-    pesel             VARCHAR(11)   NOT NULL    UNIQUE,
-    date_of_birth     DATE          NOT NULL,
+    name              VARCHAR(32)   NOT NULL,
+    surname           VARCHAR(32)   NOT NULL,
+    pesel             VARCHAR(12)   NOT NULL    UNIQUE,
+    date_of_birth     DATE,
     sex               VARCHAR(256),
     phone             VARCHAR(32)   NOT NULL,
     email             VARCHAR(32)   NOT NULL    UNIQUE,
@@ -43,6 +43,7 @@ CREATE TABLE doctor_availability (
     FOREIGN KEY (doctor_id)
         REFERENCES doctor(doctor_id)
 );
+
 
 
 CREATE TABLE note (

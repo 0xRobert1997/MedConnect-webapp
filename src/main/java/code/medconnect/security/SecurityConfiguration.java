@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
 
@@ -26,7 +29,7 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+/*    @Bean
     public AuthenticationManager authManager(
             HttpSecurity http,
             PasswordEncoder passwordEncoder,
@@ -38,6 +41,17 @@ public class SecurityConfiguration {
                 .passwordEncoder(passwordEncoder)
                 .and()
                 .build();
+    }*/
+    @Bean
+    public AuthenticationManager authenticationManager(
+            HttpSecurity http,
+            PasswordEncoder passwordEncoder,
+            UserDetailsService userDetailService
+    ) throws Exception {
+            var authProvider = new DaoAuthenticationProvider();
+            authProvider.setUserDetailsService(userDetailService);
+            authProvider.setPasswordEncoder(passwordEncoder);
+            return new ProviderManager(authProvider);
     }
 
 
@@ -45,22 +59,24 @@ public class SecurityConfiguration {
     @ConditionalOnProperty(value = "spring.security.enabled", havingValue = "true", matchIfMissing = true)
     SecurityFilterChain securityEnabled(HttpSecurity http) throws Exception {
 
-        HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter());
+        CookieClearingLogoutHandler cookies = new CookieClearingLogoutHandler("JSESSIONID");
 
         return http
                 .authorizeHttpRequests(auth -> {
                             auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
                             auth.requestMatchers(
-                                    "/static/**", "/home", "/sign", "/register", "/ourdoctors")
+                                    "/static/**", "/home", "/register", "/ourdoctors")
                                     .permitAll();
-                            auth.requestMatchers("/").hasRole("DOCTOR");
-                            auth.requestMatchers("/").hasRole("PATIENT");
-                            auth.anyRequest().authenticated();
+                            auth.requestMatchers("/doctor").hasRole("DOCTOR");
+                            auth.requestMatchers("/patient").hasRole("PATIENT");
+                            auth.anyRequest().permitAll();
+
                         })
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessUrl("/home"))
-                .logout((logout) -> logout.addLogoutHandler(clearSiteData))
+                .logout((logout) -> logout.addLogoutHandler(cookies))
                 .build();
     }
 

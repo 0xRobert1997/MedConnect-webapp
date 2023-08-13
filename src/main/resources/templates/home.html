@@ -11,7 +11,7 @@
         body {
             display: flex;
             flex-direction: column;
-            min-height: 80vh;
+            min-height: 100vh;
             margin: 0;
             padding: 0;
             background-image: url('/images/medical-banner.jpg');
@@ -32,6 +32,7 @@
             text-align: center;
             padding: 10px;
             background-color: #f0f0f0;
+            margin-top: auto;
         }
     </style>
     <title>MedConnect</title>
@@ -43,11 +44,14 @@
     <div class="text-end mt-4">
         <a th:href="@{/register}" class="btn btn-primary mb-2 d-block">Register</a>
         <a th:href="@{/login}" class="btn btn-primary mb-2 d-block">Login</a>
+        <a th:href="@{/patient}" class="btn btn-primary mb-2 d-block">Patients portal</a>
+        <a th:href="@{/doctor}" class="btn btn-primary mb-2 d-block">Doctors portal</a>
         <a th:href="@{/ourdoctors}" class="btn btn-info d-block">Our Doctors</a>
     </div>
 </div>
 <div class="footer">
     About us!
+    <p>MedConnect is a platform dedicated to connecting patients and doctors :)</p>
 </div>
 </body>
 

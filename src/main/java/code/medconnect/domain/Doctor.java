@@ -1,5 +1,6 @@
 package code.medconnect.domain;
 
+import code.medconnect.security.AppUser;
 import lombok.*;
 
 import java.util.Set;
@@ -22,6 +23,7 @@ public class Doctor {
     Address address;
     Set<DoctorAvailability> availabilities;
     Set<Visit> visits;
+    AppUser user;
 
 
 }
