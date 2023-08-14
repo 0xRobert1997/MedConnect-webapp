@@ -11,6 +11,6 @@ public interface PatientEntityMapper {
 
     Patient map(PatientEntity entity);
 
-    @Mapping(source = "appUser", target = "appUserEntity")
+ //   @Mapping(source = "appUser", target = "appUserEntity")
     PatientEntity map(Patient patient);
 }

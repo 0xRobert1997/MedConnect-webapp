@@ -46,7 +46,7 @@ public class PatientEntity {
     @Column(name = "photo_data", columnDefinition = "bytea")
     private byte[] photoData;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
@@ -54,10 +54,10 @@ public class PatientEntity {
     private Set<VisitEntity> visits;
 
 
-    @OneToMany(mappedBy = "patient",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient",fetch = FetchType.EAGER)
     private Set<DiseaseEntity> diseases;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private AppUserEntity appUserEntity;
+    private AppUserEntity appUser;
 }

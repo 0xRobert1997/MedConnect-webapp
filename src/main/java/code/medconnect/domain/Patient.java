@@ -25,8 +25,8 @@ public class Patient {
     String email;
     byte[] photoData;
     Address address;
-    Set<Visit> visits;
     Set<Disease> diseases;
+    Set<Visit> visits;
     AppUser appUser;
 
 }

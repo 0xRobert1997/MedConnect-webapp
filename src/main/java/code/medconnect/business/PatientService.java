@@ -1,7 +1,9 @@
 package code.medconnect.business;
 
 import code.medconnect.api.dto.PatientDTO;
+import code.medconnect.api.dto.VisitDTO;
 import code.medconnect.api.dto.mapper.PatientMapper;
+import code.medconnect.api.dto.mapper.VisitMapper;
 import code.medconnect.business.dao.DiseaseDAO;
 import code.medconnect.business.dao.PatientDAO;
 import code.medconnect.business.dao.VisitDAO;
@@ -10,10 +12,14 @@ import code.medconnect.domain.Patient;
 import code.medconnect.domain.Visit;
 import code.medconnect.domain.exception.NotFoundException;
 
+import code.medconnect.security.AppUserEntity;
+import code.medconnect.security.AppUserRepository;
+import code.medconnect.security.AppUserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -29,12 +35,14 @@ public class PatientService {
     DiseaseDAO diseaseDAO;
     VisitDAO visitDAO;
 
+    AppUserRepository appUserRepository;
+
     PatientMapper patientMapper;
+    VisitMapper visitMapper;
 
 
     @Transactional
     public void createPatient(PatientDTO patientDTO) {
-
         Patient patient = patientMapper.map(patientDTO);
         patientDAO.savePatient(patient);
     }
@@ -62,7 +70,20 @@ public class PatientService {
     }
 
     @Transactional
-    public List<Visit> getPatientsVisits(String pesel) {
-        return visitDAO.findVisitByPatientPesel(pesel);
+    public List<VisitDTO> getPatientsVisits(String pesel) {
+        return visitDAO.findVisitByPatientPesel(pesel).stream()
+                .map(visit -> visitMapper.map(visit))
+                .toList();
     }
+
+    @Transactional
+    public PatientDTO findByEmail(String email) {
+        return patientDAO.findByEmail(email)
+                .map(a -> patientMapper.map(a))
+                .orElseThrow(() -> new NotFoundException("Patient with email: " + email + " doesn't exist"));
+
+    }
+
+
+
 }

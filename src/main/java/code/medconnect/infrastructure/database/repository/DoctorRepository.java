@@ -3,6 +3,7 @@ package code.medconnect.infrastructure.database.repository;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.DoctorAvailability;
+import code.medconnect.domain.exception.NotFoundException;
 import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
 import code.medconnect.infrastructure.database.entity.DoctorEntity;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorAvailabilityJpaRepository;
@@ -55,5 +56,11 @@ public class DoctorRepository implements DoctorDAO {
         return doctorJpaRepository.findAll().stream()
                 .map(doctorEntityMapper::map)
                 .collect(Collectors.toSet());
+    }
+
+    public Doctor findById(Integer id) {
+         return doctorJpaRepository.findById(id)
+                 .map(doctorEntityMapper::map)
+                 .orElseThrow(() -> new NotFoundException("Doctor with id: " + id + " not found"));
     }
 }

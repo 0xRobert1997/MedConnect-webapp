@@ -1,11 +1,10 @@
 package code.medconnect.infrastructure.configuration;
 
-import code.medconnect.domain.Address;
-import code.medconnect.domain.Doctor;
-import code.medconnect.domain.Patient;
+import code.medconnect.domain.*;
 import code.medconnect.infrastructure.database.repository.DoctorRepository;
+import code.medconnect.infrastructure.database.repository.NoteRepository;
 import code.medconnect.infrastructure.database.repository.PatientRepository;
-import code.medconnect.infrastructure.database.repository.jpa.PatientJpaRepository;
+import code.medconnect.infrastructure.database.repository.VisitRepository;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserEntity;
 import code.medconnect.security.AppUserRepository;
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -30,20 +30,68 @@ public class DataInitializer implements CommandLineRunner {
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
 
-    private final PatientJpaRepository patientJpaRepository;
+
     private final AppUserRepository appUserRepository;
+    private final VisitRepository visitRepository;
+    private final NoteRepository noteRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
         Integer userPatient1Id = initializerUserPatient1();
         Integer userPatient2Id = initializerUserPatient2();
+
         Integer userDoctor1Id = initializerUserDoctor1();
         Integer userDoctor2Id = initializerUserDoctor2();
 
         initializePatients(userPatient1Id, userPatient2Id);
         initializeDoctors(userDoctor1Id, userDoctor2Id);
+
+
+
+
     }
+
+
+       /* private void initializeExampleVisits(Patient patient , Doctor doctor ) {
+
+*//*            Patient patient = patientRepository.findById(userPatient1Id);
+            Doctor doctor = doctorRepository.findById(userDoctor1Id);*//*
+
+            Visit visit1 = Visit.builder()
+                    .patient(patient)
+                    .doctor(doctor)
+                    .day(LocalDate.now())
+                    .startTime(LocalTime.of(10, 0))
+                    .endTime(LocalTime.of(11, 0))
+                    .build();
+
+            Visit visit2 = Visit.builder()
+                    .patient(patient)
+                    .doctor(doctor)
+                    .day(LocalDate.now().plusDays(1))
+                    .startTime(LocalTime.of(15, 30))
+                    .endTime(LocalTime.of(16, 30))
+                    .build();
+
+            Visit savedVisit1 = visitRepository.saveVisit(visit1);
+            Visit savedVisit2 = visitRepository.saveVisit(visit2);
+
+            initializeNote(savedVisit1);
+            initializeNote(savedVisit2);
+
+        }*/
+
+/*    private void initializeNote(Visit visit) {
+        noteRepository.saveNote(
+                Note.builder()
+                        .noteContent("bla bla bla")
+                        .dateTime(OffsetDateTime.of(2023, 8, 10,10,10,0,0, ZoneOffset.UTC))
+                        .build(),
+                visit
+        );
+    }*/
+
 
     private Integer initializerUserPatient1() {
         AppUserEntity userPatient1 = AppUserEntity.builder()
@@ -82,6 +130,7 @@ public class DataInitializer implements CommandLineRunner {
         AppUserEntity saved = appUserRepository.save(userPatient1);
         return saved.getId();
     }
+
     private Integer initializerUserDoctor2() {
         AppUserEntity userPatient1 = AppUserEntity.builder()
                 .userName("Doctor2")
@@ -96,34 +145,37 @@ public class DataInitializer implements CommandLineRunner {
     }
 
 
-    private void initializePatients(Integer user1Id, Integer user2Id) {
+    private List<Integer> initializePatients(Integer user1Id, Integer user2Id) {
 
         Patient patient1 = getPatient1();
         Patient patient2 = getPatient2();
 
-        patientRepository.savePatient(patient1.withAppUser(
+        Patient savedPatient1 = patientRepository.savePatient(patient1.withAppUser(
                 AppUser.builder()
-                .id(user1Id)
-                .build()));
-        patientRepository.savePatient(patient2.withAppUser(
+                        .id(user1Id)
+                        .build()));
+        Patient savedPatient2 = patientRepository.savePatient(patient2.withAppUser(
                 AppUser.builder()
                         .id(user2Id)
-                        .build()));
+                        .build())
+        );
+        return List.of(savedPatient1.getPatientId(), savedPatient2.getPatientId());
     }
-    private void initializeDoctors(Integer userDoctor1Id, Integer userDoctor2Id) {
+    private List<Integer> initializeDoctors(Integer userDoctor1Id, Integer userDoctor2Id) {
 
         Doctor doctor1 = getDoctor1();
         Doctor doctor2 = getDoctor2();
 
-        doctorRepository.saveDoctor(doctor1
-                .withUser(AppUser.builder()
+        Doctor savedDoctor1 = doctorRepository.saveDoctor(doctor1
+                .withAppUser(AppUser.builder()
                         .id(userDoctor1Id)
                         .build()));
 
-        doctorRepository.saveDoctor(doctor2
-                .withUser(AppUser.builder()
+        Doctor savedDoctor2 = doctorRepository.saveDoctor(doctor2
+                .withAppUser(AppUser.builder()
                         .id(userDoctor2Id)
                         .build()));
+        return List.of(savedDoctor1.getDoctorId(), savedDoctor2.getDoctorId());
     }
 
     private byte[] getPhotoBytes(String imagePath) {
@@ -147,7 +199,7 @@ public class DataInitializer implements CommandLineRunner {
                 .dateOfBirth(LocalDate.of(1995, 10, 10))
                 .sex("male")
                 .photoData(getPhotoBytes("static/images/SpongeBob.jpg"))
-                .email("spondgebob@gmail.com")
+                .email("patient1@example.com")
                 .address(Address
                         .builder()
                         .country("Poland")
@@ -167,7 +219,7 @@ public class DataInitializer implements CommandLineRunner {
                 .dateOfBirth(LocalDate.of(1996, 10, 10))
                 .sex("male")
                 .photoData(getPhotoBytes("static/images/Patrick.jpg"))
-                .email("patrick@gmail.com")
+                .email("patient2@example.com")
                 .address(Address
                         .builder()
                         .country("Poland")
@@ -184,7 +236,7 @@ public class DataInitializer implements CommandLineRunner {
                 .surname("House")
                 .specialization("Humans")
                 .phone("666-666-666")
-                .email("drHouse@example.com")
+                .email("doctor1@example.com")
                 .photoData(getPhotoBytes("static/images/doctor-house.jpg"))
                 .address(Address
                         .builder()
@@ -202,7 +254,7 @@ public class DataInitializer implements CommandLineRunner {
                 .surname("Dolittle")
                 .specialization("Animals")
                 .phone("420-420-420")
-                .email("drDolittle@example.com")
+                .email("doctor2@example.com")
                 .photoData(getPhotoBytes("static/images/doctor-dolittle.jpg"))
                 .address(Address
                         .builder()

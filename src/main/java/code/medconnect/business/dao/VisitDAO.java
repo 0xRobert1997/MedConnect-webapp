@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface VisitDAO {
 
     List<Visit> findVisitByPatientPesel(String patientPesel);
+    List<Visit> findVisitByDoctorEmail(String doctorEmail);
 
     Visit saveVisit(Visit visit);
 

@@ -15,6 +15,8 @@ import java.util.List;
 public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> {
 
 
+    List<VisitEntity> findByDoctorAndDay(DoctorEntity doctor, LocalDate day);
+
     @Query("""
             UPDATE VisitEntity vst
             SET vst.canceled = true
@@ -22,8 +24,6 @@ public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> 
             """)
     @Modifying(clearAutomatically = true)
     void cancelVisitById(@Param("visitId") Integer visitId);
-
-
 
     @Query("""
             SELECT visit
@@ -33,7 +33,12 @@ public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> 
     @Modifying(clearAutomatically = true)
     List<VisitEntity> findVisitByPatientPesel(@Param("pesel") String pesel);
 
-    List<VisitEntity> findByDoctorAndDay(DoctorEntity doctor, LocalDate day);
 
-
+    @Query("""
+            SELECT visit
+            FROM VisitEntity visit
+            WHERE visit.doctor.email = :email
+            """)
+    @Modifying(clearAutomatically = true)
+    List<VisitEntity> findVisitByDoctorEmail(@Param("email") String doctorEmail);
 }

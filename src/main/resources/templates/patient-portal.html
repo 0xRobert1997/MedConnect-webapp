@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>Patient Details</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>Patient Details</h1>
+    <p><strong>Name:</strong> <span th:text="${patientDTO.name}"></span></p>
+    <p><strong>Surname:</strong> <span th:text="${patientDTO.surname}"></span></p>
+    <p><strong>Pesel:</strong> <span th:text="${patientDTO.pesel}"></span></p>
+    <p><strong>Date of Birth:</strong> <span th:text="${patientDTO.dateOfBirth}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${patientDTO.email}"></span></p>
+    <p><strong>Phone Number:</strong> <span th:text="${patientDTO.phone}"></span></p>
+
+    <h2>Visit History</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Start time</th>
+            <th>End time</th>
+            <th>Doctor</th>
+            <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="visit : ${visitHistory}">
+            <td th:text="${visit.day}"></td>
+            <td th:text="${visit.startTime}"></td>
+            <td th:text="${visit.endTime}"></td>
+            <td th:text="${visit.doctorName}"></td>
+            <td th:text="${visit.note}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a th:href="@{/new-visit}" class="btn btn-success">Make new visit</a>
+    <a th:href="@{/}" class="btn btn-primary">Go back</a>
+</div>
+</body>
+
+</html>

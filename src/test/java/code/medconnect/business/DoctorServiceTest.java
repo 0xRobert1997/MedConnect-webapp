@@ -30,7 +30,7 @@ public class DoctorServiceTest {
         Mockito.when(doctorDAO.findByEmail(email)).thenReturn(Optional.of(doctor));
 
         // When
-        Doctor foundDoctor = doctorService.findDoctorByEmail(email);
+        Doctor foundDoctor = doctorService.findByEmail(email);
 
         // Then
         Assertions.assertSame(doctor, foundDoctor);
@@ -43,6 +43,6 @@ public class DoctorServiceTest {
         Mockito.when(doctorDAO.findByEmail(email)).thenReturn(Optional.empty());
 
         // When, Then
-        Assertions.assertThrows(NotFoundException.class, () -> doctorService.findDoctorByEmail(email));
+        Assertions.assertThrows(NotFoundException.class, () -> doctorService.findByEmail(email));
     }
 }

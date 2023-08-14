@@ -52,6 +52,12 @@ public class PatientRepository implements PatientDAO {
         patientJpaRepository.save(patientEntity);
     }
 
+    public Patient findById(Integer id) {
+        return patientJpaRepository.findById(id)
+                .map(patientEntityMapper::map)
+                .orElseThrow(() -> new NotFoundException("Patient with id: " + id + " not found"));
+    }
+
 
 
 

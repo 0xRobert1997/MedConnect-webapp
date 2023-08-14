@@ -23,7 +23,7 @@ public class Doctor {
     Address address;
     Set<DoctorAvailability> availabilities;
     Set<Visit> visits;
-    AppUser user;
+    AppUser appUser;
 
 
 }

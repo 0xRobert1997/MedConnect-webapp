@@ -22,7 +22,12 @@ public class AppUserService {
         AppUser savedAppUser = appUserMapper.map(saved);
         log.info("User saved: " + appUserEntity);
         return savedAppUser;
-
-
     }
+
+    @Transactional
+    public AppUser findByUsername(String username) {
+        AppUserEntity user = appUserRepository.findByUserName(username);
+        return appUserMapper.map(user);
+    }
+
 }

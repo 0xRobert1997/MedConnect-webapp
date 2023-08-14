@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+    <title>Doctor Portal</title>
+</head>
+
+<body>
+<div class="container">
+    <h1>Doctor Portal</h1>
+    <p><strong>Name:</strong> <span th:text="${doctorDTO.name}"></span></p>
+    <p><strong>Last Name:</strong> <span th:text="${doctorDTO.surname}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${doctorDTO.phone}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${doctorDTO.email}"></span></p>
+
+    <h2>Visit History</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Start time</th>
+            <th>End time</th>
+            <th>Patient</th>
+            <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="visit : ${visits}">
+            <td th:text="${visit.day}"></td>
+            <td th:text="${visit.startTime}"></td>
+            <td th:text="${visit.endTime}"></td>
+            <td th:text="${visit.patientName}"></td>
+            <td th:text="${visit.note}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Add Note to Visit</h2>
+    <form th:action="@{/doctor/add-note}" method="post">
+        <input type="hidden" name="doctorEmail" th:value="${doctorDTO.email}" />
+        <select name="visitId">
+            <option th:each="visit : ${visitHistory}" th:value="${visit.id}" th:text="${visit.day + ' ' + visit.startTime}"></option>
+        </select>
+        <textarea name="note" rows="4" cols="50" placeholder="Add a note"></textarea>
+        <button type="submit" class="btn btn-primary">Add Note</button>
+    </form>
+
+    <h2>Check Patient and Medical History</h2>
+    <form th:action="@{/doctor/check-patient}" method="post">
+        <input type="text" name="patientPesel" placeholder="Patient PESEL" />
+        <button type="submit" class="btn btn-primary">Check Patient</button>
+    </form>
+
+    <h2>Add Availability</h2>
+    <form th:action="@{/doctor/add-availability}" method="post">
+        <input type="hidden" name="doctorEmail" th:value="${doctorDTO.email}" />
+
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" />
+
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime" name="startTime" />
+
+        <label for="endTime">End Time:</label>
+        <input type="time" id="endTime" name="endTime" />
+
+        <button type="submit" class="btn btn-primary">Add Availability</button>
+    </form>
+
+
+
+    <a th:href="@{/}" class="btn btn-primary">Go back</a>
+</div>
+</body>
+
+</html>

@@ -45,15 +45,15 @@ public class DoctorEntity {
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "doctor_id")
     private Set<DoctorAvailabilityEntity> availabilities;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)
     private Set<VisitEntity> visits;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private AppUserEntity user;
+    private AppUserEntity appUser;
 }

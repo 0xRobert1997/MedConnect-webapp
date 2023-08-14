@@ -4,9 +4,7 @@ import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.business.PatientService;
 import code.medconnect.domain.Address;
 import code.medconnect.security.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,7 @@ public class RegisterController {
     PatientService patientService;
 
     @RequestMapping(value = REGISTER_BASE_PATH, method = RequestMethod.GET)
-    public String homePage() {
+    public String registerPage() {
         return "register";
     }
 

@@ -4,7 +4,7 @@ import code.medconnect.domain.*;
 import code.medconnect.domain.exception.VisitInTakenTimePeriodException;
 import code.medconnect.domain.exception.NotFoundException;
 import code.medconnect.fixtures.DomainFixtures;
-import code.medconnect.infrastructure.database.repository.VisitDAO;
+import code.medconnect.infrastructure.database.repository.VisitRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class VisitServiceTest {
 
     @Mock
-    VisitDAO visitDAO;
+    VisitRepository visitRepository;
 
     @InjectMocks
     VisitService visitService;
@@ -35,15 +35,15 @@ public class VisitServiceTest {
         Integer visitId = 5;
         Visit visit = DomainFixtures.someVisit();
 
-        Mockito.when(visitDAO.findVisitById(visitId)).thenReturn(Optional.of(visit));
+        Mockito.when(visitRepository.findVisitById(visitId)).thenReturn(Optional.of(visit));
 
         //when
         visitService.cancelVisit(visitId);
 
         // Then
-        InOrder inOrder = Mockito.inOrder(visitDAO);
-        inOrder.verify(visitDAO).cancelVisit(visit);
-        inOrder.verify(visitDAO).saveVisit(visit);
+        InOrder inOrder = Mockito.inOrder(visitRepository);
+        inOrder.verify(visitRepository).cancelVisit(visit);
+        inOrder.verify(visitRepository).saveVisit(visit);
     }
 
     @Test
@@ -53,15 +53,15 @@ public class VisitServiceTest {
         Visit visit = DomainFixtures.someVisit();
         Note note = DomainFixtures.someNote();
 
-        Mockito.when(visitDAO.findVisitById(visitId)).thenReturn(Optional.of(visit));
+        Mockito.when(visitRepository.findVisitById(visitId)).thenReturn(Optional.of(visit));
 
         // When
         visitService.addNoteToVisit(visitId, note);
 
         // Then
         assertEquals(note, visit.getNote());  // Make sure the note was set in the visit
-        InOrder inOrder = Mockito.inOrder(visitDAO);
-        inOrder.verify(visitDAO).saveVisit(visit);
+        InOrder inOrder = Mockito.inOrder(visitRepository);
+        inOrder.verify(visitRepository).saveVisit(visit);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class VisitServiceTest {
         Integer visitId = 5;
         Note note = DomainFixtures.someNote();
 
-        Mockito.when(visitDAO.findVisitById(visitId)).thenReturn(Optional.empty());
+        Mockito.when(visitRepository.findVisitById(visitId)).thenReturn(Optional.empty());
 
         // when, then
         assertThrows(NotFoundException.class, () -> visitService.addNoteToVisit(visitId, note));
@@ -85,7 +85,7 @@ public class VisitServiceTest {
         LocalTime startTime = LocalTime.of(9, 0);
         LocalTime endTime = LocalTime.of(10, 0);
 
-        Mockito.when(visitDAO.saveVisit(Mockito.any(Visit.class))).thenAnswer(a -> a.getArgument(0));
+        Mockito.when(visitRepository.saveVisit(Mockito.any(Visit.class))).thenAnswer(a -> a.getArgument(0));
 
         // When
         Visit createdVisit = visitService.makeVisit(patient, doctor, day, startTime, endTime);
@@ -114,7 +114,7 @@ public class VisitServiceTest {
         List<Visit> conflictingVisits = List.of(DomainFixtures.someVisit());
 
 
-        Mockito.when(visitDAO.findConflictingVisits(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
+        Mockito.when(visitRepository.findConflictingVisits(Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenReturn(conflictingVisits);
 
         // When, Then

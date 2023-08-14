@@ -1,6 +1,6 @@
 CREATE TABLE app_user (
     user_id            SERIAL       PRIMARY KEY,
-    user_name           VARCHAR(20)  NOT NULL        UNIQUE,
+    user_name          VARCHAR(20)  NOT NULL        UNIQUE,
     password           VARCHAR(256) NOT NULL,
     email              VARCHAR(32)  NOT NULL        UNIQUE,
     active             BOOLEAN      NOT NULL,

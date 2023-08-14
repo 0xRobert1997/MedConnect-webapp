@@ -19,6 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -29,19 +30,7 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-/*    @Bean
-    public AuthenticationManager authManager(
-            HttpSecurity http,
-            PasswordEncoder passwordEncoder,
-            UserDetailsService userDetailService
-    )
-            throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .build();
-    }*/
+
     @Bean
     public AuthenticationManager authenticationManager(
             HttpSecurity http,
@@ -62,21 +51,23 @@ public class SecurityConfiguration {
         CookieClearingLogoutHandler cookies = new CookieClearingLogoutHandler("JSESSIONID");
 
         return http
-                .authorizeHttpRequests(auth -> {
-                            auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
-                            auth.requestMatchers(
-                                    "/static/**", "/home", "/register", "/ourdoctors")
-                                    .permitAll();
-                            auth.requestMatchers("/doctor").hasRole("DOCTOR");
-                            auth.requestMatchers("/patient").hasRole("PATIENT");
-                            auth.anyRequest().permitAll();
 
+                .authorizeHttpRequests(auth -> {
+                           auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
+                            auth.requestMatchers(
+                                    "/static/**", "/home", "/register", "/ourdoctors").permitAll();
+                    auth.requestMatchers(antMatcher("/medconnect/patient/**")).hasRole("PATIENT");
+
+                    auth.requestMatchers(antMatcher("medconnect/doctor/**")).hasRole("DOCTOR");
+                            auth.anyRequest().permitAll();
                         })
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessUrl("/home"))
                 .logout((logout) -> logout.addLogoutHandler(cookies))
+                .exceptionHandling((exceptionHandling) -> exceptionHandling
+                        .accessDeniedPage("/access-denied"))
                 .build();
     }
 

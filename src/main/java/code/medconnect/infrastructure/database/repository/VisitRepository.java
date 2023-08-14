@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
-public class VisitDAO implements code.medconnect.business.dao.VisitDAO {
+public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
 
     private final VisitJpaRepository visitJpaRepository;
     private final DoctorJpaRepository doctorJpaRepository;
@@ -49,6 +49,15 @@ public class VisitDAO implements code.medconnect.business.dao.VisitDAO {
     @Override
     public List<Visit> findVisitByPatientPesel(String patientPesel) {
         List<VisitEntity> visits = visitJpaRepository.findVisitByPatientPesel(patientPesel);
+        return visits
+                .stream()
+                .map(visitEntityMapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<Visit> findVisitByDoctorEmail(String doctorEmail) {
+        List<VisitEntity> visits = visitJpaRepository.findVisitByDoctorEmail(doctorEmail);
         return visits
                 .stream()
                 .map(visitEntityMapper::map)
