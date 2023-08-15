@@ -6,5 +6,5 @@ import java.util.Set;
 
 public interface DoctorAvailabilityDAO {
 
-    Set<DoctorAvailability> findByDoctorEmail(final String doctorEmail);
+  //  Set<DoctorAvailability> findByDoctorEmail(final String doctorEmail);
 }

@@ -8,5 +8,5 @@ import java.util.Set;
 
 @Repository
 public interface DoctorAvailabilityJpaRepository extends JpaRepository<DoctorAvailabilityEntity, Integer> {
-    Set<DoctorAvailabilityEntity> findByDoctorEmail(String email);
+  //  Set<DoctorAvailabilityEntity> findByDoctorEmail(String email);
 }

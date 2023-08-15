@@ -17,11 +17,11 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
     private final DoctorAvailabilityJpaRepository doctorAvailabilityJpaRepository;
     private final DoctorAvailabilityEntityMapper doctorAvailabilityEntityMapper;
 
-    @Override
+/*    @Override
     public Set<DoctorAvailability> findByDoctorEmail(String email) {
         return doctorAvailabilityJpaRepository.findByDoctorEmail(email)
                 .stream()
                 .map(doctorAvailabilityEntityMapper::map)
                 .collect(Collectors.toSet());
-    }
+    }*/
 }

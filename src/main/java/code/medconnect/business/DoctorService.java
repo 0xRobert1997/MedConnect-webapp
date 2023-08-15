@@ -41,16 +41,27 @@ public class DoctorService {
     }
 
     @Transactional
-    public void saveAvailAbility(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {
-        DoctorAvailability doctorAvailability = DoctorAvailability.builder()
-                .doctor(doctor)
+    public void saveAvailAbility(DoctorDTO doctorDTO, LocalDate day, LocalTime startTime, LocalTime endTime) {
+       /* DoctorAvailability doctorAvailability = DoctorAvailability.builder()
+                .doctor(doctorMapper.map(doctorDTO))
                 .day(day)
                 .startTime(startTime)
                 .endTime(endTime)
                 .build();
-        doctorDAO.saveAvailability(doctorAvailability);
+        doctorDAO.saveAvailability(doctorAvailability);*/
+
+        Set<DoctorAvailability> availabilities = doctorDTO.getAvailabilities();
+        availabilities.add(DoctorAvailability.builder()
+                        .doctorId(doctorDTO.getDoctorId())
+                        .day(day)
+                        .startTime(startTime)
+                        .endTime(endTime)
+                .build());
+        doctorDAO.saveDoctor(doctorMapper.map(doctorDTO));
 
     }
+
+
     @Transactional
     public void deleteAvailAbility(DoctorAvailability doctorAvailability) {
         doctorDAO.deleteAvailability(doctorAvailability);

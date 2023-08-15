@@ -20,6 +20,7 @@ public class Doctor {
     String phone;
     String email;
     byte[] photoData;
+    String base64Image;
     Address address;
     Set<DoctorAvailability> availabilities;
     Set<Visit> visits;

@@ -10,6 +10,7 @@ import java.time.LocalTime;
 @Setter
 @With
 @Builder
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -21,9 +22,13 @@ public class DoctorAvailabilityEntity {
     @Column(name = "doctor_availability_id")
     private Integer doctorAvailabilityId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+/*    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id", nullable = false)
-    private DoctorEntity doctor;
+    private DoctorEntity doctor;*/
+
+
+    @Column(name = "doctor_id", nullable = false)
+    private Integer doctorId;
 
     @Column(name = "day", nullable = false)
     private LocalDate day;

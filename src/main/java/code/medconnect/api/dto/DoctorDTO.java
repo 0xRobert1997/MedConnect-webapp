@@ -17,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class DoctorDTO {
 
+    Integer doctorId;
     String name;
     String surname;
     String specialization;

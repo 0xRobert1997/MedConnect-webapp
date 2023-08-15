@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 @Slf4j
 @Service
@@ -30,12 +31,18 @@ public class VisitService {
         log.info("Canceled visit with id: [{}]", visitId);
     }
     @Transactional
-    public void addNoteToVisit(Integer visitId, Note note) {
+    public void addNoteToVisit(Integer visitId, String noteContent) {
+
         Visit visit = visitDAO.findVisitById(visitId)
                 .orElseThrow(() -> new NotFoundException("Visit with ID " + visitId + " not found"));
 
-        note.setVisit(visit);
-        visit.setNote(note);
+        Note.builder()
+                .visit(visit)
+                .noteContent(noteContent)
+                .dateTime(OffsetDateTime.now())
+                .build();
+/*        note.setVisit(visit);
+        visit.setNote(note);*/
         log.info("Added note to visit with id: [{}]", visitId);
         visitDAO.saveVisit(visit);
     }

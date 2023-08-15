@@ -5,6 +5,7 @@ import code.medconnect.api.dto.VisitDTO;
 import code.medconnect.business.DoctorService;
 import code.medconnect.business.VisitService;
 import code.medconnect.domain.Doctor;
+import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @AllArgsConstructor
@@ -57,25 +59,21 @@ public class DoctorController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime
     ) {
         DoctorDTO doctorDTO = doctorService.findByEmail(doctorEmail);
-
-        //doctorService.saveAvailAbility();
+        doctorService.saveAvailAbility(doctorDTO, date, startTime, endTime);
 
         return "redirect:/doctor";
     }
 
 
 
-
-
-
-
     @PostMapping("/doctor/add-note")
     public String addNoteToVisit(
             @RequestParam String doctorEmail,
-            @RequestParam Long visitId,
-            @RequestParam String note
+            @RequestParam Integer visitId,
+            @RequestParam String noteContent
     ) {
-
+        DoctorDTO doctorDTO = doctorService.findByEmail(doctorEmail);
+        visitService.addNoteToVisit(visitId, noteContent);
 
         return "redirect:/doctor";
     }
