@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface DoctorDAO {
 
-    Optional<Doctor> findByEmail(String email);
+    Doctor findByEmail(String email);
 
     void saveAvailability(DoctorAvailability doctorAvailability);
 

@@ -78,6 +78,7 @@ public class DoctorController {
         return "redirect:/doctor";
     }
 
+
     @PostMapping("/doctor/check-patient")
     public String checkPatient(@RequestParam String patientPesel, Model model) {
 

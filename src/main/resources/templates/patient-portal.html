@@ -42,8 +42,28 @@
         </tbody>
     </table>
 
-    <a th:href="@{/new-visit}" class="btn btn-success">Make new visit</a>
-    <a th:href="@{/}" class="btn btn-primary">Go back</a>
+    <h2>Choose a Doctor</h2>
+    <<form th:action="@{/new-visit}" method="get">
+    <label for="doctor">Select Doctor:</label>
+    <select id="doctor" name="doctorEmail" required>
+        <option th:each="doctor : ${doctors}"
+                th:value="${doctor.email}"
+                th:text="${doctor.name + ' ' + doctor.surname}">
+        </option>
+    </select>
+    <br>
+
+    <input type="hidden" name="patientEmail" th:value="${patientDTO.email}" />
+
+    <button type="submit" class="btn btn-primary">New Visit</button>
+</form>
+
+
+    <div class="row mt-3">
+        <div class="col-md-12 text-center">
+            <a th:href="@{/patient}" class="btn btn-info" role="button">Go back</a>
+        </div>
+    </div>
 </div>
 </body>
 

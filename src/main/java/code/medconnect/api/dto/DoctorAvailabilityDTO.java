@@ -17,7 +17,6 @@ import java.time.LocalTime;
 public class DoctorAvailabilityDTO {
 
     Integer doctorAvailabilityId;
-  //  DoctorDTO doctor;
     Integer doctorId;
     LocalDate day;
     LocalTime startTime;

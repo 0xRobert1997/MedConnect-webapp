@@ -28,8 +28,11 @@ public class DoctorRepository implements DoctorDAO {
     private final DoctorAvailabilityEntityMapper doctorAvailabilityEntityMapper;
 
     @Override
-    public Optional<Doctor> findByEmail(String email) {
-        return doctorJpaRepository.findByEmail(email).map(doctorEntityMapper::map);
+    public Doctor findByEmail(String email) {
+
+        Optional<Doctor> doctorOpt = doctorJpaRepository.findByEmail(email).map(doctorEntityMapper::map);
+        Doctor doctor = doctorOpt.orElseThrow(() -> new NotFoundException("Doctor with email: " + email + " does not exist"));
+        return doctor;
     }
 
     @Override

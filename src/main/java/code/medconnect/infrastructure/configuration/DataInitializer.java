@@ -1,10 +1,9 @@
 package code.medconnect.infrastructure.configuration;
 
+import code.medconnect.api.dto.DoctorDTO;
+import code.medconnect.business.DoctorService;
 import code.medconnect.domain.*;
-import code.medconnect.infrastructure.database.repository.DoctorRepository;
-import code.medconnect.infrastructure.database.repository.NoteRepository;
-import code.medconnect.infrastructure.database.repository.PatientRepository;
-import code.medconnect.infrastructure.database.repository.VisitRepository;
+import code.medconnect.infrastructure.database.repository.*;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserEntity;
 import code.medconnect.security.AppUserRepository;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -35,6 +35,8 @@ public class DataInitializer implements CommandLineRunner {
     private final VisitRepository visitRepository;
     private final NoteRepository noteRepository;
 
+    private final DoctorAvailabilityRepository doctorAvailabilityRepository;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -47,9 +49,51 @@ public class DataInitializer implements CommandLineRunner {
         initializePatients(userPatient1Id, userPatient2Id);
         initializeDoctors(userDoctor1Id, userDoctor2Id);
 
+        initializeAvailabilities();
 
 
 
+
+
+    }
+    private void initializeAvailabilities() {
+        doctorRepository.saveAvailability(someAvailability1());
+        doctorRepository.saveAvailability(someAvailability2());
+        doctorRepository.saveAvailability(someAvailability3());
+        doctorRepository.saveAvailability(someAvailability4());
+    }
+
+    private DoctorAvailability someAvailability1() {
+        return DoctorAvailability.builder()
+                .doctorId(1)
+                .day(LocalDate.of(2023, 9, 15))
+                .startTime(LocalTime.of(8,0))
+                .endTime(LocalTime.of(16,0))
+                .build();
+    }
+    private DoctorAvailability someAvailability2() {
+        return DoctorAvailability.builder()
+                .doctorId(1)
+                .day(LocalDate.of(2023, 9, 16))
+                .startTime(LocalTime.of(8,0))
+                .endTime(LocalTime.of(16,0))
+                .build();
+    }
+    private DoctorAvailability someAvailability3() {
+        return DoctorAvailability.builder()
+                .doctorId(2)
+                .day(LocalDate.of(2023, 9, 14))
+                .startTime(LocalTime.of(8,0))
+                .endTime(LocalTime.of(16,0))
+                .build();
+    }
+    private DoctorAvailability someAvailability4() {
+        return DoctorAvailability.builder()
+                .doctorId(2)
+                .day(LocalDate.of(2023, 9, 18))
+                .startTime(LocalTime.of(8,0))
+                .endTime(LocalTime.of(16,0))
+                .build();
     }
 
 

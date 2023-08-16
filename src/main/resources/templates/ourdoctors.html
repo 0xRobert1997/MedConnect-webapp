@@ -20,19 +20,15 @@
         .doctors-container {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap; /* Pozwala na przenoszenie do następnego wiersza */
+            flex-wrap: wrap;
         }
 
         .object-item {
             text-align: center;
-            margin: 0 40px 20px; /* Dodatkowy margines dolny */
+            margin: 0 40px 20px;
         }
 
-        /* Styl dla przycisku "Go Back" */
-        .go-back {
-            margin-top: 20px;
-            text-align: center;
-        }
+
 
     </style>
 </head>
@@ -52,11 +48,15 @@
         </div>
     </div>
 </div>
-<div class="go-back">
+
     <p>
-        <a th:href="@{/}" class="btn btn-info" role="button">Go back</a>
+    <div class="row mt-3">
+        <div class="col-md-12 text-center">
+            <a th:href="@{/patient}" class="btn btn-info" role="button">Go back</a>
+        </div>
+    </div>
     </p>
-</div>
+
 
 </body>
 

@@ -13,7 +13,6 @@ import java.time.LocalTime;
 public class DoctorAvailability {
 
     Integer doctorAvailabilityId;
- //   Doctor doctor;
     Integer doctorId;
     LocalDate day;
     LocalTime startTime;

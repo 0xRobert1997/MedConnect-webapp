@@ -8,8 +8,8 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
           crossorigin="anonymous">
     <style>
-        .short-input {
-            width: 150px;
+         .short-input-group {
+            width: 50%;
         }
     </style>
     <title>Register</title>
@@ -19,62 +19,62 @@
 <div class="container">
     <h1>Register</h1>
     <form th:action="@{/register}" method="post">
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" name="username" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">Surname</label>
             <input type="text" class="form-control" id="surname" name="surname" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">Pesel</label>
             <input type="text" class="form-control" id="pesel" name="pesel" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">Email</label>
             <input type="text" class="form-control" id="email" name="email" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">Phone number</label>
             <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="dateOfBirth" class="form-label">Date of Birth</label>
             <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">Country</label>
             <input type="text" class="form-control" id="country" name="country" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">City</label>
             <input type="text" class="form-control" id="city" name="city" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">Postal code</label>
             <input type="text" class="form-control" id="postalCode" name="postalCode" required>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3 short-input-group">
             <label for="surname" class="form-label">Street and number of building</label>
             <input type="text" class="form-control" id="address" name="address" required size="10">
         </div>
