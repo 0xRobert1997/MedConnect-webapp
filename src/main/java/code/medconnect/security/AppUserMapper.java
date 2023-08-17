@@ -8,6 +8,7 @@ import org.mapstruct.ReportingPolicy;
 public interface AppUserMapper {
 
     AppUser map(final AppUserDTO appUserDTO);
+
     @Mapping(target = "active", constant = "true")
     AppUserEntity map(final AppUser appUser);
 

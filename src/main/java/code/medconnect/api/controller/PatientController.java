@@ -8,15 +8,10 @@ import code.medconnect.business.DoctorService;
 import code.medconnect.business.PaginationService;
 import code.medconnect.business.PatientService;
 import code.medconnect.business.VisitService;
-import code.medconnect.domain.Doctor;
-import code.medconnect.domain.DoctorAvailability;
-import code.medconnect.domain.Visit;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +20,6 @@ import java.security.Principal;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -45,9 +39,9 @@ public class PatientController {
         String username = principal.getName();
         AppUser appUser = appUserService.findByUsername(username);
         String userEmail = appUser.getEmail();
-        PatientDTO patientDTO = patientService.findByEmail(userEmail);
-        List<VisitDTO> patientsVisits = patientService.getPatientsVisits(patientDTO.getPesel());
-        Set<Doctor> doctors = doctorService.findAllDoctors();
+        PatientDTO patientDTO = patientService.findPatientByEmail(userEmail);
+        List<VisitDTO> patientsVisits = visitService.getPatientsVisits(patientDTO.getPesel());
+        Set<DoctorDTO> doctors = doctorService.findAllDoctors();
 
         model.addAttribute("patientDTO", patientDTO);
         model.addAttribute("visitHistory", patientsVisits);
@@ -60,26 +54,24 @@ public class PatientController {
     public String newVisitPage(
             Model model,
             @RequestParam(defaultValue = "0") int page,
-            @ModelAttribute("patientEmail") String patientEmail,
-            @ModelAttribute("doctorEmail") String doctorEmail
+            @ModelAttribute("patientId") Integer patientId,
+            @ModelAttribute("doctorId") Integer doctorId
     ) {
-        PatientDTO patientDTO = patientService.findByEmail(patientEmail);
         int pageSize = 1;
 
-        Page<DoctorAvailabilityDTO> doctorAvailabilityPage = paginationService.paginate(page, pageSize, doctorEmail);
+        Page<DoctorAvailabilityDTO> doctorAvailabilityPage = paginationService.paginate(page, pageSize, doctorId);
         List<LocalTime> availableTimes = getAvailableTimeFrames();
 
         model.addAttribute("doctorAvailabilities", doctorAvailabilityPage.getContent());
         model.addAttribute("doctorAvailabilityPage", doctorAvailabilityPage);
-        model.addAttribute("patientDTO", patientDTO);
-        model.addAttribute("doctorEmail", doctorEmail);
+        model.addAttribute("patientId", patientId);
+        model.addAttribute("doctorId", doctorId);
         model.addAttribute("availableTimes", availableTimes);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", doctorAvailabilityPage.getTotalPages());
 
         return "new-visit";
     }
-
 
 
     List<LocalTime> getAvailableTimeFrames() {

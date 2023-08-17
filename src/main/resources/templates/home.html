@@ -12,14 +12,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            background-image: url('/images/medical-banner.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
         }
-
         .center {
             flex: 1;
             display: flex;
@@ -27,7 +20,16 @@
             justify-content: center;
             align-items: center;
         }
-
+         .top-right-links {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .top-right-links a {
+            display: block;
+            margin-bottom: 5px;
+            margin-right: 50px;
+        }
         .footer {
             text-align: center;
             padding: 10px;
@@ -39,11 +41,14 @@
 </head>
 
 <body>
+<div class="top-right-links">
+    <a th:href="@{/register}" class="btn btn-primary mb-2">Register</a>
+    <a th:href="@{/login}" class="btn btn-primary mb-2">Login</a>
+    <a th:href="@{/logout}" class="btn btn-primary mb-2">Logout</a>
+</div>
 <div class="center">
     <h1>Welcome to MedConnect!</h1>
     <div class="text-end mt-4">
-        <a th:href="@{/register}" class="btn btn-primary mb-2 d-block">Register</a>
-        <a th:href="@{/login}" class="btn btn-primary mb-2 d-block">Login</a>
         <a th:href="@{/patient}" class="btn btn-primary mb-2 d-block">Patients portal</a>
         <a th:href="@{/doctor}" class="btn btn-primary mb-2 d-block">Doctors portal</a>
         <a th:href="@{/ourdoctors}" class="btn btn-info d-block">Our Doctors</a>

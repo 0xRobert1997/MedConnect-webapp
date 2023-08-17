@@ -1,11 +1,7 @@
 package code.medconnect.api.controller;
 
 import code.medconnect.domain.exception.NotFoundException;
-import code.medconnect.domain.exception.VisitInTakenTimePeriodException;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -15,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.nio.file.AccessDeniedException;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -58,7 +53,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ModelAndView handleAccessDeniedException(AccessDeniedException ex) {
-        String message ="Access denied!";
+        String message = "Access denied!";
         log.error(message, ex);
         ModelAndView modelView = new ModelAndView("error");
         modelView.addObject("errorMessage", message);

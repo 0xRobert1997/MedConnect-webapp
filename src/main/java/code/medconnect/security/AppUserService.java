@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
-
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -16,7 +14,7 @@ public class AppUserService {
 
 
     @Transactional
-    public AppUser createUser(AppUser appUser){
+    public AppUser createUser(AppUser appUser) {
         AppUserEntity appUserEntity = appUserMapper.map(appUser);
         AppUserEntity saved = appUserRepository.save(appUserEntity);
         AppUser savedAppUser = appUserMapper.map(saved);

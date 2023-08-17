@@ -17,12 +17,12 @@ public class PaginationService {
     private final DoctorAvailabilityDAO doctorAvailabilityDAO;
 
 
-    public Page<DoctorAvailabilityDTO> paginate(int pageNumber, int pageSize, String doctorEmail) {
+    public Page<DoctorAvailabilityDTO> paginate(int pageNumber, int pageSize, Integer doctorId) {
         Sort sort = Sort.by("day").ascending()
                 .and(Sort.by("startTime").ascending());
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        return doctorAvailabilityDAO.getDoctorAvailabilityPage(doctorEmail, pageable);
+        return doctorAvailabilityDAO.getDoctorAvailabilityPage(doctorId, pageable);
     }
 
 }

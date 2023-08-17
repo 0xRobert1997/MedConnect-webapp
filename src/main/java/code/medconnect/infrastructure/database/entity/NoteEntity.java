@@ -26,6 +26,7 @@ public class NoteEntity {
     @Column(name = "date_time")
     private OffsetDateTime dateTime;
 
-    @OneToOne(mappedBy = "note", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "visit_id")
     private VisitEntity visit;
 }

@@ -10,8 +10,7 @@ import java.util.Optional;
 
 public interface VisitDAO {
 
-    List<Visit> findVisitByPatientPesel(String patientPesel);
-    List<Visit> findVisitByDoctorEmail(String doctorEmail);
+    List<Visit> findVisitsByDoctorId(Integer doctorId);
 
     Visit saveVisit(Visit visit);
 
@@ -23,4 +22,10 @@ public interface VisitDAO {
     void cancelVisit(Visit visit);
 
     List<Visit> findConflictingVisits(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime);
+
+    List<Visit> findByPatientId(Integer patientId);
+
+    List<Visit> findByDoctorId(Integer doctorId);
+
+    Visit findVisitWithNotes(Integer visitId);
 }

@@ -1,6 +1,5 @@
 package code.medconnect.api.dto;
 
-import code.medconnect.domain.Visit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +16,6 @@ public class NoteDTO {
     Integer noteId;
     String noteContent;
     OffsetDateTime dateTime;
-    Visit visit;
+    VisitDTO visit;
 
 }

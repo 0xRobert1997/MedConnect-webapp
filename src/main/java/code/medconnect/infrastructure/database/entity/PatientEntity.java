@@ -46,15 +46,16 @@ public class PatientEntity {
     @Column(name = "photo_data", columnDefinition = "bytea")
     private byte[] photoData;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "patient_id")
     private Set<VisitEntity> visits;
 
 
-    @OneToMany(mappedBy = "patient",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private Set<DiseaseEntity> diseases;
 
     @ManyToOne(fetch = FetchType.LAZY)

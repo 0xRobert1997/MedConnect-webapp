@@ -1,6 +1,6 @@
 package code.medconnect.infrastructure.database.repository.jpa;
 
-import code.medconnect.infrastructure.database.entity.DoctorEntity;
+import code.medconnect.domain.Visit;
 import code.medconnect.infrastructure.database.entity.VisitEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,7 +15,12 @@ import java.util.List;
 public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> {
 
 
-    List<VisitEntity> findByDoctorAndDay(DoctorEntity doctor, LocalDate day);
+    List<VisitEntity> findByDoctorIdAndDay(Integer doctorId, LocalDate day);
+
+    List<VisitEntity> findByPatientId(Integer patientId);
+
+    @Query("SELECT v FROM VisitEntity v WHERE v.doctorId = :doctorId")
+    List<VisitEntity> findVisitByDoctorId(Integer doctorId);
 
     @Query("""
             UPDATE VisitEntity vst
@@ -25,20 +30,12 @@ public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> 
     @Modifying(clearAutomatically = true)
     void cancelVisitById(@Param("visitId") Integer visitId);
 
-    @Query("""
-            SELECT visit
-            FROM VisitEntity visit
-            WHERE visit.patient.pesel = :pesel
-            """)
-    @Modifying(clearAutomatically = true)
-    List<VisitEntity> findVisitByPatientPesel(@Param("pesel") String pesel);
-
 
     @Query("""
-            SELECT visit
-            FROM VisitEntity visit
-            WHERE visit.doctor.email = :email
+            SELECT v
+            FROM VisitEntity v
+            JOIN FETCH v.notes
+            WHERE v.visitId = :visitId
             """)
-    @Modifying(clearAutomatically = true)
-    List<VisitEntity> findVisitByDoctorEmail(@Param("email") String doctorEmail);
+    VisitEntity findVisitWithNotes(@Param("visitId") Integer visitId);
 }

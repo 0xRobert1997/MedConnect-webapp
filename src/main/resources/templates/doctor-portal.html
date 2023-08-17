@@ -18,7 +18,7 @@
     <p><strong>Phone:</strong> <span th:text="${doctorDTO.phone}"></span></p>
     <p><strong>Email:</strong> <span th:text="${doctorDTO.email}"></span></p>
 
-    <h2>Visit History</h2>
+    <h2>Visits </h2>
     <table class="table">
         <thead>
         <tr>
@@ -26,16 +26,14 @@
             <th>Start time</th>
             <th>End time</th>
             <th>Patient</th>
-            <th>Notes</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="visit : ${visits}">
-            <td th:text="${visit.day}"></td>
-            <td th:text="${visit.startTime}"></td>
-            <td th:text="${visit.endTime}"></td>
-            <td th:text="${visit.patientName}"></td>
-            <td th:text="${visit.note}"></td>
+        <tr th:each="entry : ${visits.entrySet()}">
+            <td th:text="${entry.key.day}"></td>
+            <td th:text="${entry.key.startTime}"></td>
+            <td th:text="${entry.key.endTime}"></td>
+            <td th:text="${entry.value.name + ' ' + entry.value.surname}"></td>
         </tr>
         </tbody>
     </table>
@@ -44,19 +42,19 @@
     <form th:action="@{/doctor/add-note}" method="post">
         <input type="hidden" name="doctorEmail" th:value="${doctorDTO.email}" />
         <select name="visitId">
-            <option th:each="visit : ${visitHistory}" th:value="${visit.id}" th:text="${visit.day + ' ' + visit.startTime}"></option>
+            <option th:each="entry : ${visits}" th:value="${entry.key.visitId}" th:text="${entry.key.day + ' ' + entry.key.startTime}"></option>
         </select>
-        <textarea name="note" rows="4" cols="50" placeholder="Add a note"></textarea>
+        <textarea name="noteContent" rows="4" cols="50" placeholder="Add a note"></textarea>
         <button type="submit" class="btn btn-primary">Add Note</button>
     </form>
 
-    <h2>Check Patient and Medical History</h2>
+    <h2>Check Patient and Diseases History</h2>
     <form th:action="@{/doctor/check-patient}" method="post">
         <input type="text" name="patientPesel" placeholder="Patient PESEL" />
         <button type="submit" class="btn btn-primary">Check Patient</button>
     </form>
 
-    <h2>Add Availability</h2>
+    <h2>Add Your Availability!</h2>
     <form th:action="@{/doctor/add-availability}" method="post">
         <input type="hidden" name="doctorEmail" th:value="${doctorDTO.email}" />
 

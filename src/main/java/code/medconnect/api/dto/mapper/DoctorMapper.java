@@ -11,9 +11,8 @@ public interface DoctorMapper {
     @Mapping(target = "base64Image", ignore = true)
     DoctorDTO map(final Doctor doctor);
 
-   // @Mapping(target = "base64Image", ignore = true)
+    // @Mapping(target = "base64Image", ignore = true)
     Doctor map(final DoctorDTO doctorDTO);
-
 
 
 }

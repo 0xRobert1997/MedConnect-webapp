@@ -9,8 +9,9 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface DoctorEntityMapper {
 
-  //  @Mapping(target = "appUser", ignore = true)
+    @Mapping(target = "visits", ignore = true)
     Doctor map(DoctorEntity doctorEntity);
+
     DoctorEntity map(Doctor doctorEntity);
 
 

@@ -15,26 +15,26 @@ public class SpringDocConfiguration {
     @Bean
     public GroupedOpenApi groupedOpenApi() {
         return GroupedOpenApi.builder()
-            .group("default")
-            .pathsToMatch("/**")
-            .packagesToScan(MedConnectApp.class.getPackageName())
-            .build();
+                .group("default")
+                .pathsToMatch("/**")
+                .packagesToScan(MedConnectApp.class.getPackageName())
+                .build();
     }
 
     @Bean
     public OpenAPI springDocOpenApi() {
         return new OpenAPI()
-            .components(new Components())
-            .info(new Info()
-                .title("MedConnect app")
-                .contact(contact())
-                .version("6.9"));
+                .components(new Components())
+                .info(new Info()
+                        .title("MedConnect app")
+                        .contact(contact())
+                        .version("6.9"));
     }
 
     private Contact contact() {
         return new Contact()
-            .name("Robert")
-            .url("https://github.com/0xRobert1997")
-            .email("robert.jezierski@protonmail.com");
+                .name("Robert")
+                .url("https://github.com/0xRobert1997")
+                .email("robert.jezierski@protonmail.com");
     }
 }

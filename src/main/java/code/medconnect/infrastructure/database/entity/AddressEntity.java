@@ -30,6 +30,4 @@ public class AddressEntity {
     private String address;
 
 
-
-
 }

@@ -1,14 +1,16 @@
 package code.medconnect.business.dao;
 
 import code.medconnect.domain.Note;
-import code.medconnect.domain.Visit;
+import code.medconnect.infrastructure.database.entity.NoteEntity;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface NoteDAO {
 
 
-    Note saveNote(Note note, Visit visit);
+    Note saveNote(Note note);
 
-    Optional<Note> findNoteByVisitId(Integer visitId);
+    Optional<List<NoteEntity>> findNoteByVisitId(Integer visitId);
 }

@@ -19,5 +19,4 @@ public class DoctorAvailability {
     LocalTime endTime;
 
 
-
 }

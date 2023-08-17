@@ -2,10 +2,8 @@ package code.medconnect.infrastructure.database.repository;
 
 import code.medconnect.api.dto.DoctorAvailabilityDTO;
 import code.medconnect.api.dto.mapper.DoctorAvailabilityMapper;
-import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.business.dao.DoctorAvailabilityDAO;
 import code.medconnect.domain.DoctorAvailability;
-import code.medconnect.domain.exception.NotFoundException;
 import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorAvailabilityJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
@@ -18,8 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -40,10 +36,7 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
     }
 
     @Override
-    public Page<DoctorAvailabilityDTO> getDoctorAvailabilityPage(String doctorEmail, Pageable pageable) {
-        Integer doctorId = doctorJpaRepository.findByEmail(doctorEmail)
-                .orElseThrow(() -> new NotFoundException("Doctor with email: " + doctorEmail + "not found"))
-                .getDoctorId();
+    public Page<DoctorAvailabilityDTO> getDoctorAvailabilityPage(Integer doctorId, Pageable pageable) {
 
         Page<DoctorAvailabilityEntity> availabilityPage
                 = doctorAvailabilityJpaRepository.findAllByDoctorId(doctorId, pageable);

@@ -9,5 +9,6 @@ import org.mapstruct.ReportingPolicy;
 public interface NoteEntityMapper {
 
     Note map(NoteEntity noteEntity);
+
     NoteEntity map(Note noteEntity);
 }

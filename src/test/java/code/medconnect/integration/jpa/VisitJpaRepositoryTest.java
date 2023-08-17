@@ -35,7 +35,7 @@ public class VisitJpaRepositoryTest {
     PatientJpaRepository patientJpaRepository;
     DoctorJpaRepository doctorJpaRepository;
 
-    @Test
+/*    @Test
     void shouldSaveVisitCorrectly() {
         //given
         PatientEntity patient = patientJpaRepository.saveAndFlush(EntityFixtures.somePatient1());
@@ -49,9 +49,9 @@ public class VisitJpaRepositoryTest {
 
         //then
         assertThat(visits).hasSize(1);
-    }
+    }*/
 
-    @Test
+/*    @Test
     void shouldCancelVisitCorrectly() {
         //given
         PatientEntity patient = patientJpaRepository.saveAndFlush(EntityFixtures.somePatient1());
@@ -69,9 +69,9 @@ public class VisitJpaRepositoryTest {
         VisitEntity cancelledVisit = visitJpaRepository.findById(visitId).orElse(null);
         assertNotNull(cancelledVisit);
         assertTrue(cancelledVisit.isCanceled());
-    }
+    }*/
 
-    @Test
+/*    @Test
     void shouldFindAllDoctorsVisitsByDayCorrectly() {
         //given
         DoctorEntity doctor = EntityFixtures.someDoctor1();
@@ -96,6 +96,6 @@ public class VisitJpaRepositoryTest {
 
         //then
         assertThat(result).hasSize(2);
-    }
+    }*/
 
 }

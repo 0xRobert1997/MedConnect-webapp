@@ -1,8 +1,6 @@
 package code.medconnect.api.dto.mapper;
 
-import code.medconnect.api.dto.AddressDTO;
 import code.medconnect.api.dto.DiseaseDTO;
-import code.medconnect.domain.Address;
 import code.medconnect.domain.Disease;
 import org.mapstruct.Mapper;
 

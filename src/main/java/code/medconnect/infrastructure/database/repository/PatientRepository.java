@@ -3,7 +3,6 @@ package code.medconnect.infrastructure.database.repository;
 import code.medconnect.business.dao.PatientDAO;
 import code.medconnect.domain.Disease;
 import code.medconnect.domain.Patient;
-
 import code.medconnect.domain.exception.NotFoundException;
 import code.medconnect.infrastructure.database.entity.DiseaseEntity;
 import code.medconnect.infrastructure.database.entity.PatientEntity;
@@ -25,13 +24,18 @@ public class PatientRepository implements PatientDAO {
     private final DiseaseEntityMapper diseaseEntityMapper;
 
     @Override
-    public Optional<Patient> findByEmail(String email) {
-        return patientJpaRepository.findByEmail(email).map(patientEntityMapper::map);
+    public Optional<Patient> findPatientWithVisits(Integer patientId) {
+        return patientJpaRepository.findPatientWithVisits(patientId).map(patientEntityMapper::map);
     }
 
     @Override
     public Optional<Patient> findByPesel(String pesel) {
         return patientJpaRepository.findByPesel(pesel).map(patientEntityMapper::map);
+    }
+
+    @Override
+    public Optional<Patient> findByEmail(String email) {
+        return patientJpaRepository.findByEmail(email).map(patientEntityMapper::map);
     }
 
     @Override
@@ -52,15 +56,17 @@ public class PatientRepository implements PatientDAO {
         patientJpaRepository.save(patientEntity);
     }
 
-    public Patient findById(Integer id) {
-        return patientJpaRepository.findById(id)
-                .map(patientEntityMapper::map)
-                .orElseThrow(() -> new NotFoundException("Patient with id: " + id + " not found"));
+    @Override
+    public Optional<Patient> findByPeselWithDiseases(String patientPesel) {
+        patientJpaRepository.findByPeselWithDiseases(patientPesel);
+        return Optional.empty();
     }
 
+    public Optional<Patient> findById(Integer id) {
+        return patientJpaRepository.findById(id)
+                .map(patientEntityMapper::map);
 
-
-
+    }
 
 
 }

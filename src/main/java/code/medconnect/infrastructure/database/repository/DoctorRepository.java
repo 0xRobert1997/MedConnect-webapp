@@ -30,9 +30,10 @@ public class DoctorRepository implements DoctorDAO {
     @Override
     public Doctor findByEmail(String email) {
 
-        Optional<Doctor> doctorOpt = doctorJpaRepository.findByEmail(email).map(doctorEntityMapper::map);
-        Doctor doctor = doctorOpt.orElseThrow(() -> new NotFoundException("Doctor with email: " + email + " does not exist"));
-        return doctor;
+        Optional<Doctor> doctorOpt = doctorJpaRepository.findByEmail(email)
+                .map(doctorEntityMapper::map);
+        return doctorOpt.orElseThrow(
+                () -> new NotFoundException("Doctor with email: " + email + " does not exist"));
     }
 
     @Override
@@ -62,8 +63,8 @@ public class DoctorRepository implements DoctorDAO {
     }
 
     public Doctor findById(Integer id) {
-         return doctorJpaRepository.findById(id)
-                 .map(doctorEntityMapper::map)
-                 .orElseThrow(() -> new NotFoundException("Doctor with id: " + id + " not found"));
+        return doctorJpaRepository.findById(id)
+                .map(doctorEntityMapper::map)
+                .orElseThrow(() -> new NotFoundException("Doctor with id: " + id + " not found"));
     }
 }

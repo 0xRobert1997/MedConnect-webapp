@@ -12,4 +12,12 @@ public interface DoctorJpaRepository extends JpaRepository<DoctorEntity, Integer
     Optional<DoctorEntity> findByEmail(String email);
 
 
+/*    @Query("""
+            SELECT d FROM DoctorEntity d
+            JOIN FETCH d.visits
+            WHERE d.doctorId = :doctorId
+            """)
+    Optional<DoctorEntity> findDoctorWithVisits(@Param("doctorId") Integer doctorId);*/
+
+
 }

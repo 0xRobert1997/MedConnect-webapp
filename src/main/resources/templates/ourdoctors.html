@@ -28,8 +28,6 @@
             margin: 0 40px 20px;
         }
 
-
-
     </style>
 </head>
 
@@ -44,7 +42,7 @@
             <h3 th:text="${doctor.name}"></h3>
             <h3 th:text="${doctor.surname}"></h3>
             <p th:text="${'Specialization: ' + doctor.specialization}"></p>
-            <!-- Pozostałe pola informacji o lekarzu -->
+
         </div>
     </div>
 </div>
@@ -52,7 +50,7 @@
     <p>
     <div class="row mt-3">
         <div class="col-md-12 text-center">
-            <a th:href="@{/patient}" class="btn btn-info" role="button">Go back</a>
+            <a th:href="@{/}" class="btn btn-info" role="button">Go back</a>
         </div>
     </div>
     </p>

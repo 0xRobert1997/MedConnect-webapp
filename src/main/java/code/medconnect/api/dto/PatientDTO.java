@@ -1,8 +1,6 @@
 package code.medconnect.api.dto;
 
 import code.medconnect.domain.Address;
-import code.medconnect.domain.Disease;
-import code.medconnect.domain.Visit;
 import code.medconnect.security.AppUserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +26,8 @@ public class PatientDTO {
     String email;
     byte[] photoData;
     String base64Image;
+    Set<DiseaseDTO> diseases;
+    Set<VisitDTO> visits;
     Address address;
     AppUserDTO appUserDTO;
 

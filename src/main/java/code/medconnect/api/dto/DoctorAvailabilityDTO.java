@@ -1,6 +1,5 @@
 package code.medconnect.api.dto;
 
-import code.medconnect.domain.Doctor;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

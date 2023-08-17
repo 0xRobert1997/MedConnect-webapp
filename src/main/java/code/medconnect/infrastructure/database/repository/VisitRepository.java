@@ -47,20 +47,10 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
 
 
     @Override
-    public List<Visit> findVisitByPatientPesel(String patientPesel) {
-        List<VisitEntity> visits = visitJpaRepository.findVisitByPatientPesel(patientPesel);
-        return visits
+    public List<Visit> findVisitsByDoctorId(Integer doctorId) {
+        return visitJpaRepository.findVisitByDoctorId(doctorId)
                 .stream()
-                .map(visitEntityMapper::map)
-                .toList();
-    }
-
-    @Override
-    public List<Visit> findVisitByDoctorEmail(String doctorEmail) {
-        List<VisitEntity> visits = visitJpaRepository.findVisitByDoctorEmail(doctorEmail);
-        return visits
-                .stream()
-                .map(visitEntityMapper::map)
+                .map(visitEntityMapper::mapWithoutNotes)
                 .toList();
     }
 
@@ -73,9 +63,29 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
     @Override
     public List<Visit> findByDoctorAndDay(Doctor doctor, LocalDate day) {
         DoctorEntity doctorEntity = doctorEntityMapper.map(doctor);
-        return visitJpaRepository.findByDoctorAndDay(doctorEntity, day).stream()
+        return visitJpaRepository.findByDoctorIdAndDay(doctor.getDoctorId(), day).stream()
                 .map(visitEntityMapper::map)
                 .toList();
+    }
+
+    @Override
+    public List<Visit> findByPatientId(Integer patientId) {
+        return visitJpaRepository.findByPatientId(patientId)
+                .stream().map(visitEntityMapper::map)
+                .toList();
+    }
+
+    @Override
+    public List<Visit> findByDoctorId(Integer doctorId) {
+        return visitJpaRepository.findVisitByDoctorId(doctorId)
+                .stream().map(visitEntityMapper::map)
+                .toList();
+    }
+
+    @Override
+    public Visit findVisitWithNotes(Integer visitId) {
+        VisitEntity visitEntity = visitJpaRepository.findVisitWithNotes(visitId);
+        return visitEntityMapper.map(visitEntity);
     }
 
     @Override
@@ -85,8 +95,8 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
         return byDoctorAndDay.stream()
                 .filter(visit ->
                         (endTime.isAfter(visit.getStartTime()) && startTime.isBefore(visit.getEndTime()))
-                        || (startTime.isBefore(visit.getEndTime()) && endTime.isAfter(visit.getStartTime()))
-                        || (startTime.equals(visit.getStartTime()) && endTime.equals(visit.getEndTime())))
+                                || (startTime.isBefore(visit.getEndTime()) && endTime.isAfter(visit.getStartTime()))
+                                || (startTime.equals(visit.getStartTime()) && endTime.equals(visit.getEndTime())))
                 .collect(Collectors.toList());
     }
 

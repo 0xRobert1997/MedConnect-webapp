@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,8 +23,14 @@ public class VisitEntity {
     @Column(name = "visit_id")
     private Integer visitId;
 
+    @Column(name = "patient_id")
+    private Integer patientId;
+
     @Column(name = "day", nullable = false)
     private LocalDate day;
+
+    @Column(name = "doctor_id")
+    private Integer doctorId;
 
     @Column(name = "start_time", nullable = false)
     private LocalTime startTime;
@@ -33,17 +41,10 @@ public class VisitEntity {
     @Column(name = "canceled", nullable = false)
     private boolean canceled;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "note_id")
-    private NoteEntity note;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "patient_id")
-    private PatientEntity patient;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "doctor_id")
-    private DoctorEntity doctor;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "visit_id")
+    private List<NoteEntity> notes;
 
 
 }

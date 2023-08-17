@@ -3,6 +3,7 @@ package code.medconnect.infrastructure.database.entity;
 import code.medconnect.security.AppUserEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.Set;
 
@@ -41,16 +42,18 @@ public class DoctorEntity {
     private byte[] photoData;
 
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "doctor_id")
+    @BatchSize(size = 5)
     private Set<DoctorAvailabilityEntity> availabilities;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_id")
     private Set<VisitEntity> visits;
 
     @ManyToOne(fetch = FetchType.EAGER)

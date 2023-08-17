@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -17,8 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
-import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
-import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
+
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
@@ -37,10 +35,10 @@ public class SecurityConfiguration {
             PasswordEncoder passwordEncoder,
             UserDetailsService userDetailService
     ) throws Exception {
-            var authProvider = new DaoAuthenticationProvider();
-            authProvider.setUserDetailsService(userDetailService);
-            authProvider.setPasswordEncoder(passwordEncoder);
-            return new ProviderManager(authProvider);
+        var authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(authProvider);
     }
 
 
@@ -53,18 +51,18 @@ public class SecurityConfiguration {
         return http
 
                 .authorizeHttpRequests(auth -> {
-                           auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
-                            auth.requestMatchers(
-                                    "/static/**", "/home", "/register", "/ourdoctors").permitAll();
+                    auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
+                    auth.requestMatchers(
+                            "/static/**", "/home", "/register", "/ourdoctors").permitAll();
                     auth.requestMatchers(antMatcher("/medconnect/patient/**")).hasRole("PATIENT");
 
                     auth.requestMatchers(antMatcher("medconnect/doctor/**")).hasRole("DOCTOR");
-                            auth.anyRequest().permitAll();
-                        })
+                    auth.anyRequest().permitAll();
+                })
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
-                .logout(logout -> logout.logoutSuccessUrl("/home"))
+                .logout(logout -> logout.logoutSuccessUrl("/"))
                 .logout((logout) -> logout.addLogoutHandler(cookies))
                 .exceptionHandling((exceptionHandling) -> exceptionHandling
                         .accessDeniedPage("/access-denied"))
@@ -76,10 +74,10 @@ public class SecurityConfiguration {
     SecurityFilterChain securityDisabled(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth ->
-                auth.anyRequest().permitAll())
+                        auth.anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .build();
-        }
+    }
 
 }
 

@@ -22,11 +22,6 @@ public class DoctorAvailabilityEntity {
     @Column(name = "doctor_availability_id")
     private Integer doctorAvailabilityId;
 
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_id", nullable = false)
-    private DoctorEntity doctor;*/
-
-
     @Column(name = "doctor_id", nullable = false)
     private Integer doctorId;
 

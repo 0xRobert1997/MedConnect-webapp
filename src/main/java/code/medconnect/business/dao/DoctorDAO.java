@@ -3,7 +3,6 @@ package code.medconnect.business.dao;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.DoctorAvailability;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface DoctorDAO {
@@ -17,6 +16,8 @@ public interface DoctorDAO {
     Doctor saveDoctor(Doctor doctor);
 
     Set<Doctor> findAll();
+
+    Doctor findById(Integer doctorId);
 
 
 }

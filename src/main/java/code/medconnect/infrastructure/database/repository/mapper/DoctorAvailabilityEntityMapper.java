@@ -9,5 +9,6 @@ import org.mapstruct.ReportingPolicy;
 public interface DoctorAvailabilityEntityMapper {
 
     DoctorAvailability map(DoctorAvailabilityEntity doctorAvailabilityEntity);
+
     DoctorAvailabilityEntity map(DoctorAvailability doctorAvailabilityEntity);
 }
