@@ -12,6 +12,7 @@ import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -34,7 +36,10 @@ public class PatientController {
 
 
     @RequestMapping(value = PATIENT_BASE_PATH, method = RequestMethod.GET)
-    public String PatientPage(Model model, Principal principal) {
+    public String PatientPage(
+            Model model,
+            Principal principal
+    ) {
 
         String username = principal.getName();
         AppUser appUser = appUserService.findByUsername(username);
@@ -57,7 +62,8 @@ public class PatientController {
             @ModelAttribute("patientId") Integer patientId,
             @ModelAttribute("doctorId") Integer doctorId
     ) {
-        int pageSize = 1;
+
+        int pageSize = 2;
 
         Page<DoctorAvailabilityDTO> doctorAvailabilityPage = paginationService.paginate(page, pageSize, doctorId);
         List<LocalTime> availableTimes = getAvailableTimeFrames();

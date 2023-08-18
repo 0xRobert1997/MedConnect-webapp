@@ -49,7 +49,7 @@ public class VisitService {
         Visit visit = visitDAO.findVisitById(visitId)
                 .orElseThrow(() -> new NotFoundException("Visit with ID " + visitId + " not found"));
 
-        visitDAO.findVisitWithNotes(visitId);
+
 
         Note note = Note.builder()
                 .noteContent(noteContent)
@@ -58,8 +58,8 @@ public class VisitService {
 
         note.setVisit(visit);
 
-        visit.getNotes().add(note);
-        visitDAO.saveVisit(visit);
+        noteDAO.saveNote(note);
+
 
         log.info("Added note to visit with id: [{}], noteContent: [{}]", visitId, noteContent);
     }

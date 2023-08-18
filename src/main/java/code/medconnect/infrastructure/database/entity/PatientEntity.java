@@ -3,6 +3,8 @@ package code.medconnect.infrastructure.database.entity;
 import code.medconnect.security.AppUserEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -48,6 +50,7 @@ public class PatientEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
+    @Fetch(value = FetchMode.JOIN)
     private AddressEntity address;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -55,7 +58,8 @@ public class PatientEntity {
     private Set<VisitEntity> visits;
 
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.JOIN)
     private Set<DiseaseEntity> diseases;
 
     @ManyToOne(fetch = FetchType.LAZY)

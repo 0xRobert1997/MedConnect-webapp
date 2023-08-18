@@ -45,13 +45,6 @@ CREATE TABLE doctor_availability (
 );
 
 
-
-CREATE TABLE note (
-    note_id         SERIAL     PRIMARY KEY,
-    note_content    TEXT       NOT NULL,
-    date_time       TIMESTAMP  NOT NULL
-);
-
 CREATE TABLE Visit (
     visit_id            SERIAL      PRIMARY KEY,
     patient_id          INT         NOT NULL,
@@ -60,14 +53,18 @@ CREATE TABLE Visit (
     start_time          TIME        NOT NULL,
     end_time            TIME        NOT NULL,
     canceled            BOOLEAN     NOT NULL    DEFAULT false,
-    note_id             INT,
     FOREIGN KEY (patient_id)
         REFERENCES patient(patient_id),
     FOREIGN KEY (doctor_id)
-        REFERENCES doctor(doctor_id),
-    FOREIGN KEY (note_id)
-        REFERENCES note(note_id)
-
+        REFERENCES doctor(doctor_id)
+);
+CREATE TABLE note (
+    note_id         SERIAL     PRIMARY KEY,
+    note_content    TEXT       NOT NULL,
+    date_time       TIMESTAMP  NOT NULL,
+    visit_id        INT,
+    FOREIGN KEY (visit_id)
+        REFERENCES visit(visit_id)
 );
 
 

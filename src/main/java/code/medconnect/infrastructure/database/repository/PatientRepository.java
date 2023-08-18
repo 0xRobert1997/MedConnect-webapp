@@ -12,6 +12,7 @@ import code.medconnect.infrastructure.database.repository.mapper.PatientEntityMa
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -38,6 +39,12 @@ public class PatientRepository implements PatientDAO {
         return patientJpaRepository.findByEmail(email).map(patientEntityMapper::map);
     }
 
+    public Optional<Patient> findById(Integer id) {
+        return patientJpaRepository.findById(id)
+                .map(patientEntityMapper::map);
+
+    }
+
     @Override
     public Patient savePatient(Patient patient) {
         PatientEntity toSave = patientEntityMapper.map(patient);
@@ -57,16 +64,32 @@ public class PatientRepository implements PatientDAO {
     }
 
     @Override
-    public Optional<Patient> findByPeselWithDiseases(String patientPesel) {
-        patientJpaRepository.findByPeselWithDiseases(patientPesel);
-        return Optional.empty();
+    public Patient findByPeselWithDiseases(String patientPesel) {
+        Optional<PatientEntity> patientEntityOpt = patientJpaRepository.findByPesel(patientPesel);
+
+        if (patientEntityOpt.isPresent()) {
+            return mapWithDiseases(patientEntityOpt.get());
+        } else {
+            throw new NotFoundException("Patient with pesel: " + patientPesel + " doesn't exist");
+        }
     }
 
-    public Optional<Patient> findById(Integer id) {
-        return patientJpaRepository.findById(id)
-                .map(patientEntityMapper::map);
+    private Patient mapWithDiseases(PatientEntity entity) {
+        Set<Disease> mappedDiseases = new HashSet<>();
 
+        for (DiseaseEntity disease : entity.getDiseases()) {
+            Disease mapped = diseaseEntityMapper.map(disease);
+            mappedDiseases.add(mapped);
+        }
+        return  Patient.builder()
+                    .patientId(entity.getPatientId())
+                    .name(entity.getName())
+                    .pesel(entity.getPesel())
+                    .dateOfBirth(entity.getDateOfBirth())
+                    .diseases(mappedDiseases)
+                    .build();
     }
+
 
 
 }

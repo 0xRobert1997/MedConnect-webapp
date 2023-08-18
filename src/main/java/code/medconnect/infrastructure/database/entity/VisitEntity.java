@@ -42,8 +42,7 @@ public class VisitEntity {
     private boolean canceled;
 
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "visit_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "visit", cascade = CascadeType.ALL)
     private List<NoteEntity> notes;
 
 

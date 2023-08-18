@@ -283,7 +283,7 @@ public class DataInitializerFixtures {
 
     static Disease diseaseFixture2() {
         return Disease.builder()
-                .patient(patientFixture2().withPatientId(2))
+                .patient(patientFixture2().withPatientId(1))
                 .diagnosisDate(OffsetDateTime.of(
                         2023, 2, 2, 13, 0, 0, 0, ZoneOffset.UTC))
                 .diseaseName("Nothing scary")
@@ -293,7 +293,7 @@ public class DataInitializerFixtures {
 
     static Disease diseaseFixture3() {
         return Disease.builder()
-                .patient(patientFixture1().withPatientId(1))
+                .patient(patientFixture1().withPatientId(2))
                 .diagnosisDate(OffsetDateTime.of(
                         2023, 7, 7, 12, 0, 0, 0, ZoneOffset.UTC))
                 .diseaseName("Headache")

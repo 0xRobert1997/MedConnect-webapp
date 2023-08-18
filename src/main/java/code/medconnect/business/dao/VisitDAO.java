@@ -27,5 +27,5 @@ public interface VisitDAO {
 
     List<Visit> findByDoctorId(Integer doctorId);
 
-    Visit findVisitWithNotes(Integer visitId);
+
 }

@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
 @Slf4j
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -35,16 +37,16 @@ public class DataInitializer implements CommandLineRunner {
         initializeDoctors();
         initializeAvailabilities();
         initializeVisits();
-        initializeDiseases();
+    //    initializeDiseases();
 
 
     }
 
-    private void initializeDiseases() {
+/*    private void initializeDiseases() {
         diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture1());
         diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture2());
         diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture3());
-    }
+    }*/
 
     private void initializerUsers() {
         appUserRepository.save(DataInitializerFixtures.appUserEntityFixture1());
@@ -79,11 +81,20 @@ public class DataInitializer implements CommandLineRunner {
         patientRepository.savePatient(patient1.withAppUser(
                 AppUser.builder()
                         .id(1)
-                        .build()));
+                        .build())
+                .withDiseases(Set.of(
+                        DataInitializerFixtures.diseaseFixture1(),
+                        DataInitializerFixtures.diseaseFixture2())
+                ));
+
+
         patientRepository.savePatient(patient2.withAppUser(
                 AppUser.builder()
                         .id(2)
                         .build())
+                .withDiseases(Set.of(
+                        DataInitializerFixtures.diseaseFixture3()
+                ))
         );
     }
 

@@ -31,11 +31,5 @@ public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> 
     void cancelVisitById(@Param("visitId") Integer visitId);
 
 
-    @Query("""
-            SELECT v
-            FROM VisitEntity v
-            JOIN FETCH v.notes
-            WHERE v.visitId = :visitId
-            """)
-    VisitEntity findVisitWithNotes(@Param("visitId") Integer visitId);
+
 }

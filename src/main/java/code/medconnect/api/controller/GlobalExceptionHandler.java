@@ -17,16 +17,15 @@ import java.util.Optional;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-/*    private static final Map<Class<?>, HttpStatus> EXCEPTION_STATUS = Map.of(
-            ConstraintViolationException.class, HttpStatus.BAD_REQUEST,
-            DataIntegrityViolationException.class, HttpStatus.BAD_REQUEST,
-            EntityNotFoundException.class, HttpStatus.NOT_FOUND,
-            NotFoundException.class, HttpStatus.NOT_FOUND,
-            VisitInTakenTimePeriodException.class, HttpStatus.BAD_REQUEST
-    );
-    public HttpStatus getHttpStatusFromException(final Class<?> exception) {
-        return EXCEPTION_STATUS.getOrDefault(exception, HttpStatus.INTERNAL_SERVER_ERROR);
-    }*/
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleException(Exception ex) {
+        String message = String.format("Other exception occurred: [%s]", ex.getMessage());
+        log.error(message, ex);
+        ModelAndView modelView = new ModelAndView("error");
+        modelView.addObject("errorMessage", message);
+        return modelView;
+    }
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -60,13 +59,4 @@ public class GlobalExceptionHandler {
         return modelView;
     }
 
-/*    @ExceptionHandler(ProcessingException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ModelAndView handleException(ProcessingException ex) {
-        String message = String.format("Processing exception occurred: [%s]", ex.getMessage());
-        log.error(message, ex);
-        ModelAndView modelView = new ModelAndView("error");
-        modelView.addObject("errorMessage", message);
-        return modelView;
-    }*/
 }

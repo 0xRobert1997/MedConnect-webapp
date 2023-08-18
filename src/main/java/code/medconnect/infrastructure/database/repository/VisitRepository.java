@@ -82,11 +82,7 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
                 .toList();
     }
 
-    @Override
-    public Visit findVisitWithNotes(Integer visitId) {
-        VisitEntity visitEntity = visitJpaRepository.findVisitWithNotes(visitId);
-        return visitEntityMapper.map(visitEntity);
-    }
+
 
     @Override
     public List<Visit> findConflictingVisits(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {

@@ -49,23 +49,19 @@ public class SecurityConfiguration {
         CookieClearingLogoutHandler cookies = new CookieClearingLogoutHandler("JSESSIONID");
 
         return http
-
+                .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> {
                     auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
                     auth.requestMatchers(
-                            "/static/**", "/home", "/register", "/ourdoctors").permitAll();
-                    auth.requestMatchers(antMatcher("/medconnect/patient/**")).hasRole("PATIENT");
-
-                    auth.requestMatchers(antMatcher("medconnect/doctor/**")).hasRole("DOCTOR");
+                    "/static/**", "/register", "/ourdoctors").permitAll();
+                    auth.requestMatchers("/patient/**").hasAuthority("PATIENT");
+                    auth.requestMatchers("/doctor/**").hasAuthority("DOCTOR");
                     auth.anyRequest().permitAll();
                 })
-                .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessUrl("/"))
                 .logout((logout) -> logout.addLogoutHandler(cookies))
-                .exceptionHandling((exceptionHandling) -> exceptionHandling
-                        .accessDeniedPage("/access-denied"))
                 .build();
     }
 

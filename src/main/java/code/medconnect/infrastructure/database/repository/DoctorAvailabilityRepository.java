@@ -36,6 +36,12 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
     }
 
     @Override
+    public void saveAvailability(DoctorAvailability doctorAvailability) {
+        DoctorAvailabilityEntity toSave = doctorAvailabilityEntityMapper.map(doctorAvailability);
+        doctorAvailabilityJpaRepository.save(toSave);
+    }
+
+    @Override
     public Page<DoctorAvailabilityDTO> getDoctorAvailabilityPage(Integer doctorId, Pageable pageable) {
 
         Page<DoctorAvailabilityEntity> availabilityPage

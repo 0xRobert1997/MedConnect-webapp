@@ -58,15 +58,13 @@ public class DoctorService {
 
     @Transactional
     public void saveAvailAbility(DoctorDTO doctorDTO, LocalDate day, LocalTime startTime, LocalTime endTime) {
-        Set<DoctorAvailability> availabilities = doctorDTO.getAvailabilities();
-        availabilities.add(DoctorAvailability.builder()
+        DoctorAvailability ava = DoctorAvailability.builder()
                 .doctorId(doctorDTO.getDoctorId())
                 .day(day)
                 .startTime(startTime)
                 .endTime(endTime)
-                .build());
-        doctorDAO.saveDoctor(doctorMapper.map(doctorDTO));
-
+                .build();
+        doctorAvailabilityDAO.saveAvailability(ava);
     }
 
 

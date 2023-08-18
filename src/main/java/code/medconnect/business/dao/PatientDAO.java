@@ -20,5 +20,5 @@ public interface PatientDAO {
 
     void addDisease(String pesel, Disease disease);
 
-    Optional<Patient> findByPeselWithDiseases(String patientPesel);
+    Patient findByPeselWithDiseases(String patientPesel);
 }

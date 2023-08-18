@@ -4,6 +4,7 @@ import code.medconnect.domain.Note;
 import code.medconnect.domain.Visit;
 import code.medconnect.infrastructure.database.entity.NoteEntity;
 import code.medconnect.infrastructure.database.entity.VisitEntity;
+import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -16,8 +17,10 @@ import java.util.List;
 public interface VisitEntityMapper {
 
 
+    @Named("map")
     Visit map(VisitEntity visitEntity);
 
+    @Named("mapWithoutNotes")
     @Mapping(target = "notes", ignore = true)
     Visit mapWithoutNotes(VisitEntity visitEntity);
 

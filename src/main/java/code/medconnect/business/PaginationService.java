@@ -18,10 +18,10 @@ public class PaginationService {
 
 
     public Page<DoctorAvailabilityDTO> paginate(int pageNumber, int pageSize, Integer doctorId) {
-        Sort sort = Sort.by("day").ascending()
-                .and(Sort.by("startTime").ascending());
 
+        Sort sort = Sort.by("day").ascending();
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
         return doctorAvailabilityDAO.getDoctorAvailabilityPage(doctorId, pageable);
     }
 

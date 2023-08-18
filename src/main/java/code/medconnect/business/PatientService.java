@@ -79,8 +79,10 @@ public class PatientService {
     }
 
 
-    public PatientDTO findPatientWithDiseases(String patientPesel) {
-        patientDAO.findByPeselWithDiseases(patientPesel);
-        return null;
+    @Transactional
+    public Patient findPatientWithDiseases(String patientPesel) {
+        return patientDAO.findByPeselWithDiseases(patientPesel);
+
+
     }
 }
