@@ -39,17 +39,13 @@ public class VisitService {
                 .orElseThrow(() -> new NotFoundException("Visit with ID " + visitId + " not found"));
 
         visitDAO.cancelVisit(visit);
-        //      visitDAO.saveVisit(visit);
         log.info("Canceled visit with id: [{}]", visitId);
     }
 
     @Transactional
     public void addNoteToVisit(Integer visitId, String noteContent) {
-
         Visit visit = visitDAO.findVisitById(visitId)
                 .orElseThrow(() -> new NotFoundException("Visit with ID " + visitId + " not found"));
-
-
 
         Note note = Note.builder()
                 .noteContent(noteContent)
@@ -57,10 +53,7 @@ public class VisitService {
                 .build();
 
         note.setVisit(visit);
-
         noteDAO.saveNote(note);
-
-
         log.info("Added note to visit with id: [{}], noteContent: [{}]", visitId, noteContent);
     }
 
@@ -110,13 +103,12 @@ public class VisitService {
     }
 
     @Transactional
-    public List<VisitDTO> getPatientsVisits(String pesel) {
+    public List<Visit> getPatientsVisits(String pesel) {
         Patient patient = patientDAO.findByPesel(pesel)
                 .orElseThrow(() -> new NotFoundException("Patient with pesel: " + pesel + " doesn't exist"));
         Integer patientId = patient.getPatientId();
 
-        return visitDAO.findByPatientId(patientId)
-                .stream().map(visitMapper::map)
-                .toList();
+        return visitDAO.findByPatientId(patientId);
+
     }
 }

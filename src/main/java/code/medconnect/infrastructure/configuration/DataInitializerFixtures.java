@@ -1,6 +1,7 @@
 package code.medconnect.infrastructure.configuration;
 
 import code.medconnect.domain.*;
+import code.medconnect.infrastructure.database.entity.NoteEntity;
 import code.medconnect.security.AppUserEntity;
 import code.medconnect.security.RoleEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -213,7 +215,7 @@ public class DataInitializerFixtures {
 
     static Visit visitFixture1() {
         return Visit.builder()
-                .day(LocalDate.of(2023, 8, 30))
+                .day(LocalDate.of(2023, 7, 30))
                 .startTime(LocalTime.of(12, 30))
                 .endTime(LocalTime.of(13, 0))
                 .patientId(1)

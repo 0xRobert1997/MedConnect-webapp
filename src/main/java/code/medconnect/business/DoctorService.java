@@ -15,6 +15,7 @@ import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.domain.Patient;
+import code.medconnect.domain.Visit;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,16 +45,14 @@ public class DoctorService {
     private final DoctorAvailabilityMapper doctorAvailabilityMapper;
 
     @Transactional
-    public Set<DoctorDTO> findAllDoctors() {
-        return doctorDAO.findAll().stream()
-                .map(doctorMapper::map)
-                .collect(Collectors.toSet());
+    public Set<Doctor> findAllDoctors() {
+        return doctorDAO.findAll();
+
     }
 
     @Transactional
-    public DoctorDTO findByEmail(String email) {
-        Doctor doctor = doctorDAO.findByEmail(email);
-        return doctorMapper.map(doctor);
+    public Doctor findByEmail(String email) {
+        return doctorDAO.findByEmail(email);
     }
 
     @Transactional
@@ -74,19 +73,14 @@ public class DoctorService {
     }
 
     @Transactional
-    public List<VisitDTO> getDoctorsVisits(Integer doctorId) {
-        return visitDAO.findVisitsByDoctorId(doctorId)
-                .stream()
-                .map(visitMapper::map)
-                .toList();
+    public List<Visit> getDoctorsVisits(Integer doctorId) {
+        return visitDAO.findVisitsByDoctorId(doctorId);
     }
 
     @Transactional
-    public List<DoctorAvailabilityDTO> getDoctorAvailabilities(String doctorEmail) {
-        DoctorDTO doctorDTO = findByEmail(doctorEmail);
-        return doctorAvailabilityDAO.findByDoctorId(doctorDTO.getDoctorId())
-                .stream().map(doctorAvailabilityMapper::map)
-                .toList();
+    public List<DoctorAvailability> getDoctorAvailabilities(String doctorEmail) {
+        Doctor doctor = findByEmail(doctorEmail);
+        return doctorAvailabilityDAO.findByDoctorId(doctor.getDoctorId());
     }
 
     @Transactional

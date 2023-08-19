@@ -9,6 +9,8 @@ import java.time.OffsetDateTime;
 @Setter
 @With
 @Builder
+@ToString(of = {"dateTime", "noteContent"})
+@EqualsAndHashCode(of = {"dateTime", "noteContent"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

@@ -40,7 +40,7 @@
 
     <h2>Add Note to Visit</h2>
     <form th:action="@{/doctor/add-note}" method="post">
-        <input type="hidden" name="doctorEmail" th:value="${doctorDTO.email}" />
+
         <select name="visitId">
             <option th:each="entry : ${visits}" th:value="${entry.key.visitId}" th:text="${entry.key.day + ' ' + entry.key.startTime}"></option>
         </select>

@@ -1,8 +1,11 @@
 package code.medconnect.infrastructure.database.repository;
 
 import code.medconnect.domain.Doctor;
+import code.medconnect.domain.Note;
 import code.medconnect.domain.Visit;
 import code.medconnect.infrastructure.database.entity.DoctorEntity;
+import code.medconnect.infrastructure.database.entity.NoteEntity;
+import code.medconnect.infrastructure.database.entity.PatientEntity;
 import code.medconnect.infrastructure.database.entity.VisitEntity;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.NoteJpaRepository;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,7 +54,7 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
     public List<Visit> findVisitsByDoctorId(Integer doctorId) {
         return visitJpaRepository.findVisitByDoctorId(doctorId)
                 .stream()
-                .map(visitEntityMapper::mapWithoutNotes)
+                .map(visitEntityMapper::map)
                 .toList();
     }
 
@@ -71,8 +75,36 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
     @Override
     public List<Visit> findByPatientId(Integer patientId) {
         return visitJpaRepository.findByPatientId(patientId)
-                .stream().map(visitEntityMapper::map)
+                .stream().map(this::mapWithNotes)
                 .toList();
+    }
+
+    private Visit mapWithNotes(VisitEntity visitEntity) {
+        Visit visit = Visit.builder()
+                .visitId(visitEntity.getVisitId())
+                .patientId(visitEntity.getPatientId())
+                .day(visitEntity.getDay())
+                .doctorId(visitEntity.getDoctorId())
+                .startTime(visitEntity.getStartTime())
+                .endTime(visitEntity.getEndTime())
+                .canceled(visitEntity.isCanceled())
+  //              .notes(new ArrayList<>())
+                .build();
+        List<Note> notes = new ArrayList<>();
+
+        for (NoteEntity noteEntity : visitEntity.getNotes()) {
+            notes.add(mapNoteWithoutVisit(noteEntity));
+        }
+        visit.setNotes(notes);
+        return visit;
+    }
+
+    private Note mapNoteWithoutVisit(NoteEntity noteEntity) {
+        return Note.builder()
+                .noteId(noteEntity.getNoteId())
+                .dateTime(noteEntity.getDateTime())
+                .noteContent(noteEntity.getNoteContent())
+                .build();
     }
 
     @Override

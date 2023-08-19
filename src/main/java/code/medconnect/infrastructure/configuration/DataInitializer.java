@@ -37,16 +37,16 @@ public class DataInitializer implements CommandLineRunner {
         initializeDoctors();
         initializeAvailabilities();
         initializeVisits();
-    //    initializeDiseases();
+        initializeDiseases();
 
 
     }
 
-/*    private void initializeDiseases() {
+    private void initializeDiseases() {
         diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture1());
         diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture2());
         diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture3());
-    }*/
+    }
 
     private void initializerUsers() {
         appUserRepository.save(DataInitializerFixtures.appUserEntityFixture1());

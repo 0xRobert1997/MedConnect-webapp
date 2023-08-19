@@ -64,17 +64,14 @@ public class PatientService {
 
 
     @Transactional
-    public PatientDTO findPatientWithVisits(Integer patientId) {
+    public Patient findPatientWithVisits(Integer patientId) {
         return patientDAO.findPatientWithVisits(patientId)
-                .map(a -> patientMapper.map(a))
                 .orElseThrow(() -> new NotFoundException("Patient with patientId: " + patientId + " doesn't exist"));
-
     }
 
     @Transactional
-    public PatientDTO findPatientByEmail(String email) {
+    public Patient findPatientByEmail(String email) {
         return patientDAO.findByEmail(email)
-                .map(a -> patientMapper.map(a))
                 .orElseThrow(() -> new NotFoundException("Patient with email: " + email + " doesn't exist"));
     }
 
@@ -82,7 +79,5 @@ public class PatientService {
     @Transactional
     public Patient findPatientWithDiseases(String patientPesel) {
         return patientDAO.findByPeselWithDiseases(patientPesel);
-
-
     }
 }

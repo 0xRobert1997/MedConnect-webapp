@@ -43,7 +43,11 @@
                     <span th:text="${doctor.surname}"></span>
                 </span>
             </td>
-            <td th:text="${visit.notes}"></td>
+
+            <td>
+                <span th:each="note : ${visit.notes}" th:text="${note.noteContent}" th:if="${not #lists.isEmpty(visit.notes)}"></span>
+            </td>
+
             <td>
                 <span th:if="${visit.canceled}">Canceled</span>
             </td>
