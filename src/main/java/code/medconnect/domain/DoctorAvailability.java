@@ -8,6 +8,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class DoctorAvailability {

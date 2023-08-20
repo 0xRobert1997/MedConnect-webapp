@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class Disease {

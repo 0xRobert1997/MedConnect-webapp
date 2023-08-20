@@ -3,11 +3,11 @@ package code.medconnect.business.dao;
 import code.medconnect.domain.Disease;
 import code.medconnect.domain.Patient;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PatientDAO {
 
-    Optional<Patient> findPatientWithVisits(Integer patientId);
 
     Optional<Patient> findByPesel(String pesel);
 
@@ -21,4 +21,8 @@ public interface PatientDAO {
     void addDisease(String pesel, Disease disease);
 
     Patient findByPeselWithDiseases(String patientPesel);
+
+    List<Patient> findAll();
+
+
 }

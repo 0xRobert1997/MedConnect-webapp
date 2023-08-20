@@ -55,6 +55,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers(
                     "/static/**", "/register", "/ourdoctors").permitAll();
                     auth.requestMatchers("/patient/**").hasAuthority("PATIENT");
+                    auth.requestMatchers("/api/**").hasAuthority("PATIENT");
                     auth.requestMatchers("/doctor/**").hasAuthority("DOCTOR");
                     auth.anyRequest().permitAll();
                 })

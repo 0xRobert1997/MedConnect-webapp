@@ -1,6 +1,5 @@
 package code.medconnect.business;
 
-import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.api.dto.mapper.VisitMapper;
 import code.medconnect.business.dao.DiseaseDAO;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -34,8 +34,7 @@ public class PatientService {
 
 
     @Transactional
-    public void createPatient(PatientDTO patientDTO) {
-        Patient patient = patientMapper.map(patientDTO);
+    public void createPatient(Patient patient) {
         patientDAO.savePatient(patient);
     }
 
@@ -64,13 +63,7 @@ public class PatientService {
 
 
     @Transactional
-    public Patient findPatientWithVisits(Integer patientId) {
-        return patientDAO.findPatientWithVisits(patientId)
-                .orElseThrow(() -> new NotFoundException("Patient with patientId: " + patientId + " doesn't exist"));
-    }
-
-    @Transactional
-    public Patient findPatientByEmail(String email) {
+    public Patient findByEmail(String email) {
         return patientDAO.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Patient with email: " + email + " doesn't exist"));
     }
@@ -79,5 +72,10 @@ public class PatientService {
     @Transactional
     public Patient findPatientWithDiseases(String patientPesel) {
         return patientDAO.findByPeselWithDiseases(patientPesel);
+    }
+
+    @Transactional
+    public List<Patient> findAll() {
+        return patientDAO.findAll();
     }
 }

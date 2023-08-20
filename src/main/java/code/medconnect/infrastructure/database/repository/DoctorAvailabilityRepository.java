@@ -23,8 +23,6 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
 
     private final DoctorAvailabilityJpaRepository doctorAvailabilityJpaRepository;
     private final DoctorAvailabilityEntityMapper doctorAvailabilityEntityMapper;
-    private final DoctorJpaRepository doctorJpaRepository;
-    private final DoctorEntityMapper doctorEntityMapper;
     private final DoctorAvailabilityMapper doctorAvailabilityMapper;
 
     @Override
@@ -42,6 +40,12 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
     }
 
     @Override
+    public void deleteAvailability(DoctorAvailability doctorAvailability) {
+        DoctorAvailabilityEntity doctorAvailabilityEntity = doctorAvailabilityEntityMapper.map(doctorAvailability);
+        doctorAvailabilityJpaRepository.delete(doctorAvailabilityEntity);
+    }
+
+    @Override
     public Page<DoctorAvailabilityDTO> getDoctorAvailabilityPage(Integer doctorId, Pageable pageable) {
 
         Page<DoctorAvailabilityEntity> availabilityPage
@@ -56,12 +60,4 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
         return new PageImpl<>(doctorAvailabilityDTOs, pageable, availabilityPage.getTotalElements());
     }
 
-
-/*    @Override
-    public Set<DoctorAvailability> findByDoctorEmail(String email) {
-        return doctorAvailabilityJpaRepository.findByDoctorEmail(email)
-                .stream()
-                .map(doctorAvailabilityEntityMapper::map)
-                .collect(Collectors.toSet());
-    }*/
 }

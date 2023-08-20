@@ -1,9 +1,14 @@
 package code.medconnect.api.controller;
 
 import code.medconnect.api.dto.PatientDTO;
+import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.business.PatientService;
 import code.medconnect.domain.Address;
+import code.medconnect.domain.Patient;
 import code.medconnect.security.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
@@ -25,6 +30,7 @@ public class RegisterController {
     AppUserDTOMapper appUserDTOMapper;
     RoleRepository roleRepository;
     PatientService patientService;
+    PatientMapper patientMapper;
 
     @RequestMapping(value = REGISTER_BASE_PATH, method = RequestMethod.GET)
     public String registerPage() {
@@ -38,8 +44,9 @@ public class RegisterController {
             @RequestParam("name") String name,
             @RequestParam("surname") String surname,
             @RequestParam("pesel") String pesel,
-            @RequestParam("email") String email,
-            @RequestParam("phoneNumber") String phone,
+            @RequestParam("email") @Email(message = "Invalid email format") String email,
+            @RequestParam("phoneNumber") @Pattern(regexp = "^\\d{3}-\\d{3}-\\d{3}$",
+                    message = "Invalid phone format") String phone,
             @RequestParam("dateOfBirth") String dateOfBirthStr,
             @RequestParam("country") String country,
             @RequestParam("city") String city,
@@ -52,7 +59,6 @@ public class RegisterController {
         AppUserDTO appUserDTO = AppUserDTO.builder()
                 .userName(username)
                 .email(email)
-
                 .build();
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -81,7 +87,8 @@ public class RegisterController {
                         .build())
                 .build();
 
-        patientService.createPatient(patientDTO);
+        Patient patient = patientMapper.map(patientDTO);
+        patientService.createPatient(patient);
 
         return "redirect:/registration-success";
     }

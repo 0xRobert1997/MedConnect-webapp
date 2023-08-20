@@ -9,4 +9,7 @@ public interface DiseaseDAO {
     List<Disease> findDiseasesByPatientPesel(String pesel);
 
     Disease saveDisease(Disease disease);
+
+    List<Disease> findAll();
+
 }

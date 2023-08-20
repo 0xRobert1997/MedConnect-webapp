@@ -1,6 +1,5 @@
 package code.medconnect.infrastructure.database.repository.jpa;
 
-import code.medconnect.domain.Visit;
 import code.medconnect.infrastructure.database.entity.VisitEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -20,7 +19,7 @@ public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> 
     List<VisitEntity> findByPatientId(Integer patientId);
 
     @Query("SELECT v FROM VisitEntity v WHERE v.doctorId = :doctorId")
-    List<VisitEntity> findVisitByDoctorId(Integer doctorId);
+    List<VisitEntity> findByDoctorId(Integer doctorId);
 
     @Query("""
             UPDATE VisitEntity vst

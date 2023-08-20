@@ -1,9 +1,10 @@
 package code.medconnect.business;
 
+import code.medconnect.business.dao.DoctorAvailabilityDAO;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.domain.Doctor;
-import code.medconnect.domain.exception.NotFoundException;
-import code.medconnect.fixtures.DomainFixtures;
+import code.medconnect.domain.DoctorAvailability;
+import code.medconnect.util.DomainFixtures;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,37 +13,69 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 @ExtendWith(MockitoExtension.class)
 public class DoctorServiceTest {
 
     @Mock
-    DoctorDAO doctorDAO;
+    private DoctorDAO doctorDAO;
+    @Mock
+    private DoctorAvailabilityDAO doctorAvailabilityDAO;
+
 
     @InjectMocks
-    DoctorService doctorService;
+    private DoctorService doctorService;
 
     @Test
-    void testFindDoctorByEmailReturnsDoctor() {
-        // Given
-        String email = "doctor@example.com";
-        Doctor doctor = DomainFixtures.someDoctor();
-        Mockito.when(doctorDAO.findByEmail(email)).thenReturn(Optional.of(doctor));
-
-        // When
-        Doctor foundDoctor = doctorService.findByEmail(email);
-
-        // Then
-        Assertions.assertSame(doctor, foundDoctor);
+    void shouldFindAllDoctorsCorrectly() {
+        //given
+        Doctor doctor = DomainFixtures.someDoctor1();
+        Set<Doctor> allDoctors = new HashSet<>();
+        allDoctors.add(doctor);
+        //when
+        Mockito.when(doctorDAO.findAll()).thenReturn(allDoctors);
+        //then
+        Set<Doctor> result = doctorService.findAll();
+        Assertions.assertEquals(1, result.size());
     }
 
     @Test
-    void testFindDoctorByEmailThrowsExceptionIfDoctorNotFound() {
-        // Given
-        String email = "wrongEmail";
-        Mockito.when(doctorDAO.findByEmail(email)).thenReturn(Optional.empty());
+    void shouldFindDoctorByEmailCorrectly() {
+        // given
+        Doctor doctor = DomainFixtures.someDoctor1();
+        String email = doctor.getEmail();
+        Mockito.when(doctorDAO.findByEmail(email)).thenReturn(doctor);
 
-        // When, Then
-        Assertions.assertThrows(NotFoundException.class, () -> doctorService.findByEmail(email));
+        // when,then
+        Doctor result = doctorService.findByEmail(email);
+        Assertions.assertEquals(doctor.getEmail(), result.getEmail());
     }
+
+    @Test
+    void shouldInvokeDaoToSaveCorrectly() {
+        //given
+        Doctor doctor = DomainFixtures.someDoctor1();
+        LocalDate day = LocalDate.of(2050, 1, 4);
+        LocalTime startTime = LocalTime.of(13, 13);
+        LocalTime endTime = LocalTime.of(13, 19);
+        //when
+        doctorService.saveAvailAbility(doctor, day, startTime, endTime);
+        //then
+        Mockito.verify(doctorAvailabilityDAO).saveAvailability(Mockito.any(DoctorAvailability.class));
+    }
+
+    @Test
+    void shouldInvokeDaoToDeleteCorrectly() {
+        //given
+        DoctorAvailability doctorAvailability = DomainFixtures.someDoctorAvailability();
+        //then
+        doctorService.deleteAvailAbility(doctorAvailability);
+        //then
+        Mockito.verify(doctorAvailabilityDAO).deleteAvailability(Mockito.any(DoctorAvailability.class));
+    }
+
+
 }

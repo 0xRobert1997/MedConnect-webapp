@@ -16,7 +16,6 @@ import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -33,6 +31,8 @@ import java.util.stream.Collectors;
 public class PatientController {
 
     static final String PATIENT_BASE_PATH = "/patient";
+
+    private static final Integer PAGE_SIZE = 3;
     private final PatientService patientService;
     private final VisitService visitService;
     private final AppUserService appUserService;
@@ -44,21 +44,21 @@ public class PatientController {
 
 
     @RequestMapping(value = PATIENT_BASE_PATH, method = RequestMethod.GET)
-    public String PatientPage(
+    public String patientPage(
             Model model,
             Principal principal
     ) {
         String username = principal.getName();
         AppUser appUser = appUserService.findByUsername(username);
         String userEmail = appUser.getEmail();
-        Patient patient = patientService.findPatientByEmail(userEmail);
+        Patient patient = patientService.findByEmail(userEmail);
         PatientDTO patientDTO = patientMapper.map(patient);
 
         List<VisitDTO> patientsVisits = visitService.getPatientsVisits(patientDTO.getPesel())
                 .stream()
                 .map(visitMapper::map)
                 .toList();
-        Set<DoctorDTO> doctors = doctorService.findAllDoctors()
+        Set<DoctorDTO> doctors = doctorService.findAll()
                 .stream()
                 .map(doctorMapper::map)
                 .collect(Collectors.toSet());
@@ -73,14 +73,13 @@ public class PatientController {
     @GetMapping("/new-visit")
     public String newVisitPage(
             Model model,
-            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "1") int page,
             @ModelAttribute("patientId") Integer patientId,
             @ModelAttribute("doctorId") Integer doctorId
     ) {
 
-        int pageSize = 2;
 
-        Page<DoctorAvailabilityDTO> doctorAvailabilityPage = paginationService.paginate(page, pageSize, doctorId);
+        Page<DoctorAvailabilityDTO> doctorAvailabilityPage = paginationService.paginate(page, PAGE_SIZE, doctorId);
         List<LocalTime> availableTimes = getAvailableTimeFrames();
 
         model.addAttribute("doctorAvailabilities", doctorAvailabilityPage.getContent());
@@ -95,7 +94,7 @@ public class PatientController {
     }
 
 
-    List<LocalTime> getAvailableTimeFrames() {
+    private List<LocalTime> getAvailableTimeFrames() {
         return List.of(
                 LocalTime.of(8, 0),
                 LocalTime.of(8, 30),

@@ -30,7 +30,7 @@ public class VisitService {
     private final PatientDAO patientDAO;
     private final DoctorDAO doctorDAO;
     private final NoteDAO noteDAO;
-    private final VisitMapper visitMapper;
+
 
 
     @Transactional
@@ -59,6 +59,16 @@ public class VisitService {
 
 
     @Transactional
+    public List<Visit> getPatientsVisits(String pesel) {
+        Patient patient = patientDAO.findByPesel(pesel)
+                .orElseThrow(() -> new NotFoundException("Patient with pesel: " + pesel + " doesn't exist"));
+        Integer patientId = patient.getPatientId();
+
+        return visitDAO.findByPatientId(patientId);
+
+    }
+
+    @Transactional
     public Visit makeVisit(Integer patientId, Integer doctorId, LocalDate day, LocalTime startTime, LocalTime endTime) {
 
         Doctor doctor = doctorDAO.findById(doctorId);
@@ -81,7 +91,7 @@ public class VisitService {
         }
     }
 
-    @Transactional
+
     private boolean areVisitSlotsAvailable(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {
         List<Visit> conflictingVisits = visitDAO.findConflictingVisits(doctor, day, startTime, endTime);
         if (conflictingVisits.isEmpty()) {
@@ -90,7 +100,7 @@ public class VisitService {
         return conflictingVisits.isEmpty();
     }
 
-    @Transactional
+
     private boolean isDoctorAvailableAtTime(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {
         for (DoctorAvailability availability : doctor.getAvailabilities()) {
             if (availability.getDay().equals(day)
@@ -102,13 +112,7 @@ public class VisitService {
         return false;
     }
 
-    @Transactional
-    public List<Visit> getPatientsVisits(String pesel) {
-        Patient patient = patientDAO.findByPesel(pesel)
-                .orElseThrow(() -> new NotFoundException("Patient with pesel: " + pesel + " doesn't exist"));
-        Integer patientId = patient.getPatientId();
-
-        return visitDAO.findByPatientId(patientId);
-
+    public List<Visit> findAll() {
+        return visitDAO.findAll();
     }
 }

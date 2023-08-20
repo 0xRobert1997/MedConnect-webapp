@@ -36,17 +36,6 @@ public class DoctorRepository implements DoctorDAO {
                 () -> new NotFoundException("Doctor with email: " + email + " does not exist"));
     }
 
-    @Override
-    public void saveAvailability(DoctorAvailability doctorAvailability) {
-        DoctorAvailabilityEntity doctorAvailabilityEntity = doctorAvailabilityEntityMapper.map(doctorAvailability);
-        doctorAvailabilityJpaRepository.save(doctorAvailabilityEntity);
-    }
-
-    @Override
-    public void deleteAvailability(DoctorAvailability doctorAvailability) {
-        DoctorAvailabilityEntity doctorAvailabilityEntity = doctorAvailabilityEntityMapper.map(doctorAvailability);
-        doctorAvailabilityJpaRepository.delete(doctorAvailabilityEntity);
-    }
 
     @Override
     public Doctor saveDoctor(Doctor doctor) {

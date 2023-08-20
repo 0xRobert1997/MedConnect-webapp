@@ -3,7 +3,6 @@ package code.medconnect.api.controller;
 import code.medconnect.api.dto.DoctorDTO;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.business.DoctorService;
-import code.medconnect.domain.Doctor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +23,9 @@ public class OurDoctorsController {
 
 
     @RequestMapping(value = OUR_DOCTORS_BASE_PATH, method = RequestMethod.GET)
-    public String homePage(Model model) {
+    public String ourDoctorsPage(Model model) {
 
-        Set<DoctorDTO> doctors = doctorService.findAllDoctors()
+        Set<DoctorDTO> doctors = doctorService.findAll()
                 .stream()
                 .map(doctorMapper::map)
                 .collect(Collectors.toSet());

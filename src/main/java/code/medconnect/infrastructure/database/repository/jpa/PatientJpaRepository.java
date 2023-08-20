@@ -15,17 +15,7 @@ public interface PatientJpaRepository extends JpaRepository<PatientEntity, Integ
 
     Optional<PatientEntity> findByPesel(String pesel);
 
-    @Query("""
-            SELECT p FROM PatientEntity p
-            JOIN FETCH p.visits
-            WHERE p.patientId = :patientId
-            """)
-    Optional<PatientEntity> findPatientWithVisits(@Param("patientId") Integer patientId);
 
-    @Query("""
-            SELECT p FROM PatientEntity p
-            LEFT JOIN FETCH p.diseases d
-            WHERE p.pesel = :patientPesel
-            """)
-    Optional<PatientEntity> findByPeselWithDiseases(@Param("patientPesel") String patientPesel);
+
+
 }

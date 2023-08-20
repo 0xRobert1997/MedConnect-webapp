@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity

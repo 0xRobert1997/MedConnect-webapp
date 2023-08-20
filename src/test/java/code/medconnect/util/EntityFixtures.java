@@ -1,13 +1,37 @@
-package code.medconnect.fixtures;
+package code.medconnect.util;
 
 import code.medconnect.infrastructure.database.entity.*;
+import code.medconnect.security.AppUserEntity;
+import code.medconnect.security.RoleEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Set;
 
 public class EntityFixtures {
+
+    public static AppUserEntity someAppUserEntityFixture1() {
+        return AppUserEntity.builder()
+                .userName("Patient1")
+                .email("patient1@example.com")
+                //password: test
+                .password("$2a$12$GVehLNO8yk4GQc3Yil2IuOaoVR26Qg1/tjBCuUxKfoiAQadIs07AC")
+                .roles(Set.of(RoleEntity.builder().id(1).build()))
+                .active(true)
+                .build();
+    }
+    public static AppUserEntity someAppUserEntityFixture2() {
+        return AppUserEntity.builder()
+                .userName("Patient2")
+                .email("patient2@example.com")
+                //password: test
+                .password("$2a$12$GVehLNO8yk4GQc3Yil2IuOaoVR26Qg1/tjBCuUxKfoiAQadIs07AC")
+                .roles(Set.of(RoleEntity.builder().id(1).build()))
+                .active(true)
+                .build();
+    }
 
     public static PatientEntity somePatient1() {
         return PatientEntity.builder()

@@ -3,9 +3,7 @@ package code.medconnect.infrastructure.database.repository;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Note;
 import code.medconnect.domain.Visit;
-import code.medconnect.infrastructure.database.entity.DoctorEntity;
 import code.medconnect.infrastructure.database.entity.NoteEntity;
-import code.medconnect.infrastructure.database.entity.PatientEntity;
 import code.medconnect.infrastructure.database.entity.VisitEntity;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.NoteJpaRepository;
@@ -21,6 +19,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
@@ -52,7 +51,7 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
 
     @Override
     public List<Visit> findVisitsByDoctorId(Integer doctorId) {
-        return visitJpaRepository.findVisitByDoctorId(doctorId)
+        return visitJpaRepository.findByDoctorId(doctorId)
                 .stream()
                 .map(visitEntityMapper::map)
                 .toList();
@@ -66,7 +65,6 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
 
     @Override
     public List<Visit> findByDoctorAndDay(Doctor doctor, LocalDate day) {
-        DoctorEntity doctorEntity = doctorEntityMapper.map(doctor);
         return visitJpaRepository.findByDoctorIdAndDay(doctor.getDoctorId(), day).stream()
                 .map(visitEntityMapper::map)
                 .toList();
@@ -109,11 +107,18 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
 
     @Override
     public List<Visit> findByDoctorId(Integer doctorId) {
-        return visitJpaRepository.findVisitByDoctorId(doctorId)
+        return visitJpaRepository.findByDoctorId(doctorId)
                 .stream().map(visitEntityMapper::map)
                 .toList();
     }
 
+    @Override
+    public List<Visit> findAll() {
+        return visitJpaRepository.findAll()
+                .stream()
+                .map(a -> visitEntityMapper.map(a))
+                .toList();
+    }
 
 
     @Override

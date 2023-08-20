@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface VisitDAO {
 
@@ -27,5 +28,7 @@ public interface VisitDAO {
 
     List<Visit> findByDoctorId(Integer doctorId);
 
+
+    List<Visit> findAll();
 
 }

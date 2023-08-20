@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,10 +25,7 @@ public class PatientRepository implements PatientDAO {
     private final PatientEntityMapper patientEntityMapper;
     private final DiseaseEntityMapper diseaseEntityMapper;
 
-    @Override
-    public Optional<Patient> findPatientWithVisits(Integer patientId) {
-        return patientJpaRepository.findPatientWithVisits(patientId).map(patientEntityMapper::map);
-    }
+
 
     @Override
     public Optional<Patient> findByPesel(String pesel) {
@@ -39,10 +37,18 @@ public class PatientRepository implements PatientDAO {
         return patientJpaRepository.findByEmail(email).map(patientEntityMapper::map);
     }
 
+    @Override
     public Optional<Patient> findById(Integer id) {
         return patientJpaRepository.findById(id)
                 .map(patientEntityMapper::map);
 
+    }
+    @Override
+    public List<Patient> findAll() {
+        return patientJpaRepository.findAll()
+                .stream()
+                .map(patientEntityMapper::map)
+                .toList();
     }
 
     @Override

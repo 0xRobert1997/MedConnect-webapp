@@ -70,8 +70,7 @@ public class DoctorController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime
     ) {
         Doctor doctor = doctorService.findByEmail(doctorEmail);
-        DoctorDTO doctorDTO = doctorMapper.map(doctor);
-        doctorService.saveAvailAbility(doctorDTO, date, startTime, endTime);
+        doctorService.saveAvailAbility(doctor, date, startTime, endTime);
 
         return "redirect:/doctor";
     }

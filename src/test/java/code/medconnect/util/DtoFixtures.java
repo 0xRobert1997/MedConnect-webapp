@@ -1,32 +1,19 @@
-package code.medconnect.fixtures;
+package code.medconnect.util;
 
-import code.medconnect.domain.*;
+import code.medconnect.api.dto.DoctorDTO;
+import code.medconnect.api.dto.PatientDTO;
+import code.medconnect.api.dto.VisitDTO;
+import code.medconnect.domain.Address;
+import code.medconnect.domain.Doctor;
+import code.medconnect.domain.Visit;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Set;
 
-public class DomainFixtures {
+public class DtoFixtures {
 
-    public static Visit someVisit() {
-        return Visit.builder()
-                .day(LocalDate.of(2023, 9, 9))
-                .startTime(LocalTime.of(10, 0))
-                .endTime(LocalTime.of(10, 30))
-                .build();
-    }
-
-
-
-    public static Note someNote() {
-        return Note.builder()
-                .noteContent("bla bla bla")
-                .build();
-    }
-
-    public static Doctor someDoctor() {
-        return Doctor.builder()
+    public static DoctorDTO someDoctorDTO1() {
+        return DoctorDTO.builder()
                 .name("Doc1")
                 .surname("One")
                 .specialization("Humans")
@@ -41,13 +28,13 @@ public class DomainFixtures {
                         .build())
                 .build();
     }
-    public static Doctor someDoctorWithAvailability() {
-        return Doctor.builder()
+    public static DoctorDTO someDoctorDTO2() {
+        return DoctorDTO.builder()
                 .name("Doc1")
                 .surname("One")
                 .specialization("Humans")
-                .phone("666-666-666")
-                .email("dr1@example.com")
+                .phone("666-444-666")
+                .email("dr2@example.com")
                 .address(Address
                         .builder()
                         .country("Poland")
@@ -55,18 +42,11 @@ public class DomainFixtures {
                         .postalCode("11-111")
                         .address("domowa 2")
                         .build())
-                .availabilities(Set.of(DoctorAvailability.builder()
-                        .day(LocalDate.of(2023, 9, 9))
-                        .startTime(LocalTime.of(8,0))
-                        .endTime(LocalTime.of(16, 0))
-                        .build()))
                 .build();
     }
 
-
-
-    public static Patient somePatient() {
-        return Patient.builder()
+    public static PatientDTO somePatientDTO() {
+        return PatientDTO.builder()
                 .name("Z")
                 .surname("ZZ")
                 .pesel("12345658900")
@@ -80,6 +60,21 @@ public class DomainFixtures {
                         .postalCode("11-111")
                         .address("Kolobrzeska 11")
                         .build())
+                .build();
+    }
+
+    public static VisitDTO someVisitDTO1() {
+        return VisitDTO.builder()
+                .day(LocalDate.of(2023, 9, 9))
+                .startTime(LocalTime.of(10, 0))
+                .endTime(LocalTime.of(10, 30))
+                .build();
+    }
+    public static VisitDTO someVisitDTO2() {
+        return VisitDTO.builder()
+                .day(LocalDate.of(2023, 9, 12))
+                .startTime(LocalTime.of(10, 0))
+                .endTime(LocalTime.of(10, 30))
                 .build();
     }
 }

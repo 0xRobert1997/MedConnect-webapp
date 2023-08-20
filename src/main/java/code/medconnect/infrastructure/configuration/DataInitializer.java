@@ -2,10 +2,7 @@ package code.medconnect.infrastructure.configuration;
 
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Patient;
-import code.medconnect.infrastructure.database.repository.DiseaseRepository;
-import code.medconnect.infrastructure.database.repository.DoctorRepository;
-import code.medconnect.infrastructure.database.repository.PatientRepository;
-import code.medconnect.infrastructure.database.repository.VisitRepository;
+import code.medconnect.infrastructure.database.repository.*;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserRepository;
 import lombok.AllArgsConstructor;
@@ -27,6 +24,7 @@ public class DataInitializer implements CommandLineRunner {
     private final AppUserRepository appUserRepository;
     private final VisitRepository visitRepository;
     private final DiseaseRepository diseaseRepository;
+    private final DoctorAvailabilityRepository doctorAvailabilityRepository;
 
 
     @Override
@@ -38,7 +36,6 @@ public class DataInitializer implements CommandLineRunner {
         initializeAvailabilities();
         initializeVisits();
         initializeDiseases();
-
 
     }
 
@@ -65,13 +62,13 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void initializeAvailabilities() {
-        doctorRepository.saveAvailability(DataInitializerFixtures.availabilityFixture1());
-        doctorRepository.saveAvailability(DataInitializerFixtures.availabilityFixture2());
-        doctorRepository.saveAvailability(DataInitializerFixtures.availabilityFixture3());
-        doctorRepository.saveAvailability(DataInitializerFixtures.availabilityFixture4());
-        doctorRepository.saveAvailability(DataInitializerFixtures.availabilityFixture5());
-        doctorRepository.saveAvailability(DataInitializerFixtures.availabilityFixture6());
-        doctorRepository.saveAvailability(DataInitializerFixtures.availabilityFixture7());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture1());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture2());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture3());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture4());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture5());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture6());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture7());
 
     }
 

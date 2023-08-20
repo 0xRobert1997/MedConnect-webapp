@@ -32,4 +32,11 @@ public class DiseaseRepository implements DiseaseDAO {
         return diseaseEntityMapper.map(saved);
 
     }
+    @Override
+    public List<Disease> findAll() {
+        return diseaseJpaRepository.findAll()
+                .stream()
+                .map(diseaseEntityMapper::map)
+                .toList();
+    }
 }

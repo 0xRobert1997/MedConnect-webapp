@@ -2,16 +2,17 @@ package code.medconnect.api.dto;
 
 import code.medconnect.domain.Address;
 import code.medconnect.security.AppUserDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Data
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatientDTO {
@@ -22,7 +23,9 @@ public class PatientDTO {
     String pesel;
     LocalDate dateOfBirth;
     String sex;
+    @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
     String phone;
+    @Email
     String email;
     byte[] photoData;
     String base64Image;

@@ -19,10 +19,7 @@ import java.time.LocalTime;
 public class VisitController {
 
     private final VisitService visitService;
-    private final PatientService patientService;
-    private final DoctorService doctorService;
-    private final PatientMapper patientMapper;
-    private final DoctorMapper doctorMapper;
+
 
 
     @PostMapping("/confirm-visit")

@@ -16,4 +16,6 @@ public interface DoctorAvailabilityDAO {
     Page<DoctorAvailabilityDTO> getDoctorAvailabilityPage(Integer doctorId, Pageable pageable);
 
     void saveAvailability(DoctorAvailability doctorAvailability);
+
+    void deleteAvailability(DoctorAvailability doctorAvailability);
 }
