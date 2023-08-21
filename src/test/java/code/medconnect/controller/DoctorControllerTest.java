@@ -11,11 +11,11 @@ import code.medconnect.business.PatientService;
 import code.medconnect.business.VisitService;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Patient;
+import code.medconnect.domain.Visit;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
 import code.medconnect.util.DomainFixtures;
 import code.medconnect.util.DtoFixtures;
-import code.medconnect.util.EntityFixtures;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,7 +65,7 @@ public class DoctorControllerTest {
         appUser.setEmail(userEmail);
         Doctor doctor = DomainFixtures.someDoctor1();
         DoctorDTO doctorDTO = DtoFixtures.someDoctorDTO1();
-        Map<VisitDTO, PatientDTO> visitsWithPatients = new HashMap<>();
+        Map<Visit, Patient> visitsWithPatients = new HashMap<>();
 
         //when
         when(principal.getName()).thenReturn(username);
@@ -74,7 +74,7 @@ public class DoctorControllerTest {
         when(doctorService.getDoctorsVisitsWithPatients(doctorDTO.getDoctorId())).thenReturn(visitsWithPatients);
         when(doctorMapper.map(doctor)).thenReturn(doctorDTO);
 
-        String viewName = doctorController.DoctorPage(model, principal);
+        String viewName = doctorController.doctorPage(model, principal);
 
         // then
         verify(appUserService).findByUsername(username);

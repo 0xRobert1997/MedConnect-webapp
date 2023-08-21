@@ -78,8 +78,7 @@ dependencyManagement {
 
 
 
-/*
-openApiGenerate {
+/*openApiGenerate {
 	generatorName = "java"
 	library = "webclient"
 	configOptions = [
@@ -99,8 +98,7 @@ sourceSets {
 	}
 }
 
-compileJava.dependsOn tasks.openApiGenerate
-*/
+compileJava.dependsOn tasks.openApiGenerate*/
 
 test {
 	useJUnitPlatform()
@@ -116,6 +114,15 @@ jacoco {
 
 jacocoTestReport {
 	dependsOn test
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"code/medconnect/**/*DTO.*",
+					"**/generated-sources/**"
+			])
+		}))
+	}
 	reports {
 		xml.required = false
 		csv.required = false
@@ -124,13 +131,14 @@ jacocoTestReport {
 }
 
 
+
 jacocoTestCoverageVerification {
 	violationRules {
 		rule {
 			limit {
 				counter = 'LINE'
 				value = 'COVEREDRATIO'
-				minimum = 0.01
+				minimum = 0.20
 			}
 		}
 	}

@@ -16,11 +16,12 @@ import org.springframework.http.HttpHeaders;
 
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class RestAssuredIntegrationTestBase
-        extends AbstractIT
-        implements ControllerTestSupport, AuthenticationTestSupport {
+        extends AbstractIntegrationTest
+        implements ControllerTestSupport {
 
     protected static WireMockServer wireMockServer;
 
@@ -47,21 +48,22 @@ public abstract class RestAssuredIntegrationTestBase
 
     @BeforeEach
     void beforeEach() {
-        jSessionIdValue = login("test_user", "test")
+
+        /*jSessionIdValue = login("Patient1", "test")
                 .and()
                 .cookie("JSESSIONID")
                 .header(HttpHeaders.LOCATION, "http://localhost:%s%s/".formatted(port, basePath))
                 .extract()
-                .cookie("JSESSIONID");
+                .cookie("JSESSIONID");*/
     }
 
     @AfterEach
     void afterEach() {
-        logout()
+/*        logout()
                 .and()
                 .cookie("JSESSIONID", "");
         jSessionIdValue = null;
-        wireMockServer.resetAll();
+        wireMockServer.resetAll();*/
     }
 
     @AfterAll
@@ -86,8 +88,7 @@ public abstract class RestAssuredIntegrationTestBase
     }
 
     private RequestSpecification restAssuredBase() {
-        return RestAssured
-                .given()
+        return given()
                 .config(getConfig())
                 .basePath(basePath)
                 .port(port);

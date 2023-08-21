@@ -1,11 +1,9 @@
-package code.medconnect.repository.jpa;
+package code.medconnect.infrastructure.databse.repository;
 
-import code.medconnect.infrastructure.database.entity.DoctorEntity;
+import code.medconnect.infrastructure.database.entity.DiseaseEntity;
 import code.medconnect.infrastructure.database.entity.PatientEntity;
-import code.medconnect.infrastructure.database.entity.VisitEntity;
-import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
+import code.medconnect.infrastructure.database.repository.jpa.DiseaseJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.PatientJpaRepository;
-import code.medconnect.infrastructure.database.repository.jpa.VisitJpaRepository;
 import code.medconnect.integration.configuration.PersistenceContainerTestConfiguration;
 import code.medconnect.security.AppUserEntity;
 import code.medconnect.security.AppUserRepository;
@@ -17,36 +15,53 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yaml")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(PersistenceContainerTestConfiguration.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-public class PatientJpaRepositoryTest {
+public class DiseaseJpaRepositoryTest {
 
-    private AppUserRepository appUserRepository;
+    private DiseaseJpaRepository diseaseJpaRepository;
     private PatientJpaRepository patientJpaRepository;
+    private AppUserRepository appUserRepository;
 
     @Test
-    void shouldFindByEmailAndPeselCorrectly() {
+    void shouldSaveDiseaseCorrectly() {
         //given
         AppUserEntity appUserEntity = appUserRepository.saveAndFlush(
                 EntityFixtures.someAppUserEntityFixture1());
         PatientEntity patientEntity = patientJpaRepository.saveAndFlush(
                 EntityFixtures.somePatient1().withAppUser(appUserEntity));
-        String email = patientEntity.getEmail();
+        //when
+        diseaseJpaRepository.save(EntityFixtures.someDisease().withPatient(patientEntity));
+        //then
+        List<DiseaseEntity> all = diseaseJpaRepository.findAll();
+        Assertions.assertEquals(1, all.size());
+    }
+
+    @Test
+    void shouldFindDiseaseByPatientPesel() {
+        //given
+        AppUserEntity appUserEntity = appUserRepository.saveAndFlush(
+                EntityFixtures.someAppUserEntityFixture1());
+        PatientEntity patientEntity = patientJpaRepository.saveAndFlush(
+                EntityFixtures.somePatient1().withAppUser(appUserEntity));
+        DiseaseEntity diseaseEntity = diseaseJpaRepository.saveAndFlush(EntityFixtures.someDisease().withPatient(patientEntity));
         String pesel = patientEntity.getPesel();
 
         //when
-        Optional<PatientEntity> byEmail = patientJpaRepository.findByEmail(email);
-        Optional<PatientEntity> byPesel = patientJpaRepository.findByPesel(pesel);
+        Set<DiseaseEntity> diseases = diseaseJpaRepository.findByPatientPesel(pesel);
         //then
-        Assertions.assertTrue(byEmail.isPresent());
-        Assertions.assertTrue(byPesel.isPresent());
-    }
+        Assertions.assertEquals(1, diseases.size());
 
+    }
 }

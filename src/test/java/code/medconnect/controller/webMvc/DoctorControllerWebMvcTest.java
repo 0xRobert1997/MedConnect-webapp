@@ -1,4 +1,4 @@
-package code.medconnect.webMvc;
+package code.medconnect.controller.webMvc;
 
 import code.medconnect.api.controller.DoctorController;
 import code.medconnect.api.dto.DoctorDTO;
@@ -6,16 +6,19 @@ import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.api.dto.VisitDTO;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.api.dto.mapper.PatientMapper;
+import code.medconnect.api.dto.mapper.VisitMapper;
 import code.medconnect.business.DoctorService;
 import code.medconnect.business.PatientService;
 import code.medconnect.business.VisitService;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Patient;
+import code.medconnect.domain.Visit;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
 import code.medconnect.util.DomainFixtures;
 import code.medconnect.util.DtoFixtures;
 import lombok.AllArgsConstructor;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,27 +54,39 @@ public class DoctorControllerWebMvcTest {
     PatientMapper patientMapper;
     @MockBean
     DoctorMapper doctorMapper;
+    @MockBean
+    VisitMapper visitMapper;
 
     @Test
     void doctorPageTest() throws Exception {
+        Patient patient = DomainFixtures.somePatient();
         Doctor doctor = DomainFixtures.someDoctor1().withDoctorId(1);
+        Visit visit = DomainFixtures.someVisit();
         DoctorDTO doctorDTO = DtoFixtures.someDoctorDTO1().withDoctorId(1);
+        VisitDTO visitDTO = DtoFixtures.someVisitDTO1();
+        PatientDTO patientDTO = DtoFixtures.somePatientDTO();
         String username = "Doctor1";
         String userEmail = doctor.getEmail();
         AppUser appUser = AppUser.builder().email(userEmail).build();
-        Map<VisitDTO, PatientDTO> visitsWithPatients = new HashMap<>();
+        Map<Visit, Patient> visitsWithPatients = new HashMap<>();
+        visitsWithPatients.put(visit, patient);
 
         Mockito.when(appUserService.findByUsername(username)).thenReturn(appUser);
         Mockito.when(doctorService.findByEmail(Mockito.anyString())).thenReturn(doctor);
         Mockito.when(doctorMapper.map(Mockito.any(Doctor.class))).thenReturn(doctorDTO);
+        Mockito.when(visitMapper.map(Mockito.any(Visit.class))).thenReturn(visitDTO);
+        Mockito.when(patientMapper.map(Mockito.any(Patient.class))).thenReturn(patientDTO);
         Mockito.when(doctorService.getDoctorsVisitsWithPatients(Mockito.anyInt())).thenReturn(visitsWithPatients);
+
+
+
 
         // when then
         mockMvc.perform(get("/doctor").principal(new UsernamePasswordAuthenticationToken(username, "test")))
                 .andExpect(status().isOk())
                 .andExpect(view().name("doctor-portal"))
                 .andExpect(model().attribute("doctorDTO", doctorDTO))
-                .andExpect(model().attribute("visits", visitsWithPatients));
+                .andExpect(model().attribute("visits", Matchers.hasEntry(visitDTO, patientDTO)));
 
         Mockito.verify(appUserService).findByUsername(username);
         Mockito.verify(doctorService).findByEmail(userEmail);

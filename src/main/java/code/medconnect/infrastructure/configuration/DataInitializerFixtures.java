@@ -67,7 +67,7 @@ public class DataInitializerFixtures {
 
     static DoctorAvailability availabilityFixture5() {
         return DoctorAvailability.builder()
-                .doctorId(1)
+                .doctorId(2)
                 .day(LocalDate.of(2023, 9, 19))
                 .startTime(LocalTime.of(8, 0))
                 .endTime(LocalTime.of(16, 0))
@@ -85,7 +85,7 @@ public class DataInitializerFixtures {
 
     static DoctorAvailability availabilityFixture7() {
         return DoctorAvailability.builder()
-                .doctorId(1)
+                .doctorId(2)
                 .day(LocalDate.of(2023, 9, 27))
                 .startTime(LocalTime.of(8, 0))
                 .endTime(LocalTime.of(16, 0))

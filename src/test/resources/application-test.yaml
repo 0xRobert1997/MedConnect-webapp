@@ -1,6 +1,6 @@
 spring:
   security:
-    enabled: false
+    enabled: true
   jpa:
     hibernate:
       ddl-auto: validate

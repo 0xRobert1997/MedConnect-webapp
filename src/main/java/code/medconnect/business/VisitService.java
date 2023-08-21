@@ -68,6 +68,10 @@ public class VisitService {
 
     }
 
+    public List<Visit> findAll() {
+        return visitDAO.findAll();
+    }
+
     @Transactional
     public Visit makeVisit(Integer patientId, Integer doctorId, LocalDate day, LocalTime startTime, LocalTime endTime) {
 
@@ -110,9 +114,5 @@ public class VisitService {
             }
         }
         return false;
-    }
-
-    public List<Visit> findAll() {
-        return visitDAO.findAll();
     }
 }

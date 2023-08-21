@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
@@ -17,6 +18,7 @@ public class PaginationService {
     private final DoctorAvailabilityDAO doctorAvailabilityDAO;
 
 
+    @Transactional
     public Page<DoctorAvailabilityDTO> paginate(int pageNumber, int pageSize, Integer doctorId) {
 
         Sort sort = Sort.by("day").ascending();

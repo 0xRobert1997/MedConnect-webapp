@@ -5,36 +5,32 @@ import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.api.dto.VisitDTO;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.api.dto.mapper.PatientMapper;
+import code.medconnect.api.dto.mapper.VisitMapper;
 import code.medconnect.business.DoctorService;
 import code.medconnect.business.PatientService;
 import code.medconnect.business.VisitService;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Patient;
+import code.medconnect.domain.Visit;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class DoctorController {
 
-    static final String DOCTOR_BASE_PATH = "/doctor";
+    private static final String DOCTOR_BASE_PATH = "/doctor";
 
     private final VisitService visitService;
     private final DoctorService doctorService;
@@ -42,9 +38,10 @@ public class DoctorController {
     private final PatientService patientService;
     private final PatientMapper patientMapper;
     private final DoctorMapper doctorMapper;
+    private final VisitMapper visitMapper;
 
-    @RequestMapping(value = DOCTOR_BASE_PATH, method = RequestMethod.GET)
-    public String DoctorPage(
+    @GetMapping(value = DOCTOR_BASE_PATH)
+    public String doctorPage(
             Model model,
             Principal principal
     ) {
@@ -54,10 +51,15 @@ public class DoctorController {
 
         Doctor doctor = doctorService.findByEmail(userEmail);
         DoctorDTO doctorDTO = doctorMapper.map(doctor);
-        Map<VisitDTO, PatientDTO> doctorsVisitsWithPatients = doctorService.getDoctorsVisitsWithPatients(doctorDTO.getDoctorId());
+        Map<Visit, Patient> doctorsVisitsWithPatients = doctorService.getDoctorsVisitsWithPatients(doctorDTO.getDoctorId());
+        Map<VisitDTO, PatientDTO> doctorsVisitsWithPatientsDTO = doctorsVisitsWithPatients.entrySet().stream()
+                .collect(Collectors.toMap(
+                        entry -> visitMapper.map(entry.getKey()),
+                        entry -> patientMapper.map(entry.getValue())
+                ));
 
         model.addAttribute("doctorDTO", doctorDTO);
-        model.addAttribute("visits", doctorsVisitsWithPatients);
+        model.addAttribute("visits", doctorsVisitsWithPatientsDTO);
         return "doctor-portal";
     }
 

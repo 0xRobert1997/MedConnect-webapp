@@ -1,4 +1,4 @@
-package code.medconnect.webMvc;
+package code.medconnect.controller.webMvc;
 
 import code.medconnect.api.controller.HomeController;
 import lombok.AllArgsConstructor;

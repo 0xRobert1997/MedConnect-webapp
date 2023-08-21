@@ -11,6 +11,7 @@ import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.domain.Patient;
+import code.medconnect.domain.Visit;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -68,20 +69,18 @@ public class DoctorService {
 
 
     @Transactional
-    public Map<VisitDTO, PatientDTO> getDoctorsVisitsWithPatients(Integer doctorId) {
-        List<VisitDTO> visits = visitDAO.findVisitsByDoctorId(doctorId)
-                .stream()
-                .map(visitMapper::map)
-                .toList();
+    public Map<Visit, Patient> getDoctorsVisitsWithPatients(Integer doctorId) {
+        List<Visit> visits = visitDAO.findVisitsByDoctorId(doctorId);
 
-        Map<VisitDTO, PatientDTO> visitsWithPatients = new HashMap<>();
 
-        for (VisitDTO visit : visits) {
+        Map<Visit, Patient> visitsWithPatients = new HashMap<>();
+
+        for (Visit visit : visits) {
             Integer patientId = visit.getPatientId();
             Patient patient = patientDAO.findById(patientId)
                     .orElseGet(() -> Patient.builder().build());
-            PatientDTO patientDTO = patientMapper.map(patient);
-            visitsWithPatients.put(visit, patientDTO);
+
+            visitsWithPatients.put(visit, patient);
         }
 
         return visitsWithPatients;

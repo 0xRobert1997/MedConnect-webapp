@@ -30,7 +30,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PatientController {
 
-    static final String PATIENT_BASE_PATH = "/patient";
+    public static final String PATIENT_BASE_PATH = "/patient";
+    public static final String NEW_VISIT = "/new-visit";
 
     private static final Integer PAGE_SIZE = 3;
     private final PatientService patientService;
@@ -43,7 +44,7 @@ public class PatientController {
     private final VisitMapper visitMapper;
 
 
-    @RequestMapping(value = PATIENT_BASE_PATH, method = RequestMethod.GET)
+    @GetMapping(value = PATIENT_BASE_PATH)
     public String patientPage(
             Model model,
             Principal principal
@@ -70,10 +71,10 @@ public class PatientController {
         return "patient-portal";
     }
 
-    @GetMapping("/new-visit")
+    @GetMapping(NEW_VISIT)
     public String newVisitPage(
             Model model,
-            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "0") int page,
             @ModelAttribute("patientId") Integer patientId,
             @ModelAttribute("doctorId") Integer doctorId
     ) {

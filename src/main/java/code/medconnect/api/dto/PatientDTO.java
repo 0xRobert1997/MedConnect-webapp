@@ -23,7 +23,7 @@ public class PatientDTO {
     String pesel;
     LocalDate dateOfBirth;
     String sex;
-    @Pattern(regexp = "^[+]\\d{2}\\s\\d{3}\\s\\d{3}\\s\\d{3}$")
+    @Pattern(regexp = "^\\d{3}-\\d{3}-\\d{3}$")
     String phone;
     @Email
     String email;

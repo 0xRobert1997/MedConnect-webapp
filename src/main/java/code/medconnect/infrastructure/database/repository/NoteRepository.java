@@ -22,7 +22,7 @@ public class NoteRepository implements NoteDAO {
     private final NoteJpaRepository noteJpaRepository;
     private final NoteEntityMapper noteEntityMapper;
     private final VisitJpaRepository visitJpaRepository;
-    private final VisitEntityMapper visitEntityMapper;
+
 
     @Override
     public Note saveNote(Note note) {

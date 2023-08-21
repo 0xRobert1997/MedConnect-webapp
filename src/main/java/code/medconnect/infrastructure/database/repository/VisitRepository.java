@@ -86,7 +86,6 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
                 .startTime(visitEntity.getStartTime())
                 .endTime(visitEntity.getEndTime())
                 .canceled(visitEntity.isCanceled())
-  //              .notes(new ArrayList<>())
                 .build();
         List<Note> notes = new ArrayList<>();
 
@@ -116,7 +115,7 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
     public List<Visit> findAll() {
         return visitJpaRepository.findAll()
                 .stream()
-                .map(a -> visitEntityMapper.map(a))
+                .map(visitEntityMapper::map)
                 .toList();
     }
 

@@ -1,4 +1,4 @@
-package code.medconnect.repository.jpa;
+package code.medconnect.infrastructure.databse.repository;
 
 import code.medconnect.infrastructure.database.entity.DoctorEntity;
 import code.medconnect.infrastructure.database.entity.PatientEntity;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ import java.util.Optional;
 @TestPropertySource(locations = "classpath:application-test.yaml")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(PersistenceContainerTestConfiguration.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class VisitJpaRepositoryTest {
 

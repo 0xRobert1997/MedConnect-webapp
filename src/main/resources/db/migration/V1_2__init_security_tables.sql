@@ -30,7 +30,7 @@ CREATE TABLE user_role (
 );
 
 
-INSERT INTO role (role_id, role_name) values (1, 'PATIENT'), (2, 'DOCTOR'), (3, 'REST_API');
+INSERT INTO role (role_id, role_name) values (1, 'PATIENT'), (2, 'DOCTOR');
 
 ALTER TABLE patient
 ADD COLUMN user_id INT,

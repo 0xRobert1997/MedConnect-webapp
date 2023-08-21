@@ -1,4 +1,4 @@
-package code.medconnect.webMvc;
+package code.medconnect.controller.webMvc;
 
 import code.medconnect.api.controller.PatientController;
 import code.medconnect.api.dto.DoctorAvailabilityDTO;

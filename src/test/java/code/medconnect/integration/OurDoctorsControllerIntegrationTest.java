@@ -1,6 +1,6 @@
 package code.medconnect.integration;
 
-import code.medconnect.integration.configuration.AbstractIT;
+import code.medconnect.integration.configuration.AbstractIntegrationTest;
 import lombok.RequiredArgsConstructor;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class OurDoctorsControllerIT extends AbstractIT {
+public class OurDoctorsControllerIntegrationTest extends AbstractIntegrationTest {
 
     private final TestRestTemplate testRestTemplate;
 

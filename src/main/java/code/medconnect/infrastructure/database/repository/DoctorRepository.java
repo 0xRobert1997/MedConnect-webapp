@@ -24,9 +24,6 @@ public class DoctorRepository implements DoctorDAO {
     private final DoctorJpaRepository doctorJpaRepository;
     private final DoctorEntityMapper doctorEntityMapper;
 
-    private final DoctorAvailabilityJpaRepository doctorAvailabilityJpaRepository;
-    private final DoctorAvailabilityEntityMapper doctorAvailabilityEntityMapper;
-
     @Override
     public Doctor findByEmail(String email) {
 

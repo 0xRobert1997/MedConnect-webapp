@@ -48,9 +48,10 @@ public class DoctorAvailabilityRepository implements DoctorAvailabilityDAO {
     @Override
     public Page<DoctorAvailabilityDTO> getDoctorAvailabilityPage(Integer doctorId, Pageable pageable) {
 
+        System.out.println("BEFORE PAGE");
         Page<DoctorAvailabilityEntity> availabilityPage
                 = doctorAvailabilityJpaRepository.findAllByDoctorId(doctorId, pageable);
-
+        System.out.println("AFTER PAGE");
         List<DoctorAvailabilityDTO> doctorAvailabilityDTOs = availabilityPage.getContent()
                 .stream()
                 .map(doctorAvailabilityEntityMapper::map)

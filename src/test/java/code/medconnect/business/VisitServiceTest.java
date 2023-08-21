@@ -1,12 +1,12 @@
 package code.medconnect.business;
 
-import code.medconnect.business.VisitService;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.business.dao.NoteDAO;
 import code.medconnect.business.dao.PatientDAO;
 import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.*;
 import code.medconnect.domain.exception.NotFoundException;
+import code.medconnect.domain.exception.VisitInTakenTimePeriodException;
 import code.medconnect.util.DomainFixtures;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -93,6 +93,26 @@ public class VisitServiceTest {
     }
 
     @Test
+    void thatGettingPatientsVisitsWorksCorrectly() {
+        // Given
+        Patient patient = DomainFixtures.somePatient();
+        String pesel = patient.getPesel();
+        patient.setPatientId(1);
+        List<Visit> visits = new ArrayList<>();
+
+        Mockito.when(patientDAO.findByPesel(pesel)).thenReturn(Optional.of(patient));
+        Mockito.when(visitDAO.findByPatientId(patient.getPatientId())).thenReturn(visits);
+
+        //when
+        List<Visit> resultVisits = visitService.getPatientsVisits(pesel);
+
+        //then
+        Assertions.assertEquals(visits, resultVisits);
+        Mockito.verify(patientDAO).findByPesel(pesel);
+        Mockito.verify(visitDAO).findByPatientId(patient.getPatientId());
+    }
+
+    @Test
     void thatMakingValidVisitWorksCorrectly() {
         //given
         Integer patientId = 1;
@@ -125,23 +145,22 @@ public class VisitServiceTest {
 
 
     @Test
-    void thatGettingPatientsVisitsWorksCorrectly() {
-        // Given
-        Patient patient = DomainFixtures.somePatient();
-        String pesel = patient.getPesel();
-        patient.setPatientId(1);
-        List<Visit> visits = new ArrayList<>();
+    void thatMakingNotValidVisitThrowsException() {
+        //given
+        Integer patientId = 1;
+        Integer doctorId = 1;
+        LocalDate day = LocalDate.of(2023, 10, 10);
+        LocalTime startTime = LocalTime.of(12, 0);
+        LocalTime endTime = LocalTime.of(12, 30);
 
-        Mockito.when(patientDAO.findByPesel(pesel)).thenReturn(Optional.of(patient));
-        Mockito.when(visitDAO.findByPatientId(patient.getPatientId())).thenReturn(visits);
+        Doctor doctor = DomainFixtures.someDoctor1().withAvailabilities(Set.of(DomainFixtures.someDoctorAvailability()));
 
-        //when
-        List<Visit> resultVisits = visitService.getPatientsVisits(pesel);
 
-        //then
-        Assertions.assertEquals(visits, resultVisits);
-        Mockito.verify(patientDAO).findByPesel(pesel);
-        Mockito.verify(visitDAO).findByPatientId(patient.getPatientId());
+        Mockito.when(doctorDAO.findById(doctorId)).thenReturn(doctor);
+        Mockito.when(visitDAO.findConflictingVisits(doctor, day, startTime, endTime)).thenReturn(List.of());
+
+        //when, then
+        Assertions.assertThrows(VisitInTakenTimePeriodException.class, () -> visitService.makeVisit(patientId, doctorId, day, startTime, endTime));
     }
 
 }

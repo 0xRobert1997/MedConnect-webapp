@@ -54,9 +54,8 @@ public class SecurityConfiguration {
                     auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
                     auth.requestMatchers(
                     "/static/**", "/register", "/ourdoctors").permitAll();
-                    auth.requestMatchers("/patient/**").hasAuthority("PATIENT");
-                    auth.requestMatchers("/api/**").hasAuthority("PATIENT");
-                    auth.requestMatchers("/doctor/**").hasAuthority("DOCTOR");
+                    auth.requestMatchers("/patient/**", "/api/patient/**").hasAuthority("PATIENT");
+                    auth.requestMatchers("/doctor/**", "/api/doctor/**").hasAuthority("DOCTOR");
                     auth.anyRequest().permitAll();
                 })
                 .httpBasic(Customizer.withDefaults())

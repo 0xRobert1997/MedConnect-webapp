@@ -1,4 +1,4 @@
-package code.medconnect.webMvc;
+package code.medconnect.controller.webMvc;
 
 import code.medconnect.api.controller.VisitController;
 import code.medconnect.business.VisitService;
