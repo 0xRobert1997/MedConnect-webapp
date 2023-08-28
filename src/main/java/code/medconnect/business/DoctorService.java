@@ -37,6 +37,9 @@ public class DoctorService {
     private final VisitMapper visitMapper;
     private final PatientMapper patientMapper;
 
+    private static final LocalTime START_TIME = LocalTime.of(8, 0);
+    private static final LocalTime END_TIME = LocalTime.of(16, 0);
+
 
     @Transactional
     public Set<Doctor> findAll() {
@@ -50,12 +53,12 @@ public class DoctorService {
     }
 
     @Transactional
-    public void saveAvailAbility(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {
+    public void saveAvailAbility(Doctor doctor, LocalDate day) {
         DoctorAvailability ava = DoctorAvailability.builder()
                 .doctorId(doctor.getDoctorId())
                 .day(day)
-                .startTime(startTime)
-                .endTime(endTime)
+                .startTime(START_TIME)
+                .endTime(END_TIME)
                 .build();
         doctorAvailabilityDAO.saveAvailability(ava);
     }

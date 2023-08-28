@@ -23,4 +23,5 @@ public class Visit {
     List<Note> notes;
     Integer patientId;
     Integer doctorId;
+
 }

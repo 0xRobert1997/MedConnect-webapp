@@ -83,6 +83,8 @@ public class PatientController {
         Page<DoctorAvailabilityDTO> doctorAvailabilityPage = paginationService.paginate(page, PAGE_SIZE, doctorId);
         List<LocalTime> availableTimes = getAvailableTimeFrames();
 
+
+
         model.addAttribute("doctorAvailabilities", doctorAvailabilityPage.getContent());
         model.addAttribute("doctorAvailabilityPage", doctorAvailabilityPage);
         model.addAttribute("patientId", patientId);

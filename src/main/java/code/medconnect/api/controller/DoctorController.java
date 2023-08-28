@@ -67,12 +67,12 @@ public class DoctorController {
     @PostMapping("/doctor/add-availability")
     public String addAvailability(
             @RequestParam String doctorEmail,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
+/*            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime*/
     ) {
         Doctor doctor = doctorService.findByEmail(doctorEmail);
-        doctorService.saveAvailAbility(doctor, date, startTime, endTime);
+        doctorService.saveAvailAbility(doctor, date);
 
         return "redirect:/doctor";
     }

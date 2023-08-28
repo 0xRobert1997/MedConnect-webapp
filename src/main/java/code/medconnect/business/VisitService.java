@@ -1,7 +1,5 @@
 package code.medconnect.business;
 
-import code.medconnect.api.dto.VisitDTO;
-import code.medconnect.api.dto.mapper.VisitMapper;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.business.dao.NoteDAO;
 import code.medconnect.business.dao.PatientDAO;
@@ -18,8 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -78,7 +74,7 @@ public class VisitService {
         Doctor doctor = doctorDAO.findById(doctorId);
 
         boolean dateAndTimeInDoctorAvailability = isDoctorAvailableAtTime(doctor, day, startTime, endTime);
-        boolean visitTimeAvailable = areVisitSlotsAvailable(doctor, day, startTime, endTime);
+        boolean visitTimeAvailable = isVisitInAvailableTime(doctor, day, startTime, endTime);
 
         if (dateAndTimeInDoctorAvailability && visitTimeAvailable) {
             return visitDAO.saveVisit(Visit.builder()
@@ -96,7 +92,7 @@ public class VisitService {
     }
 
 
-    private boolean areVisitSlotsAvailable(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {
+    private boolean isVisitInAvailableTime(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime) {
         List<Visit> conflictingVisits = visitDAO.findConflictingVisits(doctor, day, startTime, endTime);
         if (conflictingVisits.isEmpty()) {
             log.info("no conflicting visits found");

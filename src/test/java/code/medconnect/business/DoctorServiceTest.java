@@ -55,14 +55,14 @@ public class DoctorServiceTest {
     }
 
     @Test
-    void shouldInvokeDaoToSaveCorrectly() {
+    void shouldInvokeDaoToSaveAvailabilityCorrectly() {
         //given
         Doctor doctor = DomainFixtures.someDoctor1();
         LocalDate day = LocalDate.of(2050, 1, 4);
         LocalTime startTime = LocalTime.of(13, 13);
         LocalTime endTime = LocalTime.of(13, 19);
         //when
-        doctorService.saveAvailAbility(doctor, day, startTime, endTime);
+        doctorService.saveAvailAbility(doctor, day);
         //then
         Mockito.verify(doctorAvailabilityDAO).saveAvailability(Mockito.any(DoctorAvailability.class));
     }

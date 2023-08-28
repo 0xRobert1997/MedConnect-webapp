@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,6 +19,6 @@ public class DoctorAvailability {
     LocalDate day;
     LocalTime startTime;
     LocalTime endTime;
-
+    private List<TimeSlot> timeSlots;
 
 }

@@ -1,5 +1,6 @@
 package code.medconnect.api.dto;
 
+import code.medconnect.domain.TimeSlot;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -20,4 +22,6 @@ public class DoctorAvailabilityDTO {
     LocalDate day;
     LocalTime startTime;
     LocalTime endTime;
+    private List<TimeSlot> timeSlots;
+
 }
