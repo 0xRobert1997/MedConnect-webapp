@@ -67,6 +67,8 @@ dependencies {
 	// for converting photo to byte[]
 	implementation 'commons-io:commons-io:2.13.0'
 
+	//google photos
+	compileOnly 'com.google.photos.library:google-photos-library-client:1.7.3'
 
 }
 

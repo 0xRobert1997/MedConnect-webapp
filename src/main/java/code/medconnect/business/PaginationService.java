@@ -3,6 +3,7 @@ package code.medconnect.business;
 import code.medconnect.api.dto.DoctorAvailabilityDTO;
 import code.medconnect.api.dto.mapper.DoctorAvailabilityMapper;
 import code.medconnect.business.dao.DoctorAvailabilityDAO;
+import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
 import code.medconnect.infrastructure.database.repository.mapper.DoctorAvailabilityEntityMapper;
 import lombok.AllArgsConstructor;
@@ -26,19 +27,18 @@ public class PaginationService {
 
 
     @Transactional
-    public Page<DoctorAvailabilityDTO> paginate(int pageNumber, int pageSize, Integer doctorId) {
+    public Page<DoctorAvailability> paginate(int pageNumber, int pageSize, Integer doctorId) {
         Sort sort = Sort.by("day").ascending();
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
         Page<DoctorAvailabilityEntity> availabilityPage = doctorAvailabilityDAO.getDoctorAvailabilityPage(doctorId, pageable);
 
-        List<DoctorAvailabilityDTO> doctorAvailabilityDTOs = availabilityPage.getContent()
+        List<DoctorAvailability> doctorAvailabilities = availabilityPage.getContent()
                 .stream()
                 .map(doctorAvailabilityEntityMapper::map)
-                .map(doctorAvailabilityMapper::map)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(doctorAvailabilityDTOs, pageable, availabilityPage.getTotalElements());
+        return new PageImpl<>(doctorAvailabilities, pageable, availabilityPage.getTotalElements());
     }
 
 }

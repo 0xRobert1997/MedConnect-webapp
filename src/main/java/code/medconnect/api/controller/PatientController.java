@@ -4,6 +4,7 @@ import code.medconnect.api.dto.DoctorAvailabilityDTO;
 import code.medconnect.api.dto.DoctorDTO;
 import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.api.dto.VisitDTO;
+import code.medconnect.api.dto.mapper.DoctorAvailabilityMapper;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.api.dto.mapper.VisitMapper;
@@ -11,6 +12,7 @@ import code.medconnect.business.DoctorService;
 import code.medconnect.business.PaginationService;
 import code.medconnect.business.PatientService;
 import code.medconnect.business.VisitService;
+import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.domain.Patient;
 import code.medconnect.security.AppUser;
 import code.medconnect.security.AppUserService;
@@ -42,6 +44,7 @@ public class PatientController {
     private final PatientMapper patientMapper;
     private final DoctorMapper doctorMapper;
     private final VisitMapper visitMapper;
+    private final DoctorAvailabilityMapper doctorAvailabilityMapper;
 
 
     @GetMapping(value = PATIENT_BASE_PATH)
@@ -80,18 +83,21 @@ public class PatientController {
     ) {
 
 
-        Page<DoctorAvailabilityDTO> doctorAvailabilityPage = paginationService.paginate(page, PAGE_SIZE, doctorId);
+        Page<DoctorAvailability> pageOfAvailabilities = paginationService.paginate(page, PAGE_SIZE, doctorId);
+        List<DoctorAvailabilityDTO> doctorAvailabilityDTOS = pageOfAvailabilities.getContent().stream()
+                .map(doctorAvailabilityMapper::map)
+                .toList();
+
         List<LocalTime> availableTimes = getAvailableTimeFrames();
 
 
-
-        model.addAttribute("doctorAvailabilities", doctorAvailabilityPage.getContent());
-        model.addAttribute("doctorAvailabilityPage", doctorAvailabilityPage);
+        model.addAttribute("doctorAvailabilities", doctorAvailabilityDTOS);
+        model.addAttribute("doctorAvailabilityPage", pageOfAvailabilities);
         model.addAttribute("patientId", patientId);
         model.addAttribute("doctorId", doctorId);
         model.addAttribute("availableTimes", availableTimes);
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", doctorAvailabilityPage.getTotalPages());
+        model.addAttribute("totalPages", pageOfAvailabilities.getTotalPages());
 
         return "new-visit";
     }
