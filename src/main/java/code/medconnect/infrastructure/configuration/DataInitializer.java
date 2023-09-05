@@ -40,48 +40,48 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void initializeDiseases() {
-        diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture1());
-        diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture2());
-        diseaseRepository.saveDisease(DataInitializerFixtures.diseaseFixture3());
+        diseaseRepository.saveDisease(DataInitializerData.diseaseFixture1());
+        diseaseRepository.saveDisease(DataInitializerData.diseaseFixture2());
+        diseaseRepository.saveDisease(DataInitializerData.diseaseFixture3());
     }
 
     private void initializerUsers() {
-        appUserRepository.save(DataInitializerFixtures.appUserEntityFixture1());
-        appUserRepository.save(DataInitializerFixtures.appUserEntityFixture2());
-        appUserRepository.save(DataInitializerFixtures.appUserEntityFixture3());
-        appUserRepository.save(DataInitializerFixtures.appUserEntityFixture4());
+        appUserRepository.save(DataInitializerData.appUserEntityFixture1());
+        appUserRepository.save(DataInitializerData.appUserEntityFixture2());
+        appUserRepository.save(DataInitializerData.appUserEntityFixture3());
+        appUserRepository.save(DataInitializerData.appUserEntityFixture4());
     }
 
     private void initializeVisits() {
-        visitRepository.saveVisit(DataInitializerFixtures.visitFixture1());
-        visitRepository.saveVisit(DataInitializerFixtures.visitFixture2());
-        visitRepository.saveVisit(DataInitializerFixtures.visitFixture3());
-        visitRepository.saveVisit(DataInitializerFixtures.visitFixture4());
-        visitRepository.saveVisit(DataInitializerFixtures.visitFixture5());
-        visitRepository.saveVisit(DataInitializerFixtures.visitFixture6());
+        visitRepository.saveVisit(DataInitializerData.visitFixture1());
+        visitRepository.saveVisit(DataInitializerData.visitFixture2());
+        visitRepository.saveVisit(DataInitializerData.visitFixture3());
+        visitRepository.saveVisit(DataInitializerData.visitFixture4());
+        visitRepository.saveVisit(DataInitializerData.visitFixture5());
+        visitRepository.saveVisit(DataInitializerData.visitFixture6());
     }
 
     private void initializeAvailabilities() {
-        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture1());
-        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture2());
-        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture3());
-        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture4());
-        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture5());
-        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture6());
-        doctorAvailabilityRepository.saveAvailability(DataInitializerFixtures.availabilityFixture7());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerData.availabilityFixture1());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerData.availabilityFixture2());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerData.availabilityFixture3());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerData.availabilityFixture4());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerData.availabilityFixture5());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerData.availabilityFixture6());
+        doctorAvailabilityRepository.saveAvailability(DataInitializerData.availabilityFixture7());
 
     }
 
     private void initializePatients() {
-        Patient patient1 = DataInitializerFixtures.patientFixture1();
-        Patient patient2 = DataInitializerFixtures.patientFixture2();
+        Patient patient1 = DataInitializerData.patientFixture1();
+        Patient patient2 = DataInitializerData.patientFixture2();
         patientRepository.savePatient(patient1.withAppUser(
                 AppUser.builder()
                         .id(1)
                         .build())
                 .withDiseases(Set.of(
-                        DataInitializerFixtures.diseaseFixture1(),
-                        DataInitializerFixtures.diseaseFixture2())
+                        DataInitializerData.diseaseFixture1(),
+                        DataInitializerData.diseaseFixture2())
                 ));
 
 
@@ -90,14 +90,14 @@ public class DataInitializer implements CommandLineRunner {
                         .id(2)
                         .build())
                 .withDiseases(Set.of(
-                        DataInitializerFixtures.diseaseFixture3()
+                        DataInitializerData.diseaseFixture3()
                 ))
         );
     }
 
     private void initializeDoctors() {
-        Doctor doctor1 = DataInitializerFixtures.doctorFixture1();
-        Doctor doctor2 = DataInitializerFixtures.doctorFixture2();
+        Doctor doctor1 = DataInitializerData.doctorFixture1();
+        Doctor doctor2 = DataInitializerData.doctorFixture2();
         doctorRepository.saveDoctor(doctor1
                 .withAppUser(AppUser.builder()
                         .id(3)

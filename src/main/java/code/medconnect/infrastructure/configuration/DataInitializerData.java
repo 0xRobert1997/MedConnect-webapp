@@ -1,7 +1,6 @@
 package code.medconnect.infrastructure.configuration;
 
 import code.medconnect.domain.*;
-import code.medconnect.infrastructure.database.entity.NoteEntity;
 import code.medconnect.security.AppUserEntity;
 import code.medconnect.security.RoleEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +12,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
-public class DataInitializerFixtures {
+public class DataInitializerData {
     private static byte[] getPhotoBytes(String imagePath) {
         try {
             ClassPathResource resource = new ClassPathResource(imagePath);

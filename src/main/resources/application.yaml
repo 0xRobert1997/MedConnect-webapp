@@ -26,6 +26,20 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+
+api:
+  imgur:
+    url: https://api.imgur.com/
+    clientID: 8ce1a67ee460abc
+    clientSecret: 02ec0abcae41871653935fe303043d743085b33d
+    accessToken: aff9327d476e94cdc0f4f5432bd4956926422fd4
+
+
+
+
+
+
+
 #logging:
   #level:
    # org:
