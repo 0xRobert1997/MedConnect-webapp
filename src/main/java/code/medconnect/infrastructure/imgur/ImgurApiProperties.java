@@ -13,5 +13,5 @@ public class ImgurApiProperties {
     private String clientId;
     private String clientSecret;
     private String accessToken;
-
+    private String albumHash;
 }

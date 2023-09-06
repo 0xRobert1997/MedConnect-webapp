@@ -26,12 +26,54 @@ public class ImgurAuthorizationService {
 // https://api.imgur.com/oauth2/authorize?client_id=8ce1a67ee460abc&response_type=token
 // https://api.imgur.com/oauth2/authorize?response_type=code&client_id=8ce1a67ee460abc&redirect_uri=https%3A%2F%2Fapi.imgur.com%2Foauth2%2Ftoken
 
-    //response_type=token
-    //state na końcu jest opcjonalny
-    // potem trzeba wpisać login i hasło
 
 
+    public String uploadPhoto() {
+        HttpHeaders headers = new HttpHeaders();
+        // auth header: token
+        // header Authorization: Client-ID {{clientId}}
+        //image w body
+        return null;
+    }
 
+    // response
+    /*
+    {
+    "status": 200,
+    "success": true,
+    "data": {
+        "id": "01bqtFb",
+        "deletehash": "ZNK8fhImHb5HRal",
+        "account_id": 174096701,
+        "account_url": "0xRobert",
+        "ad_type": null,
+        "ad_url": null,
+        "title": null,
+        "description": null,
+        "name": "",
+        "type": "image/png",
+        "width": 742,
+        "height": 791,
+        "size": 26163,
+        "views": 0,
+        "section": null,
+        "vote": null,
+        "bandwidth": 0,
+        "animated": false,
+        "favorite": false,
+        "in_gallery": false,
+        "in_most_viral": false,
+        "has_sound": false,
+        "is_ad": false,
+        "nsfw": null,
+        "link": "https://i.imgur.com/01bqtFb.png",
+        "tags": [],
+        "datetime": 1694019471,
+        "mp4": "",
+        "hls": ""
+    }
+}
+     */
 
 
 

@@ -10,4 +10,5 @@ public class ImgurResponse {
 
     @JsonProperty("data")
     private ImgurData data;
+    private String id;
 }
