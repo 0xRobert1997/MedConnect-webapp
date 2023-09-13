@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "imgur.api")
+@ConfigurationProperties(prefix = "api.imgur")
 public class ImgurApiProperties {
 
     private String url;

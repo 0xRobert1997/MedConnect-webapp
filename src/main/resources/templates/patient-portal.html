@@ -20,6 +20,13 @@
     <p><strong>Email:</strong> <span th:text="${patientDTO.email}"></span></p>
     <p><strong>Phone Number:</strong> <span th:text="${patientDTO.phone}"></span></p>
 
+    <form th:action="@{/upload}" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" name="image" class="form-control-file" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Change your photo</button>
+    </form>
+
     <h2>Visit History</h2>
     <table class="table">
         <thead>

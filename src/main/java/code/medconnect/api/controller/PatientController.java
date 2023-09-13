@@ -8,10 +8,7 @@ import code.medconnect.api.dto.mapper.DoctorAvailabilityMapper;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.api.dto.mapper.VisitMapper;
-import code.medconnect.business.DoctorService;
-import code.medconnect.business.PaginationService;
-import code.medconnect.business.PatientService;
-import code.medconnect.business.VisitService;
+import code.medconnect.business.*;
 import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.domain.Patient;
 import code.medconnect.security.AppUser;
@@ -21,7 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalTime;
 import java.util.List;
@@ -35,9 +34,12 @@ public class PatientController {
     public static final String PATIENT_BASE_PATH = "/patient";
     public static final String NEW_VISIT = "/new-visit";
 
+    static final String UPLOAD_PHOTO = "/upload";
+
     private static final Integer PAGE_SIZE = 3;
     private final PatientService patientService;
     private final VisitService visitService;
+    private final ImgurService imgurService;
     private final AppUserService appUserService;
     private final DoctorService doctorService;
     private final PaginationService paginationService;
@@ -100,6 +102,19 @@ public class PatientController {
         model.addAttribute("totalPages", pageOfAvailabilities.getTotalPages());
 
         return "new-visit";
+    }
+
+    @PostMapping(UPLOAD_PHOTO)
+    public String uploadImage(@RequestParam("image") MultipartFile image) {
+        if (!image.isEmpty()) {
+            try {
+                imgurService.uploadPhoto(image);
+            } catch (IOException e) {
+
+            }
+
+        }
+        return "redirect:/patient";
     }
 
 
