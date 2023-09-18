@@ -1,5 +1,6 @@
 package code.medconnect.business;
 
+import code.medconnect.domain.exception.ImgurUploadException;
 import code.medconnect.infrastructure.imgur.ImgurApiProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class ImgurService {
 
 
 
-    public String uploadPhoto(MultipartFile image) throws IOException {
+    public void uploadPhoto(MultipartFile image) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + imgurApiProperties.getAccessToken());
         headers.add("Connection", "keep-alive");
@@ -47,9 +48,17 @@ public class ImgurService {
                 String.class
         );
 
-    // dodać obsługę odpowiedzi
+        if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+            saveUploadedPhotoId();
+        } else {
+            throw new ImgurUploadException("Failed to upload photo to Imgur");
+        }
 
-        return null;
+
+    }
+
+    private void saveUploadedPhotoId() {
+
     }
 
 

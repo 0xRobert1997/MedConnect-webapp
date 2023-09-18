@@ -13,19 +13,30 @@
 <body>
 <div class="container">
     <h1>Patient Details</h1>
-    <p><strong>Name:</strong> <span th:text="${patientDTO.name}"></span></p>
-    <p><strong>Surname:</strong> <span th:text="${patientDTO.surname}"></span></p>
-    <p><strong>Pesel:</strong> <span th:text="${patientDTO.pesel}"></span></p>
-    <p><strong>Date of Birth:</strong> <span th:text="${patientDTO.dateOfBirth}"></span></p>
-    <p><strong>Email:</strong> <span th:text="${patientDTO.email}"></span></p>
-    <p><strong>Phone Number:</strong> <span th:text="${patientDTO.phone}"></span></p>
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Name:</strong> <span th:text="${patientDTO.name}"></span></p>
+            <p><strong>Surname:</strong> <span th:text="${patientDTO.surname}"></span></p>
+            <p><strong>Pesel:</strong> <span th:text="${patientDTO.pesel}"></span></p>
+            <p><strong>Date of Birth:</strong> <span th:text="${patientDTO.dateOfBirth}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${patientDTO.email}"></span></p>
+            <p><strong>Phone Number:</strong> <span th:text="${patientDTO.phone}"></span></p>
+        </div>
+
+        <div class="col-md-6">
+            <div class="float-right">
+                <img th:src="@{/images/default-user-photo.jpg}" alt="ups" width="auto" height="auto">
+            </div>
+        </div>
+    </div>
 
     <form th:action="@{/upload}" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <input type="file" name="image" class="form-control-file" accept="image/*">
+            <input type="file" name="image" class="form-control-file mb-2" accept="image/*">
+            <button type="submit" class="btn btn-primary">Change your photo</button>
         </div>
-        <button type="submit" class="btn btn-primary">Change your photo</button>
     </form>
+
 
     <h2>Visit History</h2>
     <table class="table">
@@ -69,20 +80,21 @@
     </table>
 
     <h2>Choose a Doctor</h2>
-    <<form th:action="@{/new-visit}" method="get">
-    <label for="doctor">Select Doctor:</label>
-    <select id="doctor" name="doctorId" required>
-        <option th:each="doctor : ${doctors}"
-                th:value="${doctor.doctorId}"
-                th:text="${doctor.name + ' ' + doctor.surname}">
-        </option>
-    </select>
-    <br>
+    <form th:action="@{/new-visit}" method="get">
+        <label for="doctor">Select Doctor:</label>
+        <select id="doctor" name="doctorId" required>
+            <option th:each="doctor : ${doctors}"
+                    th:value="${doctor.doctorId}"
+                    th:text="${doctor.name + ' ' + doctor.surname}">
+            </option>
+        </select>
+        <br>
 
-    <input type="hidden" name="patientId" th:value="${patientDTO.patientId}" />
+        <input type="hidden" name="patientId" th:value="${patientDTO.patientId}" />
 
-    <button type="submit" class="btn btn-primary">New Visit</button>
-</form>
+        <button type="submit" class="btn btn-primary">New Visit</button>
+    </form>
+
 
 
     <div class="row mt-3">

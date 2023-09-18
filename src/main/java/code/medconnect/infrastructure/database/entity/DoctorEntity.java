@@ -37,6 +37,8 @@ public class DoctorEntity {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "imgur_photo_id")
+    private String imgurPhotoId;
 
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "photo_data", columnDefinition = "bytea")

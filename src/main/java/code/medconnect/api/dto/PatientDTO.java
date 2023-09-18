@@ -29,6 +29,7 @@ public class PatientDTO {
     String email;
     byte[] photoData;
     String base64Image;
+    String imgurPhotoId;
     Set<DiseaseDTO> diseases;
     Set<VisitDTO> visits;
     Address address;

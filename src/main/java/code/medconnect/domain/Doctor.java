@@ -21,6 +21,7 @@ public class Doctor {
     String email;
     byte[] photoData;
     String base64Image;
+    String imgurPhotoId;
     Address address;
     Set<DoctorAvailability> availabilities;
     Set<Visit> visits;

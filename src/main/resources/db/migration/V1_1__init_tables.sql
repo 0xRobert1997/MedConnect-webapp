@@ -15,8 +15,9 @@ CREATE TABLE patient (
     sex               VARCHAR(256),
     phone             VARCHAR(32)   NOT NULL,
     email             VARCHAR(32)   NOT NULL    UNIQUE,
-    photo_data        BYTEA,
     address_id        INT           NOT NULL,
+    photo_data        BYTEA,
+    imgur_photo_id    VARCHAR(32),
     FOREIGN KEY (address_id)
         REFERENCES address(address_id)
 );
@@ -30,6 +31,7 @@ CREATE TABLE doctor (
     email                   VARCHAR(32)  NOT NULL    UNIQUE,
     address_id              INT          NOT NULL,
     photo_data              BYTEA,
+    imgur_photo_id          VARCHAR(32),
     FOREIGN KEY (address_id)
          REFERENCES address(address_id)
 );

@@ -24,6 +24,7 @@ public class Patient {
     String phone;
     String email;
     byte[] photoData;
+    String imgurPhotoId;
     Address address;
     Set<Disease> diseases;
     Set<Visit> visits;
