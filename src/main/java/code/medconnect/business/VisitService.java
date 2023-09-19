@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -55,7 +56,7 @@ public class VisitService {
 
 
     @Transactional
-    public List<Visit> getPatientsVisits(String pesel) {
+    public Set<Visit> getPatientsVisits(String pesel) {
         Patient patient = patientDAO.findByPesel(pesel)
                 .orElseThrow(() -> new NotFoundException("Patient with pesel: " + pesel + " doesn't exist"));
         Integer patientId = patient.getPatientId();

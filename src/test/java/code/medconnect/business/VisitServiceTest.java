@@ -104,7 +104,7 @@ public class VisitServiceTest {
         Mockito.when(visitDAO.findByPatientId(patient.getPatientId())).thenReturn(visits);
 
         //when
-        List<Visit> resultVisits = visitService.getPatientsVisits(pesel);
+        Set<Visit> resultVisits = visitService.getPatientsVisits(pesel);
 
         //then
         Assertions.assertEquals(visits, resultVisits);

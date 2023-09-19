@@ -39,8 +39,7 @@ public class PatientRepository implements PatientDAO {
 
     @Override
     public Optional<Patient> findById(Integer id) {
-        return patientJpaRepository.findById(id)
-                .map(patientEntityMapper::map);
+        return patientJpaRepository.findById(id).map(patientEntityMapper::map);
 
     }
     @Override
@@ -79,6 +78,8 @@ public class PatientRepository implements PatientDAO {
             throw new NotFoundException("Patient with pesel: " + patientPesel + " doesn't exist");
         }
     }
+
+
 
     private Patient mapWithDiseases(PatientEntity entity) {
         Set<Disease> mappedDiseases = new HashSet<>();

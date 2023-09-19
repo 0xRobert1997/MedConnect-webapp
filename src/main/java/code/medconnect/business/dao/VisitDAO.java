@@ -24,7 +24,7 @@ public interface VisitDAO {
 
     List<Visit> findConflictingVisits(Doctor doctor, LocalDate day, LocalTime startTime, LocalTime endTime);
 
-    List<Visit> findByPatientId(Integer patientId);
+    Set<Visit> findByPatientId(Integer patientId);
 
     List<Visit> findByDoctorId(Integer doctorId);
 

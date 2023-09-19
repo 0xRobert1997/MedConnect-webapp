@@ -78,4 +78,9 @@ public class PatientService {
     public List<Patient> findAll() {
         return patientDAO.findAll();
     }
+
+    public Patient findById(Integer patientId) {
+        return patientDAO.findById(patientId)
+                .orElseThrow(() -> new NotFoundException("Patient with id: " + patientId + " doesn't exist"));
+    }
 }

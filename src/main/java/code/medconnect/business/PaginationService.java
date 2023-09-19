@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PaginationService {
 
-    private final DoctorAvailabilityService doctorAvailabilityService;
-
 
     private final DoctorAvailabilityDAO doctorAvailabilityDAO;
     private final DoctorAvailabilityMapper doctorAvailabilityMapper;

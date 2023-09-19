@@ -105,10 +105,14 @@ public class PatientController {
     }
 
     @PostMapping(UPLOAD_PHOTO)
-    public String uploadImage(@RequestParam("image") MultipartFile image) {
+    public String updateUsersPhoto(
+            @RequestParam("image") MultipartFile image,
+            @ModelAttribute("patientId") Integer patientId
+    ) {
         if (!image.isEmpty()) {
             try {
-                imgurService.uploadPhoto(image);
+                String uploadedPhotoId = imgurService.uploadPhoto(image);
+                imgurService.saveUploadedPhotoId(patientId, uploadedPhotoId);
             } catch (IOException e) {
 
             }
