@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -21,9 +23,15 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -34,6 +42,8 @@ import java.util.Set;
 public class ImgurService {
 
     private static final String UPLOAD_URL = "https://api.imgur.com/3/upload";
+    private static final String IMAGE_URL_BASE = "https://imgur.com/";
+    private static final String DEFAULT_PHOTO_PATH = "static/images/default-user-photo.jpg";
     private final ImgurApiProperties imgurApiProperties;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -44,13 +54,19 @@ public class ImgurService {
 
 
     @Transactional
-    public String uploadPhoto(MultipartFile image) throws IOException {
+    public String uploadPhoto(MultipartFile image)  {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + imgurApiProperties.getAccessToken());
         headers.add("Connection", "keep-alive");
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("image", new FileSystemResource(convertMultipartFileToFile(image)));
+
+        try {
+            body.add("image", new FileSystemResource(convertMultipartFileToFile(image)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         body.add("album", imgurApiProperties.getAlbumHash());
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
@@ -81,10 +97,49 @@ public class ImgurService {
             Set<Visit> patientsVisits = visitDAO.findByPatientId(patientId);
             patient.setVisits(patientsVisits);
 
-
             patientDAO.savePatient(patient);
         }
 
+    }
+
+    @Transactional
+    public byte[] getPhoto(Patient patient) {
+
+        String photoId = patient.getImgurPhotoId();
+        if (photoId != null) {
+            String imageUrl = (IMAGE_URL_BASE + photoId + ".jpg");
+            try {
+                byte[] imageBytes = downloadImage(imageUrl);
+                return imageBytes;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return getPhotoBytes(DEFAULT_PHOTO_PATH);
+        }
+
+    }
+
+    private static byte[] getPhotoBytes(String imagePath) {
+        try {
+            ClassPathResource resource = new ClassPathResource(imagePath);
+            return IOUtils.toByteArray(resource.getInputStream());
+        } catch (IOException e) {
+            log.warn("Cannot load photo correctly");
+            e.printStackTrace();
+            return new byte[0];
+        }
+    }
+
+    private static byte[] downloadImage(String imageUrl) throws IOException {
+        URL url = new URL(imageUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        try (InputStream inputStream = connection.getInputStream()) {
+            return IOUtils.toByteArray(inputStream);
+        } finally {
+            connection.disconnect();
+        }
     }
 
     private String parseId(ResponseEntity<String> responseEntity) {

@@ -25,7 +25,8 @@
 
         <div class="col-md-6">
             <div class="float-right">
-                <img th:src="@{/images/default-user-photo.jpg}" alt="ups" width="auto" height="auto">
+
+                <img th:src="${'data:image/jpeg;base64,' + photo}" alt="default photo" width="100px">
             </div>
         </div>
     </div>

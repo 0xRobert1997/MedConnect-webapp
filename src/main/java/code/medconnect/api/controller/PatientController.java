@@ -20,9 +20,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -69,11 +69,26 @@ public class PatientController {
                 .map(doctorMapper::map)
                 .collect(Collectors.toSet());
 
+        byte[] photoData = imgurService.getPhoto(patient);
+        String base64Image = Base64.getEncoder().encodeToString(photoData);
+
+        model.addAttribute("photo", base64Image);
         model.addAttribute("patientDTO", patientDTO);
         model.addAttribute("visitHistory", patientsVisits);
         model.addAttribute("doctors", doctors);
 
         return "patient-portal";
+    }
+
+    @PostMapping(UPLOAD_PHOTO)
+    public String updateUsersPhoto(
+            @RequestParam("image") MultipartFile image,
+            @ModelAttribute("patientId") Integer patientId
+    ) {
+        String uploadedPhotoId = imgurService.uploadPhoto(image);
+        imgurService.saveUploadedPhotoId(patientId, uploadedPhotoId);
+
+        return "redirect:/patient";
     }
 
     @GetMapping(NEW_VISIT)
@@ -90,7 +105,7 @@ public class PatientController {
                 .map(doctorAvailabilityMapper::map)
                 .toList();
 
-        List<LocalTime> availableTimes = getAvailableTimeFrames();
+        List<LocalTime> availableTimes = getTimeFrames();
 
 
         model.addAttribute("doctorAvailabilities", doctorAvailabilityDTOS);
@@ -104,25 +119,8 @@ public class PatientController {
         return "new-visit";
     }
 
-    @PostMapping(UPLOAD_PHOTO)
-    public String updateUsersPhoto(
-            @RequestParam("image") MultipartFile image,
-            @ModelAttribute("patientId") Integer patientId
-    ) {
-        if (!image.isEmpty()) {
-            try {
-                String uploadedPhotoId = imgurService.uploadPhoto(image);
-                imgurService.saveUploadedPhotoId(patientId, uploadedPhotoId);
-            } catch (IOException e) {
 
-            }
-
-        }
-        return "redirect:/patient";
-    }
-
-
-    private List<LocalTime> getAvailableTimeFrames() {
+    private List<LocalTime> getTimeFrames() {
         return List.of(
                 LocalTime.of(8, 0),
                 LocalTime.of(8, 30),
