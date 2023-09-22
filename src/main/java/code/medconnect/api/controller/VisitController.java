@@ -32,7 +32,7 @@ public class VisitController {
     ) {
 
         visitService.makeVisit(patientId, doctorId, day, startTime, endTime);
-
+// zaznaczyć jakoś że slot jest zajęty
         return "redirect:/patient";
     }
 

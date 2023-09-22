@@ -3,6 +3,8 @@ package code.medconnect.business;
 import code.medconnect.api.dto.DoctorAvailabilityDTO;
 import code.medconnect.business.PaginationService;
 import code.medconnect.business.dao.DoctorAvailabilityDAO;
+import code.medconnect.domain.DoctorAvailability;
+import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,14 +34,14 @@ public class PaginationServiceTest {
         Integer doctorId = 1;
         Sort sort = Sort.by("day").ascending();
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        List<DoctorAvailabilityDTO> doctorAvailabilityDTOList = new ArrayList<>();
+        List<DoctorAvailabilityEntity> doctorAvailabilityEntityList = new ArrayList<>();
 
-        Page<DoctorAvailabilityDTO> expectedPage
-                = new PageImpl<>(doctorAvailabilityDTOList, pageable, doctorAvailabilityDTOList.size());
+        Page<DoctorAvailabilityEntity> expectedPage
+                = new PageImpl<>(doctorAvailabilityEntityList, pageable, doctorAvailabilityEntityList.size());
         Mockito.when(doctorAvailabilityDAO.getDoctorAvailabilityPage(doctorId, pageable)).thenReturn(expectedPage);
 
         // when
-        Page<DoctorAvailabilityDTO> resultPage = paginationService.paginate(pageNumber, pageSize, doctorId);
+        Page<DoctorAvailability> resultPage = paginationService.paginate(pageNumber, pageSize, doctorId);
         // then
         Assertions.assertEquals(expectedPage, resultPage);
         Mockito.verify(doctorAvailabilityDAO).getDoctorAvailabilityPage(doctorId, pageable);

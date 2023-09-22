@@ -19,10 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
 public class VisitServiceTest {
@@ -98,7 +95,7 @@ public class VisitServiceTest {
         Patient patient = DomainFixtures.somePatient();
         String pesel = patient.getPesel();
         patient.setPatientId(1);
-        List<Visit> visits = new ArrayList<>();
+        Set<Visit> visits = new HashSet<>();
 
         Mockito.when(patientDAO.findByPesel(pesel)).thenReturn(Optional.of(patient));
         Mockito.when(visitDAO.findByPatientId(patient.getPatientId())).thenReturn(visits);
