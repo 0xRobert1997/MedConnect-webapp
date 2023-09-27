@@ -26,6 +26,8 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  flyway:
+    cleanDisabled: false
 
 
 api:
@@ -43,11 +45,11 @@ api:
 
 
 
-#logging:
-  #level:
-   # org:
-     # springframework:
-      #  security: DEBUG
+      #logging:
+      #level:
+      # org:
+      # springframework:
+    #  security: DEBUG
 
 logging:
   level:

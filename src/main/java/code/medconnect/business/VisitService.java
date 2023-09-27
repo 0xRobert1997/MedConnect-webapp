@@ -29,7 +29,6 @@ public class VisitService {
     private final NoteDAO noteDAO;
 
 
-
     @Transactional
     public void cancelVisit(Integer visitId) {
         Visit visit = visitDAO.findVisitById(visitId)

@@ -42,7 +42,8 @@
     <form th:action="@{/doctor/add-note}" method="post">
 
         <select name="visitId">
-            <option th:each="entry : ${visits}" th:value="${entry.key.visitId}" th:text="${entry.key.day + ' ' + entry.key.startTime}"></option>
+            <option th:each="entry : ${visits}" th:value="${entry.key.visitId}"
+                    th:text="${entry.key.day + ' ' + entry.key.startTime}"></option>
         </select>
         <textarea name="noteContent" rows="4" cols="50" placeholder="Add a note"></textarea>
         <button type="submit" class="btn btn-primary">Add Note</button>
@@ -50,26 +51,25 @@
 
     <h2>Check Patient and Diseases History</h2>
     <form th:action="@{/doctor/check-patient}" method="post">
-        <input type="text" name="patientPesel" placeholder="Patient PESEL" />
+        <input type="text" name="patientPesel" placeholder="Patient PESEL"/>
         <button type="submit" class="btn btn-primary">Check Patient</button>
     </form>
 
     <h2>Add Your Availability!</h2>
     <form th:action="@{/doctor/add-availability}" method="post">
-        <input type="hidden" name="doctorEmail" th:value="${doctorDTO.email}" />
+        <input type="hidden" name="doctorEmail" th:value="${doctorDTO.email}"/>
 
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date" />
+        <input type="date" id="date" name="date"/>
 
-<!--        <label for="startTime">Start Time:</label>
-        <input type="time" id="startTime" name="startTime" />
+        <!--        <label for="startTime">Start Time:</label>
+                <input type="time" id="startTime" name="startTime" />
 
-        <label for="endTime">End Time:</label>
-        <input type="time" id="endTime" name="endTime" />-->
+                <label for="endTime">End Time:</label>
+                <input type="time" id="endTime" name="endTime" />-->
 
         <button type="submit" class="btn btn-primary">Add Availability</button>
     </form>
-
 
 
     <div class="row mt-3">

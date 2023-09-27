@@ -143,7 +143,7 @@ public class DataInitializerData {
                 .phone("123-321-123")
                 .dateOfBirth(LocalDate.of(1995, 10, 10))
                 .sex("male")
-           //     .photoData(getPhotoBytes("static/images/SpongeBob.jpg"))
+                //     .photoData(getPhotoBytes("static/images/SpongeBob.jpg"))
                 .email("patient1@example.com")
                 .address(Address
                         .builder()

@@ -18,12 +18,6 @@ public class DiseaseRepository implements DiseaseDAO {
 
     private final DiseaseEntityMapper diseaseEntityMapper;
 
-    @Override
-    public List<Disease> findDiseasesByPatientPesel(String pesel) {
-        return diseaseJpaRepository.findByPatientPesel(pesel).stream()
-                .map(diseaseEntityMapper::map)
-                .toList();
-    }
 
     @Override
     public Disease saveDisease(Disease disease) {
@@ -32,6 +26,7 @@ public class DiseaseRepository implements DiseaseDAO {
         return diseaseEntityMapper.map(saved);
 
     }
+
     @Override
     public List<Disease> findAll() {
         return diseaseJpaRepository.findAll()

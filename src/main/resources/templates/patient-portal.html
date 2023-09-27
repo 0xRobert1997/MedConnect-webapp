@@ -34,7 +34,7 @@
     <form th:action="@{/upload}" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <input type="file" name="image" class="form-control-file mb-2" accept="image/*">
-            <input type="hidden" name="patientId" th:value="${patientDTO.patientId}" />
+            <input type="hidden" name="patientId" th:value="${patientDTO.patientId}"/>
             <button type="submit" class="btn btn-primary">Change your photo</button>
         </div>
     </form>
@@ -65,7 +65,8 @@
             </td>
 
             <td>
-                <span th:each="note : ${visit.notes}" th:text="${note.noteContent}" th:if="${not #lists.isEmpty(visit.notes)}"></span>
+                <span th:each="note : ${visit.notes}" th:text="${note.noteContent}"
+                      th:if="${not #lists.isEmpty(visit.notes)}"></span>
             </td>
 
             <td>
@@ -73,7 +74,7 @@
             </td>
             <td>
                 <form th:action="@{/cancel-visit}" method="post">
-                    <input type="hidden" name="visitId" th:value="${visit.visitId}" />
+                    <input type="hidden" name="visitId" th:value="${visit.visitId}"/>
                     <button type="submit" class="btn btn-danger">Cancel</button>
                 </form>
             </td>
@@ -92,11 +93,10 @@
         </select>
         <br>
 
-        <input type="hidden" name="patientId" th:value="${patientDTO.patientId}" />
+        <input type="hidden" name="patientId" th:value="${patientDTO.patientId}"/>
 
         <button type="submit" class="btn btn-primary">New Visit</button>
     </form>
-
 
 
     <div class="row mt-3">

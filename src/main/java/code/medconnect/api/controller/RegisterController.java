@@ -6,7 +6,6 @@ import code.medconnect.business.PatientService;
 import code.medconnect.domain.Address;
 import code.medconnect.domain.Patient;
 import code.medconnect.security.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;

@@ -28,6 +28,7 @@ public class GlobalExceptionRestHandler extends ResponseEntityExceptionHandler {
             DataIntegrityViolationException.class, HttpStatus.BAD_REQUEST,
             EntityNotFoundException.class, HttpStatus.NOT_FOUND
     );
+
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(
             @NonNull Exception ex,

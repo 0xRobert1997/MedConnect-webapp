@@ -59,7 +59,7 @@ public class PatientEntity {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "patient_id")
-  //  @Fetch(value = FetchMode.JOIN)
+    //  @Fetch(value = FetchMode.JOIN)
     private Set<VisitEntity> visits;
 
 

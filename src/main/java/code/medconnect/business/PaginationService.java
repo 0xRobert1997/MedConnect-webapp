@@ -1,7 +1,5 @@
 package code.medconnect.business;
 
-import code.medconnect.api.dto.DoctorAvailabilityDTO;
-import code.medconnect.api.dto.mapper.DoctorAvailabilityMapper;
 import code.medconnect.business.dao.DoctorAvailabilityDAO;
 import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
@@ -20,7 +18,6 @@ public class PaginationService {
 
 
     private final DoctorAvailabilityDAO doctorAvailabilityDAO;
-    private final DoctorAvailabilityMapper doctorAvailabilityMapper;
     private final DoctorAvailabilityEntityMapper doctorAvailabilityEntityMapper;
 
 

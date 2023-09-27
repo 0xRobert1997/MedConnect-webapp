@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface DiseaseDAO {
 
-    List<Disease> findDiseasesByPatientPesel(String pesel);
 
     Disease saveDisease(Disease disease);
 

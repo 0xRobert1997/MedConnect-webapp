@@ -3,17 +3,11 @@ package code.medconnect.infrastructure.database.repository;
 import code.medconnect.business.dao.NoteDAO;
 import code.medconnect.domain.Note;
 import code.medconnect.infrastructure.database.entity.NoteEntity;
-import code.medconnect.infrastructure.database.entity.VisitEntity;
 import code.medconnect.infrastructure.database.repository.jpa.NoteJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.VisitJpaRepository;
 import code.medconnect.infrastructure.database.repository.mapper.NoteEntityMapper;
-import code.medconnect.infrastructure.database.repository.mapper.VisitEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @AllArgsConstructor
@@ -31,10 +25,5 @@ public class NoteRepository implements NoteDAO {
         return noteEntityMapper.map(saved);
     }
 
-    @Override
-    public Optional<List<NoteEntity>> findNoteByVisitId(Integer visitId) {
-        return visitJpaRepository.findById(visitId)
-                .map(VisitEntity::getNotes);
-    }
 
 }

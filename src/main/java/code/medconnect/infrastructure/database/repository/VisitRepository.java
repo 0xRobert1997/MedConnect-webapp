@@ -104,12 +104,6 @@ public class VisitRepository implements code.medconnect.business.dao.VisitDAO {
                 .build();
     }
 
-    @Override
-    public List<Visit> findByDoctorId(Integer doctorId) {
-        return visitJpaRepository.findByDoctorId(doctorId)
-                .stream().map(visitEntityMapper::map)
-                .toList();
-    }
 
     @Override
     public List<Visit> findAll() {

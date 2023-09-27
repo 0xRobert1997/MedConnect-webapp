@@ -17,8 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 
-import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
@@ -53,7 +51,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
                     auth.requestMatchers(
-                    "/static/**", "/register", "/ourdoctors").permitAll();
+                            "/static/**", "/register", "/ourdoctors").permitAll();
                     auth.requestMatchers("/patient/**", "/api/patient/**").hasAuthority("PATIENT");
                     auth.requestMatchers("/doctor/**", "/api/doctor/**").hasAuthority("DOCTOR");
                     auth.anyRequest().permitAll();
