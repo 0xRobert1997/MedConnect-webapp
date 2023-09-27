@@ -26,9 +26,6 @@ public interface VisitDAO {
 
     Set<Visit> findByPatientId(Integer patientId);
 
-    List<Visit> findByDoctorId(Integer doctorId);
-
-
     List<Visit> findAll();
 
 }

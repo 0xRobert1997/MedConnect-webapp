@@ -1,9 +1,6 @@
 package code.medconnect.business;
 
-import code.medconnect.api.dto.PatientDTO;
-import code.medconnect.api.dto.VisitDTO;
-import code.medconnect.api.dto.mapper.PatientMapper;
-import code.medconnect.api.dto.mapper.VisitMapper;
+
 import code.medconnect.business.dao.DoctorAvailabilityDAO;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.business.dao.PatientDAO;
@@ -32,10 +29,7 @@ public class DoctorService {
     private final DoctorDAO doctorDAO;
     private final VisitDAO visitDAO;
     private final PatientDAO patientDAO;
-
     private final DoctorAvailabilityDAO doctorAvailabilityDAO;
-    private final VisitMapper visitMapper;
-    private final PatientMapper patientMapper;
 
     private static final LocalTime START_TIME = LocalTime.of(8, 0);
     private static final LocalTime END_TIME = LocalTime.of(16, 0);
@@ -68,7 +62,6 @@ public class DoctorService {
     public void deleteAvailAbility(DoctorAvailability doctorAvailability) {
         doctorAvailabilityDAO.deleteAvailability(doctorAvailability);
     }
-
 
 
     @Transactional

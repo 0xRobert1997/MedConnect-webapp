@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -48,8 +49,8 @@ public class DoctorAvailabilityService {
 
         return visits.stream()
                 .anyMatch(visit -> !visit.isCanceled()
-                                && visit.getStartTime().isBefore(endTime)
-                                && visit.getEndTime().isAfter(startTime));
+                        && visit.getStartTime().isBefore(endTime)
+                        && visit.getEndTime().isAfter(startTime));
     }
 
 

@@ -6,7 +6,7 @@ plugins {
 	id 'jacoco'
 }
 
-group = 'code.medconnect'
+group = 'demo'
 version = '0.0.1-SNAPSHOT'
 
 java {

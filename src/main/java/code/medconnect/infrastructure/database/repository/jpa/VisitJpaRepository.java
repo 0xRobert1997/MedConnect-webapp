@@ -30,5 +30,4 @@ public interface VisitJpaRepository extends JpaRepository<VisitEntity, Integer> 
     void cancelVisitById(@Param("visitId") Integer visitId);
 
 
-
 }

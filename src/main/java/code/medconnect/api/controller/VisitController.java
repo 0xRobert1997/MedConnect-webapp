@@ -1,9 +1,5 @@
 package code.medconnect.api.controller;
 
-import code.medconnect.api.dto.mapper.DoctorMapper;
-import code.medconnect.api.dto.mapper.PatientMapper;
-import code.medconnect.business.DoctorService;
-import code.medconnect.business.PatientService;
 import code.medconnect.business.VisitService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +15,6 @@ import java.time.LocalTime;
 public class VisitController {
 
     private final VisitService visitService;
-
 
 
     @PostMapping("/confirm-visit")

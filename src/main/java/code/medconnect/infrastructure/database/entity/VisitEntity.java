@@ -6,7 +6,6 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -25,6 +24,10 @@ public class VisitEntity {
 
     @Column(name = "patient_id")
     private Integer patientId;
+
+/*    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "patient_id")
+    private PatientEntity patient;*/
 
     @Column(name = "day", nullable = false)
     private LocalDate day;

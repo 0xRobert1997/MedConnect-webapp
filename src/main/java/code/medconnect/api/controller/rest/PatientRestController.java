@@ -22,8 +22,8 @@ public class PatientRestController {
 
 
     @GetMapping(PATIENT_ID)
-    public PatientDTO patientDetails (
-        @PathVariable String patientEmail
+    public PatientDTO patientDetails(
+            @PathVariable String patientEmail
     ) {
         Patient patient = patientService.findByEmail(patientEmail);
         return patientMapper.map(patient);

@@ -57,9 +57,10 @@ public class PatientEntity {
     @Fetch(value = FetchMode.JOIN)
     private AddressEntity address;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "patient_id")
-  //  @Fetch(value = FetchMode.JOIN)
+    @Fetch(value = FetchMode.JOIN)
+    //  @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
     private Set<VisitEntity> visits;
 
 

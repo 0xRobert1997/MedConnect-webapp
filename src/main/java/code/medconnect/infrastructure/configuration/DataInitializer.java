@@ -76,9 +76,9 @@ public class DataInitializer implements CommandLineRunner {
         Patient patient1 = DataInitializerData.patientFixture1();
         Patient patient2 = DataInitializerData.patientFixture2();
         patientRepository.savePatient(patient1.withAppUser(
-                AppUser.builder()
-                        .id(1)
-                        .build())
+                        AppUser.builder()
+                                .id(1)
+                                .build())
                 .withDiseases(Set.of(
                         DataInitializerData.diseaseFixture1(),
                         DataInitializerData.diseaseFixture2())
@@ -86,9 +86,9 @@ public class DataInitializer implements CommandLineRunner {
 
 
         patientRepository.savePatient(patient2.withAppUser(
-                AppUser.builder()
-                        .id(2)
-                        .build())
+                        AppUser.builder()
+                                .id(2)
+                                .build())
                 .withDiseases(Set.of(
                         DataInitializerData.diseaseFixture3()
                 ))
@@ -102,7 +102,7 @@ public class DataInitializer implements CommandLineRunner {
                 .withAppUser(AppUser.builder()
                         .id(3)
                         .build()));
-         doctorRepository.saveDoctor(doctor2
+        doctorRepository.saveDoctor(doctor2
                 .withAppUser(AppUser.builder()
                         .id(4)
                         .build()));
