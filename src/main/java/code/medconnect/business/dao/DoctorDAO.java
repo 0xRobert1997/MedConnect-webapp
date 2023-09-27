@@ -1,6 +1,7 @@
 package code.medconnect.business.dao;
 
 import code.medconnect.domain.Doctor;
+import code.medconnect.domain.DoctorAvailability;
 
 import java.util.Set;
 

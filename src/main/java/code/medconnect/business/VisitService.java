@@ -29,6 +29,7 @@ public class VisitService {
     private final NoteDAO noteDAO;
 
 
+
     @Transactional
     public void cancelVisit(Integer visitId) {
         Visit visit = visitDAO.findVisitById(visitId)
@@ -110,11 +111,5 @@ public class VisitService {
             }
         }
         return false;
-    }
-
-    public List<TimeSlot> getUnavailableTimeFrames() {
-
-
-        return null;
     }
 }

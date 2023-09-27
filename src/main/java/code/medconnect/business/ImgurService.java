@@ -5,6 +5,7 @@ import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.Patient;
 import code.medconnect.domain.Visit;
 import code.medconnect.domain.exception.ImgurUploadException;
+import code.medconnect.infrastructure.database.repository.PatientRepository;
 import code.medconnect.infrastructure.imgur.ImgurApiProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,13 +23,16 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,8 +51,10 @@ public class ImgurService {
     private final VisitDAO visitDAO;
 
 
+
+
     @Transactional
-    public String uploadPhoto(MultipartFile image) {
+    public String uploadPhoto(MultipartFile image)  {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + imgurApiProperties.getAccessToken());
         headers.add("Connection", "keep-alive");
@@ -79,7 +85,6 @@ public class ImgurService {
         }
 
     }
-
     @Transactional
     public void saveUploadedPhotoId(Integer patientId, String uploadedPhotoId) {
         Optional<Patient> patientOpt = patientDAO.findById(patientId);
@@ -104,7 +109,8 @@ public class ImgurService {
         if (photoId != null) {
             String imageUrl = (IMAGE_URL_BASE + photoId + ".jpg");
             try {
-                return downloadImage(imageUrl);
+                byte[] imageBytes = downloadImage(imageUrl);
+                return imageBytes;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -149,7 +155,7 @@ public class ImgurService {
 
 
     private File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
-        File file = new File(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        File file = new File(multipartFile.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(multipartFile.getBytes());
         }

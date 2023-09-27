@@ -10,6 +10,9 @@ import org.mapstruct.ReportingPolicy;
 public interface VisitEntityMapper {
 
 
+
+
+
     @Mapping(target = "notes", ignore = true)
     Visit map(VisitEntity visitEntity);
 

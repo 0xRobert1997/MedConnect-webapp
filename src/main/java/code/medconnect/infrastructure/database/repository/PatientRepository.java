@@ -26,6 +26,7 @@ public class PatientRepository implements PatientDAO {
     private final DiseaseEntityMapper diseaseEntityMapper;
 
 
+
     @Override
     public Optional<Patient> findByPesel(String pesel) {
         return patientJpaRepository.findByPesel(pesel).map(patientEntityMapper::map);
@@ -41,7 +42,6 @@ public class PatientRepository implements PatientDAO {
         return patientJpaRepository.findById(id).map(patientEntityMapper::map);
 
     }
-
     @Override
     public List<Patient> findAll() {
         return patientJpaRepository.findAll()
@@ -80,6 +80,7 @@ public class PatientRepository implements PatientDAO {
     }
 
 
+
     private Patient mapWithDiseases(PatientEntity entity) {
         Set<Disease> mappedDiseases = new HashSet<>();
 
@@ -87,14 +88,15 @@ public class PatientRepository implements PatientDAO {
             Disease mapped = diseaseEntityMapper.map(disease);
             mappedDiseases.add(mapped);
         }
-        return Patient.builder()
-                .patientId(entity.getPatientId())
-                .name(entity.getName())
-                .pesel(entity.getPesel())
-                .dateOfBirth(entity.getDateOfBirth())
-                .diseases(mappedDiseases)
-                .build();
+        return  Patient.builder()
+                    .patientId(entity.getPatientId())
+                    .name(entity.getName())
+                    .pesel(entity.getPesel())
+                    .dateOfBirth(entity.getDateOfBirth())
+                    .diseases(mappedDiseases)
+                    .build();
     }
+
 
 
 }

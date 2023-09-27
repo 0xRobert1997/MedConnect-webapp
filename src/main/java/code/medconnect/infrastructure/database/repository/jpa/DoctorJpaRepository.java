@@ -12,4 +12,6 @@ public interface DoctorJpaRepository extends JpaRepository<DoctorEntity, Integer
     Optional<DoctorEntity> findByEmail(String email);
 
 
+
+
 }

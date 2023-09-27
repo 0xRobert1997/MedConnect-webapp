@@ -2,9 +2,13 @@ package code.medconnect.infrastructure.database.repository;
 
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.domain.Doctor;
+import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.domain.exception.NotFoundException;
+import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
 import code.medconnect.infrastructure.database.entity.DoctorEntity;
+import code.medconnect.infrastructure.database.repository.jpa.DoctorAvailabilityJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
+import code.medconnect.infrastructure.database.repository.mapper.DoctorAvailabilityEntityMapper;
 import code.medconnect.infrastructure.database.repository.mapper.DoctorEntityMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
