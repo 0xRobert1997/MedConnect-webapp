@@ -1,5 +1,6 @@
 package code.medconnect.business;
 
+import code.medconnect.api.dto.DoctorAvailabilityDTO;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.Doctor;
@@ -40,8 +41,18 @@ public class DoctorAvailabilityService {
         }
 
         availability.setTimeSlots(new ArrayList<>(allSlots.values()));
+        return removeTakenSlots(availability);
+    }
+
+
+
+    private DoctorAvailability removeTakenSlots(DoctorAvailability availability) {
+        List<TimeSlot> timeSlots = availability.getTimeSlots();
+
+        timeSlots.removeIf(TimeSlot::isTaken);
         return availability;
     }
+
 
     private boolean isTimeSlotTaken(TimeSlot slot, List<Visit> visits) {
         LocalTime startTime = slot.getStartTime();
@@ -57,32 +68,40 @@ public class DoctorAvailabilityService {
     private Map<Integer, TimeSlot> getAllSlots(LocalDate date) {
         Map<Integer, TimeSlot> slots = new HashMap<>();
 
-
         slots.put(1, TimeSlot.builder()
                 .day(date).startTime(LocalTime.of(8, 0)).endTime(LocalTime.of(8, 30)).build());
         slots.put(2, TimeSlot.builder()
                 .day(date).startTime(LocalTime.of(8, 30)).endTime(LocalTime.of(9, 0)).build());
         slots.put(3, TimeSlot.builder()
                 .day(date).startTime(LocalTime.of(9, 0)).endTime(LocalTime.of(9, 30)).build());
+        slots.put(4, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(9, 30)).endTime(LocalTime.of(10, 0)).build());
+        slots.put(5, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(10, 0)).endTime(LocalTime.of(10, 30)).build());
+        slots.put(6, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(10, 30)).endTime(LocalTime.of(11, 0)).build());
+        slots.put(7, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(11, 0)).endTime(LocalTime.of(11, 30)).build());
+        slots.put(8, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(11, 30)).endTime(LocalTime.of(12, 0)).build());
+        slots.put(9, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(12, 0)).endTime(LocalTime.of(12, 30)).build());
+        slots.put(10, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(12, 30)).endTime(LocalTime.of(13, 0)).build());
+        slots.put(11, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(13, 0)).endTime(LocalTime.of(13, 30)).build());
+        slots.put(12, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(13, 30)).endTime(LocalTime.of(14, 0)).build());
+        slots.put(13, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(14, 0)).endTime(LocalTime.of(14, 30)).build());
+        slots.put(14, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(14, 30)).endTime(LocalTime.of(15, 0)).build());
+        slots.put(15, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(15, 0)).endTime(LocalTime.of(15, 30)).build());
+        slots.put(16, TimeSlot.builder()
+                .day(date).startTime(LocalTime.of(15, 30)).endTime(LocalTime.of(16, 0)).build());
 
-
-
-/*        slots.put(1, List.of(LocalTime.of(8, 0), LocalTime.of(8, 30)));
-        slots.put(2, List.of(LocalTime.of(8, 30), LocalTime.of(9, 0)));
-        slots.put(3, List.of(LocalTime.of(9, 0), LocalTime.of(9, 30)));
-        slots.put(4, List.of(LocalTime.of(9, 30), LocalTime.of(10, 0)));
-        slots.put(5, List.of(LocalTime.of(10, 0), LocalTime.of(10, 30)));
-        slots.put(6, List.of(LocalTime.of(10, 30), LocalTime.of(11, 0)));
-        slots.put(7, List.of(LocalTime.of(11, 0), LocalTime.of(11, 30)));
-        slots.put(8, List.of(LocalTime.of(11, 30), LocalTime.of(12, 0)));
-        slots.put(9, List.of(LocalTime.of(12, 0), LocalTime.of(12, 30)));
-        slots.put(10, List.of(LocalTime.of(12, 30), LocalTime.of(13, 0)));
-        slots.put(11, List.of(LocalTime.of(13, 0), LocalTime.of(13, 30)));
-        slots.put(12, List.of(LocalTime.of(13, 30), LocalTime.of(14, 0)));
-        slots.put(13, List.of(LocalTime.of(14, 0), LocalTime.of(14, 30)));
-        slots.put(14, List.of(LocalTime.of(14, 30), LocalTime.of(15, 0)));
-        slots.put(15, List.of(LocalTime.of(15, 0), LocalTime.of(15, 30)));
-        slots.put(16, List.of(LocalTime.of(15, 30), LocalTime.of(16, 0)));*/
         return slots;
     }
+
 }

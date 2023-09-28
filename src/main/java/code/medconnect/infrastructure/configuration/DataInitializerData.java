@@ -262,7 +262,7 @@ public class DataInitializerData {
 
     static Visit visitFixture6() {
         return Visit.builder()
-                .day(LocalDate.of(2023, 9, 19))
+                .day(LocalDate.of(2023, 9, 15))
                 .startTime(LocalTime.of(12, 30))
                 .endTime(LocalTime.of(13, 0))
                 .patientId(2)

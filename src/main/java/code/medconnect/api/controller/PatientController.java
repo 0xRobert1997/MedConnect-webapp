@@ -45,6 +45,7 @@ public class PatientController {
     private final ImgurService imgurService;
     private final AppUserService appUserService;
     private final DoctorService doctorService;
+    private final DoctorAvailabilityService doctorAvailabilityService;
     private final PaginationService paginationService;
     private final PatientMapper patientMapper;
     private final DoctorMapper doctorMapper;
@@ -102,20 +103,16 @@ public class PatientController {
             @ModelAttribute("doctorId") Integer doctorId
     ) {
 
-
         Page<DoctorAvailability> pageOfAvailabilities = paginationService.paginate(page, PAGE_SIZE, doctorId);
-        List<DoctorAvailabilityDTO> doctorAvailabilityDTOS = pageOfAvailabilities.getContent().stream()
+
+        List<DoctorAvailabilityDTO> doctorAvailabilityDTOS2 = pageOfAvailabilities.getContent().stream()
+                .map(doctorAvailabilityService::getAvailabilityWithSlots)
                 .map(doctorAvailabilityMapper::map)
                 .toList();
 
-        List<LocalTime> availableTimes = getTimeFrames();
-
-
-        model.addAttribute("doctorAvailabilities", doctorAvailabilityDTOS);
-        model.addAttribute("doctorAvailabilityPage", pageOfAvailabilities);
+        model.addAttribute("doctorAvailabilities", doctorAvailabilityDTOS2);
         model.addAttribute("patientId", patientId);
         model.addAttribute("doctorId", doctorId);
-        model.addAttribute("availableTimes", availableTimes);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pageOfAvailabilities.getTotalPages());
 
@@ -123,24 +120,4 @@ public class PatientController {
     }
 
 
-    private List<LocalTime> getTimeFrames() {
-        return List.of(
-                LocalTime.of(8, 0),
-                LocalTime.of(8, 30),
-                LocalTime.of(9, 0),
-                LocalTime.of(9, 30),
-                LocalTime.of(10, 0),
-                LocalTime.of(10, 30),
-                LocalTime.of(11, 0),
-                LocalTime.of(11, 30),
-                LocalTime.of(12, 0),
-                LocalTime.of(12, 30),
-                LocalTime.of(13, 0),
-                LocalTime.of(13, 30),
-                LocalTime.of(14, 0),
-                LocalTime.of(14, 30),
-                LocalTime.of(15, 0),
-                LocalTime.of(15, 30)
-        );
-    }
 }

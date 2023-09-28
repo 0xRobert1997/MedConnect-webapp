@@ -22,6 +22,6 @@ public class DoctorAvailabilityDTO {
     LocalDate day;
     LocalTime startTime;
     LocalTime endTime;
-    private List<TimeSlot> timeSlots;
+    List<TimeSlot> timeSlots;
 
 }
