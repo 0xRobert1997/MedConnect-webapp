@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -22,11 +24,12 @@ public class VisitController {
             @RequestParam("patientId") Integer patientId,
             @RequestParam("doctorId") Integer doctorId,
             @RequestParam("selectedDay") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate day,
-            @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-            @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime
+           @RequestParam("selectedTimeSlot") String selectedTimeSlotStr
     ) {
 
-        visitService.makeVisit(patientId, doctorId, day, startTime, endTime);
+        Map<String, LocalTime> parsedTimes = parseStartAndEndTime(selectedTimeSlotStr);
+
+        visitService.makeVisit(patientId, doctorId, day, parsedTimes.get("startTime"), parsedTimes.get("endTime"));
 
         return "redirect:/patient";
     }
@@ -38,6 +41,16 @@ public class VisitController {
         visitService.cancelVisit(visitId);
 
         return "redirect:/patient";
+    }
+
+    private Map<String, LocalTime> parseStartAndEndTime(String timeSlotStr) {
+        Map<String, LocalTime> parsedValues = new HashMap<>();
+
+        String[] split = timeSlotStr.split("-");
+        parsedValues.put("startTime", LocalTime.parse(split[0]));
+        parsedValues.put("endTime", LocalTime.parse(split[1]));
+
+        return parsedValues;
     }
 
 }

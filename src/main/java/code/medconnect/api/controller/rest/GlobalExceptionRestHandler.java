@@ -1,8 +1,10 @@
 package code.medconnect.api.controller.rest;
 
 import code.medconnect.api.dto.ExceptionMessage;
+import code.medconnect.domain.exception.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -24,9 +26,10 @@ import java.util.UUID;
 public class GlobalExceptionRestHandler extends ResponseEntityExceptionHandler {
 
     private static final Map<Class<?>, HttpStatus> EXCEPTION_STATUS = Map.of(
-            ConstraintViolation.class, HttpStatus.BAD_REQUEST,
+            ConstraintViolationException.class, HttpStatus.BAD_REQUEST,
             DataIntegrityViolationException.class, HttpStatus.BAD_REQUEST,
-            EntityNotFoundException.class, HttpStatus.NOT_FOUND
+            EntityNotFoundException.class, HttpStatus.NOT_FOUND,
+            NotFoundException.class, HttpStatus.NOT_FOUND
     );
 
     @Override
