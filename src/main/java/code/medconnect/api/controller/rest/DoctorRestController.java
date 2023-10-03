@@ -51,7 +51,7 @@ class DoctorRestController {
     }
 
 
-    @PostMapping(PATIENT_EMAIL)
+    @GetMapping(PATIENT_EMAIL)
     public PatientDTO checkPatient(
             @PathVariable String patientEmail
     ) {

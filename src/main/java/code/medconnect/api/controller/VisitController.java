@@ -24,7 +24,7 @@ public class VisitController {
             @RequestParam("patientId") Integer patientId,
             @RequestParam("doctorId") Integer doctorId,
             @RequestParam("selectedDay") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate day,
-           @RequestParam("selectedTimeSlot") String selectedTimeSlotStr
+            @RequestParam("selectedTimeSlot") String selectedTimeSlotStr
     ) {
 
         Map<String, LocalTime> parsedTimes = parseStartAndEndTime(selectedTimeSlotStr);
