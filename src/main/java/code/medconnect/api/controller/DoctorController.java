@@ -69,8 +69,6 @@ public class DoctorController {
     public String addAvailability(
             @RequestParam String doctorEmail,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-/*            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime startTime,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime endTime*/
     ) {
         Doctor doctor = doctorService.findByEmail(doctorEmail);
         doctorService.saveAvailAbility(doctor, date);

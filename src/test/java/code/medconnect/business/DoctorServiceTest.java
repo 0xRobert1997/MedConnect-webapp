@@ -2,8 +2,12 @@ package code.medconnect.business;
 
 import code.medconnect.business.dao.DoctorAvailabilityDAO;
 import code.medconnect.business.dao.DoctorDAO;
+import code.medconnect.business.dao.PatientDAO;
+import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.DoctorAvailability;
+import code.medconnect.domain.Patient;
+import code.medconnect.domain.Visit;
 import code.medconnect.util.DomainFixtures;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,11 +19,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 @ExtendWith(MockitoExtension.class)
 public class DoctorServiceTest {
 
+    @Mock
+    private VisitDAO visitDAO;
+    @Mock
+    private PatientDAO patientDAO;
     @Mock
     private DoctorDAO doctorDAO;
     @Mock
@@ -59,8 +67,6 @@ public class DoctorServiceTest {
         //given
         Doctor doctor = DomainFixtures.someDoctor1();
         LocalDate day = LocalDate.of(2050, 1, 4);
-        LocalTime startTime = LocalTime.of(13, 13);
-        LocalTime endTime = LocalTime.of(13, 19);
         //when
         doctorService.saveAvailAbility(doctor, day);
         //then
@@ -75,6 +81,31 @@ public class DoctorServiceTest {
         doctorService.deleteAvailAbility(doctorAvailability);
         //then
         Mockito.verify(doctorAvailabilityDAO).deleteAvailability(Mockito.any(DoctorAvailability.class));
+    }
+
+    @Test
+    void shouldReturnVisitsWithPatientsCorrectly() {
+        //given
+        Integer doctorId = 1;
+        Integer patientId = 1;
+        Patient patient = DomainFixtures.somePatient();
+        Visit visit1 = DomainFixtures.someVisit()
+                .withPatientId(patientId);
+        Visit visit2 = DomainFixtures.someVisit()
+                .withPatientId(patientId)
+                .withDay(LocalDate.of(2023, 10, 10));
+        List<Visit> visits = new ArrayList<>();
+        visits.add(visit1);
+        visits.add(visit2);
+
+        Mockito.when(visitDAO.findVisitsByDoctorId(doctorId)).thenReturn(visits);
+        Mockito.when(patientDAO.findById(Mockito.anyInt())).thenReturn(Optional.of(patient));
+        //when
+        Map<Visit, Patient> result = doctorService.getDoctorsVisitsWithPatients(doctorId);
+        Integer expected = visits.size();
+        //then
+        Assertions.assertEquals(expected, result.size());
+
     }
 
 

@@ -92,16 +92,14 @@ public class DoctorControllerTest {
         //given
         String doctorEmail = "doctor@example.com";
         LocalDate date = LocalDate.of(2023, 1, 1);
-        LocalTime startTime = LocalTime.of(12, 15);
-        LocalTime endTime = LocalTime.of(12, 30);
         Doctor doctor = DomainFixtures.someDoctor1();
 
         when(doctorService.findByEmail(doctorEmail)).thenReturn(doctor);
         //when
-        String viewName = doctorController.addAvailability(doctorEmail, date, startTime, endTime);
+        String viewName = doctorController.addAvailability(doctorEmail, date);
         //then
         verify(doctorService).findByEmail(doctorEmail);
-        verify(doctorService).saveAvailAbility(doctor, date, startTime, endTime);
+        verify(doctorService).saveAvailAbility(doctor, date);
         Assertions.assertEquals("redirect:/doctor", viewName);
     }
 
@@ -120,7 +118,7 @@ public class DoctorControllerTest {
     }
 
     @Test
-    void thathCheckPatientWorksCorrectly() {
+    void thatCheckPatientWorksCorrectly() {
         //given
         String patientPesel = "12345678901";
         Patient patient = DomainFixtures.somePatient().withPesel(patientPesel);

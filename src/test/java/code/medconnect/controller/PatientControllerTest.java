@@ -6,10 +6,7 @@ import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.api.dto.mapper.VisitMapper;
-import code.medconnect.business.DoctorService;
-import code.medconnect.business.PaginationService;
-import code.medconnect.business.PatientService;
-import code.medconnect.business.VisitService;
+import code.medconnect.business.*;
 import code.medconnect.domain.Doctor;
 import code.medconnect.domain.Patient;
 import code.medconnect.domain.Visit;
@@ -49,6 +46,8 @@ public class PatientControllerTest {
     @Mock
     private DoctorService doctorService;
     @Mock
+    private ImgurService imgurService;
+    @Mock
     private PaginationService paginationService;
     @Mock
     private PatientMapper patientMapper;
@@ -70,7 +69,7 @@ public class PatientControllerTest {
         AppUser appUser = DomainFixtures.someAppUserFixture1();
         Patient patient = DomainFixtures.somePatient().withAppUser(appUser);
         PatientDTO patientDTO = DtoFixtures.somePatientDTO();
-        List<Visit> visits = List.of(DomainFixtures.someVisit());
+        Set<Visit> visits = Set.of(DomainFixtures.someVisit());
         Set<Doctor> doctors = Set.of(DomainFixtures.someDoctor1(), DomainFixtures.someDoctor2());
 
         when(principal.getName()).thenReturn("username");
@@ -80,6 +79,8 @@ public class PatientControllerTest {
         when(doctorService.findAll()).thenReturn(doctors);
         when(patientMapper.map(Mockito.any(Patient.class))).thenReturn(patientDTO);
 
+        when(imgurService.getPhoto(Mockito.any(Patient.class))).thenReturn(new byte[0]);
+
         //when
         String viewName = patientController.patientPage(model, principal);
 
@@ -88,7 +89,6 @@ public class PatientControllerTest {
         verify(patientService).findByEmail(appUser.getEmail());
         verify(visitService).getPatientsVisits(patient.getPesel());
         verify(doctorService).findAll();
-
         Assertions.assertEquals("patient-portal", viewName);
     }
 
