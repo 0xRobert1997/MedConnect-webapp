@@ -37,7 +37,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class ImgurService {
 
-    private static final String UPLOAD_URL = "https://api.imgur.com/3/upload";
+    public static final String UPLOAD_URL = "https://api.imgur.com/3/upload";
     private static final String IMAGE_URL_BASE = "https://imgur.com/";
     private static final String DEFAULT_PHOTO_PATH = "static/images/default-user-photo.jpg";
     private final ImgurApiProperties imgurApiProperties;
