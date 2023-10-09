@@ -1,6 +1,10 @@
 package code.medconnect.business;
 
+import code.medconnect.business.dao.PatientDAO;
+import code.medconnect.business.dao.VisitDAO;
+import code.medconnect.domain.Patient;
 import code.medconnect.infrastructure.imgur.ImgurApiProperties;
+import code.medconnect.util.DomainFixtures;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 import java.io.IOException;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class ImgurServiceTest {
@@ -32,10 +37,19 @@ public class ImgurServiceTest {
     private ImgurApiProperties imgurApiProperties;
     @Mock
     private RestTemplate restTemplate;
+    @Mock
+    private ImageDownloaderService imageDownloaderService;
+
+    @Mock
+    private PatientDAO patientDAO;
+
+    @Mock
+    private VisitDAO visitDAO;
 
 
     @Test
     void thatUploadingPhotoWorksCorrectly() throws IOException {
+        //given
         String accessToken = "access token";
         String albumHash = "album hash";
         String imageFileContent = "mocked image";
@@ -60,13 +74,52 @@ public class ImgurServiceTest {
                 Mockito.eq(String.class)
         )).thenReturn(successResponse);
 
+        // when, then
         String imageId = imgurService.uploadPhoto(image);
 
         Assertions.assertEquals("imageId", imageId);
     }
 
     @Test
-    void thatGettingPhotoWorksCorrectly() {
+    void thatSavingUploadedPhotoIdWorksCorrectly() {
+        //given
+        Integer patientId = 1;
+        Patient patient = DomainFixtures.somePatient().withPatientId(patientId);
+        String photoId = "somePhotoId";
 
+        Mockito.when(patientDAO.findById(patientId)).thenReturn(Optional.of(patient));
+
+        //when
+        imgurService.saveUploadedPhotoId(patient.getPatientId(), photoId);
+        //then
+        Mockito.verify(visitDAO).findByPatientId(patientId);
+        Mockito.verify(patientDAO).savePatient(patient);
+    }
+
+    @Test
+    void testGetPhotoWithoutImageId() {
+        //given
+        Patient patient = DomainFixtures.somePatient();
+
+        //when
+        byte[] actualPhotoBytes = imgurService.getPhoto(patient);
+        //then
+        Assertions.assertNotNull(actualPhotoBytes);
+    }
+
+    @Test
+    void testGetPhotoWithImageId() throws IOException {
+    //given
+    String photoId = "someFakeId";
+    Patient patient = DomainFixtures.somePatient().withImgurPhotoId(photoId);
+    String imageUrl = "http://example.com/image.jpg";
+    byte[] expected = "photo-content".getBytes();
+    Mockito.when(imageDownloaderService
+            .downloadImage("https://imgur.com/" + photoId + ".jpg")).thenReturn(expected);
+    //when
+    byte[] result = imgurService.getPhoto(patient);
+
+    //then
+    Assertions.assertNotNull(result);
     }
 }

@@ -41,6 +41,7 @@ public class ImgurService {
     private static final String IMAGE_URL_BASE = "https://imgur.com/";
     private static final String DEFAULT_PHOTO_PATH = "static/images/default-user-photo.jpg";
     private final ImgurApiProperties imgurApiProperties;
+    private final ImageDownloaderService imageDownloaderService;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final PatientDAO patientDAO;
@@ -99,19 +100,17 @@ public class ImgurService {
 
     @Transactional
     public byte[] getPhoto(Patient patient) {
-
         String photoId = patient.getImgurPhotoId();
         if (photoId != null) {
             String imageUrl = (IMAGE_URL_BASE + photoId + ".jpg");
             try {
-                return downloadImage(imageUrl);
+                return imageDownloaderService.downloadImage(imageUrl);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         } else {
             return getDefaultPhotoBytes();
         }
-
     }
 
     private static byte[] getDefaultPhotoBytes() {
@@ -125,16 +124,6 @@ public class ImgurService {
         }
     }
 
-    private static byte[] downloadImage(String imageUrl) throws IOException {
-        URL url = new URL(imageUrl);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        try (InputStream inputStream = connection.getInputStream()) {
-            return IOUtils.toByteArray(inputStream);
-        } finally {
-            connection.disconnect();
-        }
-    }
 
     private String parseId(ResponseEntity<String> responseEntity) {
 
