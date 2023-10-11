@@ -33,10 +33,10 @@ public class OurDoctorsControllerWebMvcTest {
     private MockMvc mockMvc;
 
     @MockBean
-    DoctorService doctorService;
+    private DoctorService doctorService;
 
     @MockBean
-    DoctorMapper doctorMapper;
+    private DoctorMapper doctorMapper;
 
     @Test
     void ourDoctorsPageTest() throws Exception {

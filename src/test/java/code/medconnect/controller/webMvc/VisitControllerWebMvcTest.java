@@ -26,7 +26,7 @@ public class VisitControllerWebMvcTest {
     private MockMvc mockMvc;
 
     @MockBean
-    VisitService visitService;
+    private VisitService visitService;
 
     @Test
     void confirmVisitTest() throws Exception {

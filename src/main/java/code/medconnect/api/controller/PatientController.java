@@ -105,12 +105,12 @@ public class PatientController {
 
         Page<DoctorAvailability> pageOfAvailabilities = paginationService.paginate(page, PAGE_SIZE, doctorId);
 
-        List<DoctorAvailabilityDTO> doctorAvailabilityDTOS2 = pageOfAvailabilities.getContent().stream()
+        List<DoctorAvailabilityDTO> doctorAvailabilityDTOs = pageOfAvailabilities.getContent().stream()
                 .map(doctorAvailabilityService::getAvailabilityWithSlots)
                 .map(doctorAvailabilityMapper::map)
                 .toList();
 
-        model.addAttribute("doctorAvailabilities", doctorAvailabilityDTOS2);
+        model.addAttribute("doctorAvailabilities", doctorAvailabilityDTOs);
         model.addAttribute("patientId", patientId);
         model.addAttribute("doctorId", doctorId);
         model.addAttribute("currentPage", page);

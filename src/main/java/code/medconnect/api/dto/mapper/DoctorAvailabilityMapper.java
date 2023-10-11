@@ -9,8 +9,6 @@ public interface DoctorAvailabilityMapper {
 
     DoctorAvailability map(final DoctorAvailabilityDTO doctorAvailabilityDTO);
 
-    //   DoctorAvailabilityDTO map(final DoctorAvailability doctorAvailability);
-
 
     default DoctorAvailabilityDTO map(DoctorAvailability availability) {
         return DoctorAvailabilityDTO.builder()

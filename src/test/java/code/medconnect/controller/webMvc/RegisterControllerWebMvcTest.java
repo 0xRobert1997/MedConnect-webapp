@@ -26,17 +26,17 @@ public class RegisterControllerWebMvcTest {
     private MockMvc mockMvc;
 
     @MockBean
-    AppUserService appUserService;
+    private AppUserService appUserService;
     @MockBean
-    AppUserMapper appUserMapper;
+    private AppUserMapper appUserMapper;
     @MockBean
-    AppUserDTOMapper appUserDTOMapper;
+    private AppUserDTOMapper appUserDTOMapper;
     @MockBean
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
     @MockBean
-    PatientService patientService;
+    private PatientService patientService;
     @MockBean
-    PatientMapper patientMapper;
+    private PatientMapper patientMapper;
 
     @Test
     void registerPageTest() throws Exception {

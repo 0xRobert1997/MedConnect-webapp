@@ -43,19 +43,19 @@ public class DoctorControllerWebMvcTest {
 
     private MockMvc mockMvc;
     @MockBean
-    VisitService visitService;
+    private VisitService visitService;
     @MockBean
-    DoctorService doctorService;
+    private DoctorService doctorService;
     @MockBean
-    AppUserService appUserService;
+    private AppUserService appUserService;
     @MockBean
-    PatientService patientService;
+    private PatientService patientService;
     @MockBean
-    PatientMapper patientMapper;
+    private PatientMapper patientMapper;
     @MockBean
-    DoctorMapper doctorMapper;
+    private DoctorMapper doctorMapper;
     @MockBean
-    VisitMapper visitMapper;
+    private VisitMapper visitMapper;
 
     @Test
     void doctorPageTest() throws Exception {
