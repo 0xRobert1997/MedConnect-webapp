@@ -34,8 +34,10 @@ public class VisitControllerWebMvcTest {
         Integer patientId = 1;
         Integer doctorId = 1;
         LocalDate day = LocalDate.of(2023, 5, 5);
-        LocalTime startTime = LocalTime.of(12, 12);
-        LocalTime endTime = LocalTime.of(12, 13);
+        LocalTime startTime = LocalTime.of(12, 0);
+        LocalTime endTime = LocalTime.of(12, 30);
+        String selectedTimeSlot = "12:00-12:30";
+
 
         Mockito.when(visitService.makeVisit(patientId, doctorId, day, startTime, endTime)).thenReturn(Visit.builder().build());
 
@@ -44,8 +46,7 @@ public class VisitControllerWebMvcTest {
                         .param("patientId", patientId.toString())
                         .param("doctorId", doctorId.toString())
                         .param("selectedDay", day.toString())
-                        .param("startTime", startTime.toString())
-                        .param("endTime", endTime.toString()))
+                        .param("selectedTimeSlot", selectedTimeSlot))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/patient"));
         Mockito.verify(visitService).makeVisit(patientId, doctorId, day, startTime, endTime);
