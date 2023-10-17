@@ -31,7 +31,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -79,8 +78,6 @@ public class DoctorControllerWebMvcTest {
         Mockito.when(doctorService.getDoctorsVisitsWithPatients(Mockito.anyInt())).thenReturn(visitsWithPatients);
 
 
-
-
         // when then
         mockMvc.perform(get("/doctor").principal(new UsernamePasswordAuthenticationToken(username, "test")))
                 .andExpect(status().isOk())
@@ -104,16 +101,16 @@ public class DoctorControllerWebMvcTest {
         Mockito.when(doctorService.findByEmail(doctorEmail)).thenReturn(doctor);
         //then
         mockMvc.perform(post("/doctor/add-availability")
-                .param("doctorEmail", doctorEmail)
-                .param("date", "2023-01-01")
-                .param("startTime", "12:15")
-                .param("endTime", "12:30"))
+                        .param("doctorEmail", doctorEmail)
+                        .param("date", "2023-01-01")
+                        .param("startTime", "12:15")
+                        .param("endTime", "12:30"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/doctor"));
     }
 
     @Test
-    void addNoteToVisitTest() throws Exception{
+    void addNoteToVisitTest() throws Exception {
         // given
         Integer visitId = 1;
         String noteContent = "Some note content";

@@ -1,7 +1,6 @@
 package code.medconnect.controller;
 
 import code.medconnect.api.controller.PatientController;
-import code.medconnect.api.dto.DoctorAvailabilityDTO;
 import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.api.dto.mapper.PatientMapper;
@@ -21,17 +20,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.ui.Model;
 
 import java.security.Principal;
-import java.time.LocalTime;
-import java.util.List;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -66,7 +59,7 @@ public class PatientControllerTest {
     @Test
     void thatPatientPageWorksCorrectly() {
         //given
-        AppUser appUser = DomainFixtures.someAppUserFixture1();
+        AppUser appUser = DomainFixtures.someAppUser();
         Patient patient = DomainFixtures.somePatient().withAppUser(appUser);
         PatientDTO patientDTO = DtoFixtures.somePatientDTO();
         Set<Visit> visits = Set.of(DomainFixtures.someVisit());

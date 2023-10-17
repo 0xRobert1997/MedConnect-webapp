@@ -36,7 +36,7 @@ public class DomainFixtures {
                 .build();
     }
 
-    public static AppUser someAppUserFixture1() {
+    public static AppUser someAppUser() {
         return AppUser.builder()
                 .userName("Patient1")
                 .email("patient1@example.com")

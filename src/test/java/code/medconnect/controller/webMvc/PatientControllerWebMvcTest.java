@@ -119,7 +119,7 @@ public class PatientControllerWebMvcTest {
         DoctorAvailability someAvailability = DomainFixtures.someDoctorAvailability();
         DoctorAvailabilityDTO someAvailabilityDTO = DoctorAvailabilityDTO.builder()
                 .day(LocalDate.of(2023, 10, 10))
-                .startTime(LocalTime.of(8,0))
+                .startTime(LocalTime.of(8, 0))
                 .endTime(LocalTime.of(16, 0))
                 .build();
 
@@ -131,9 +131,9 @@ public class PatientControllerWebMvcTest {
         Mockito.when(paginationService.paginate(eq(page), anyInt(), eq(doctorId)))
                 .thenReturn(doctorAvailabilityPage);
         Mockito.when(doctorAvailabilityService.getAvailabilityWithSlots(Mockito.any()))
-                        .thenReturn(someAvailability);
+                .thenReturn(someAvailability);
         Mockito.when(doctorAvailabilityMapper.map(someAvailability))
-                        .thenReturn(someAvailabilityDTO);
+                .thenReturn(someAvailabilityDTO);
 
 
         mockMvc.perform(MockMvcRequestBuilders.get("/new-visit")

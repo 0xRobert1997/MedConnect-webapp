@@ -3,7 +3,6 @@ package code.medconnect.controller;
 import code.medconnect.api.controller.DoctorController;
 import code.medconnect.api.dto.DoctorDTO;
 import code.medconnect.api.dto.PatientDTO;
-import code.medconnect.api.dto.VisitDTO;
 import code.medconnect.api.dto.mapper.DoctorMapper;
 import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.business.DoctorService;
@@ -26,11 +25,9 @@ import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,7 +58,7 @@ public class DoctorControllerTest {
         //given
         String username = "Doctor1";
         String userEmail = "doctor@example.com";
-        AppUser appUser = DomainFixtures.someAppUserFixture1();
+        AppUser appUser = DomainFixtures.someAppUser();
         appUser.setEmail(userEmail);
         Doctor doctor = DomainFixtures.someDoctor1();
         DoctorDTO doctorDTO = DtoFixtures.someDoctorDTO1();
