@@ -1,21 +1,15 @@
 package code.medconnect.integration.configuration;
 
-import code.medconnect.integration.support.AuthenticationTestSupport;
 import code.medconnect.integration.support.ControllerTestSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
-import io.restassured.RestAssured;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 
-
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,7 +19,7 @@ public abstract class RestAssuredIntegrationTestBase
 
     protected static WireMockServer wireMockServer;
 
-    private String jSessionIdValue;
+//    private String jSessionIdValue;
 
     @Autowired
     @SuppressWarnings("unused")
@@ -36,7 +30,12 @@ public abstract class RestAssuredIntegrationTestBase
         return objectMapper;
     }
 
-    @BeforeAll
+    @Test
+    void contextLoaded() {
+        assertThat(true).isTrue();
+    }
+
+/*    @BeforeAll
     static void beforeAll() {
         wireMockServer = new WireMockServer(
                 wireMockConfig()
@@ -44,7 +43,7 @@ public abstract class RestAssuredIntegrationTestBase
                         .extensions(new ResponseTemplateTransformer(false))
         );
         wireMockServer.start();
-    }
+    }*/
 
     @BeforeEach
     void beforeEach() {
@@ -66,24 +65,17 @@ public abstract class RestAssuredIntegrationTestBase
         wireMockServer.resetAll();*/
     }
 
-    @AfterAll
+/*    @AfterAll
     static void afterAll() {
         wireMockServer.stop();
-    }
+    }*/
 
-    @Test
-    void contextLoaded() {
-        assertThat(true).isTrue();
-    }
+/*    public RequestSpecification requestSpecification() {
+        return restAssuredBase()
+                .cookie("JSESSIONID", jSessionIdValue);
+    }*/
 
     public RequestSpecification requestSpecification() {
-        return restAssuredBase()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", jSessionIdValue);
-    }
-
-    public RequestSpecification requestSpecificationNoAuthentication() {
         return restAssuredBase();
     }
 
@@ -91,7 +83,9 @@ public abstract class RestAssuredIntegrationTestBase
         return given()
                 .config(getConfig())
                 .basePath(basePath)
-                .port(port);
+                .port(port)
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON);
     }
 
     private RestAssuredConfig getConfig() {

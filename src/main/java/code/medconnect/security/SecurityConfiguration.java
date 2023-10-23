@@ -51,9 +51,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> {
                     auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
                     auth.requestMatchers(
-                            "/static/**", "/register", "/ourdoctors").permitAll();
-                    auth.requestMatchers("/patient/**", "/api/patient/**").hasAuthority("PATIENT");
-                    auth.requestMatchers("/doctor/**", "/api/doctor/**").hasAuthority("DOCTOR");
+                            "/static/**", "/register", "/ourdoctors", "/api/**").permitAll();
+                    auth.requestMatchers("/patient/**").hasAuthority("PATIENT");
+                    auth.requestMatchers("/doctor/**").hasAuthority("DOCTOR");
                     auth.anyRequest().permitAll();
                 })
                 .httpBasic(Customizer.withDefaults())

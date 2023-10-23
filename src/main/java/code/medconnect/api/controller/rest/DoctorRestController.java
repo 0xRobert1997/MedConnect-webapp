@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @RequestMapping(DoctorRestController.DOCTOR_API_BASE_PATH)
-class DoctorRestController {
+public class DoctorRestController {
 
-    static final String DOCTOR_API_BASE_PATH = "/api/doctor";
-    static final String DOCTOR_ID = "/{doctorId}";
-    static final String PATIENT_EMAIL = "/{patientEmail}";
-    static final String DOCTORS = "/allDoctors";
+    public static final String DOCTOR_API_BASE_PATH = "/api/doctor";
+    public static final String DOCTOR_ID = "/{doctorId}";
+    public static final String PATIENT_EMAIL = "/checkpatient/{patientEmail}";
+    public static final String DOCTORS = "/allDoctors";
 
     private final VisitService visitService;
     private final PatientService patientService;

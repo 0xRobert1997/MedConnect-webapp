@@ -174,7 +174,7 @@ public class DataInitializerData {
                 .build();
     }
 
-    static Doctor doctorFixture1() {
+    public static Doctor doctorFixture1() {
         return Doctor.builder()
                 .name("Gregory")
                 .surname("House")
@@ -192,7 +192,7 @@ public class DataInitializerData {
                 .build();
     }
 
-    static Doctor doctorFixture2() {
+    public static Doctor doctorFixture2() {
         return Doctor.builder()
                 .name("John")
                 .surname("Dolittle")

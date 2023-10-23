@@ -21,10 +21,10 @@ import java.util.List;
 @RequestMapping(VisitRestController.VISIT_API_BASE_PATH)
 public class VisitRestController {
 
-    static final String VISIT_API_BASE_PATH = "/api/visit";
-    static final String VISIT_ID = "/{visitId}";
-    private final String VISIT_CANCEL = "/cancel/{visitId}";
-    private final String VISIT_NEW_VISIT = "/{patientId}/{doctorId}/{selectedDay}/{startTime}/{endTime}";
+    public static final String VISIT_API_BASE_PATH = "/api/visit";
+    public static final String VISIT_ID = "/{visitId}";
+    public static final String VISIT_CANCEL = "/cancel/{visitId}";
+    public static final String VISIT_NEW_VISIT = "/{patientId}/{doctorId}/{selectedDay}/{startTime}/{endTime}";
 
     private final String VISIT_NEW = "/new";
 

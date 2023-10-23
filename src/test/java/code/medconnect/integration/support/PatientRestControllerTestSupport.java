@@ -1,11 +1,10 @@
 package code.medconnect.integration.support;
 
 import code.medconnect.api.controller.PatientController;
-import code.medconnect.api.dto.PatientDTO;
 import io.restassured.specification.RequestSpecification;
 import org.springframework.http.HttpStatus;
 
-public interface PatientControllerTestSupport {
+public interface PatientRestControllerTestSupport {
 
     RequestSpecification requestSpecification();
 
