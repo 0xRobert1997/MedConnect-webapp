@@ -1,6 +1,10 @@
 spring:
   security:
-    enabled: true
+    enabled: false
   jpa:
     hibernate:
       ddl-auto: validate
+
+api:
+  imgur:
+    url: http://localhost:9999

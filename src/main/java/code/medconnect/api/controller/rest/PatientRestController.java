@@ -15,10 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(PatientRestController.PATIENT_API_BASE_PATH)
 public class PatientRestController {
 
-    static final String PATIENT_API_BASE_PATH = "/api/patient";
-    static final String PATIENT_EMAIL = "/{patientEmail}";
+    public static final String PATIENT_API_BASE_PATH = "/api/patient";
+    public static final String PATIENT_EMAIL = "/{patientEmail}";
 
-    static final String PATIENT_UPLOAD_PHOTO = "/upload/{patientId}";
+    public static final String PATIENT_UPLOAD_PHOTO = "/upload/{patientId}";
     private final PatientService patientService;
     private final ImgurService imgurService;
     private final PatientMapper patientMapper;

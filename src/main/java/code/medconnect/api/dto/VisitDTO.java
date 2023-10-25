@@ -1,10 +1,7 @@
 package code.medconnect.api.dto;
 
 import code.medconnect.domain.Note;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,6 +9,7 @@ import java.util.List;
 
 @Data
 @Builder
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class VisitDTO {

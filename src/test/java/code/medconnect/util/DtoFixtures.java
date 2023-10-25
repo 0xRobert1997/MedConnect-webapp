@@ -72,9 +72,9 @@ public class DtoFixtures {
     }
     public static VisitDTO someVisitDTO2() {
         return VisitDTO.builder()
-                .day(LocalDate.of(2023, 9, 12))
-                .startTime(LocalTime.of(10, 0))
-                .endTime(LocalTime.of(10, 30))
+                .day(LocalDate.of(2023, 9, 25))
+                .startTime(LocalTime.of(14, 0))
+                .endTime(LocalTime.of(14, 30))
                 .build();
     }
 }

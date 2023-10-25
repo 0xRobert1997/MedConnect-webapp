@@ -3,6 +3,7 @@ package code.medconnect.integration.configuration;
 import code.medconnect.integration.support.ControllerTestSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
@@ -10,6 +11,7 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,15 +37,15 @@ public abstract class RestAssuredIntegrationTestBase
         assertThat(true).isTrue();
     }
 
-/*    @BeforeAll
+    @BeforeAll
     static void beforeAll() {
         wireMockServer = new WireMockServer(
                 wireMockConfig()
-                        .port(9999)
+                        .port(9999) // w application-test.yaml musi być taki sam port
                         .extensions(new ResponseTemplateTransformer(false))
         );
         wireMockServer.start();
-    }*/
+    }
 
     @BeforeEach
     void beforeEach() {
@@ -61,14 +63,14 @@ public abstract class RestAssuredIntegrationTestBase
 /*        logout()
                 .and()
                 .cookie("JSESSIONID", "");
-        jSessionIdValue = null;
-        wireMockServer.resetAll();*/
+        jSessionIdValue = null; */
+        wireMockServer.resetAll();
     }
 
-/*    @AfterAll
+    @AfterAll
     static void afterAll() {
         wireMockServer.stop();
-    }*/
+    }
 
 /*    public RequestSpecification requestSpecification() {
         return restAssuredBase()
