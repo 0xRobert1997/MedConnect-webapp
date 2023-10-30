@@ -4,7 +4,10 @@ import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.business.dao.NoteDAO;
 import code.medconnect.business.dao.PatientDAO;
 import code.medconnect.business.dao.VisitDAO;
-import code.medconnect.domain.*;
+import code.medconnect.domain.Doctor;
+import code.medconnect.domain.Note;
+import code.medconnect.domain.Patient;
+import code.medconnect.domain.Visit;
 import code.medconnect.domain.exception.NotFoundException;
 import code.medconnect.domain.exception.VisitInTakenTimePeriodException;
 import code.medconnect.util.DomainFixtures;
@@ -19,7 +22,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
 public class VisitServiceTest {
@@ -138,7 +144,6 @@ public class VisitServiceTest {
         Mockito.verify(doctorDAO).findById(doctorId);
         Mockito.verify(visitDAO).saveVisit(Mockito.any(Visit.class));
     }
-
 
 
     @Test

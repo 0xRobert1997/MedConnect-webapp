@@ -2,10 +2,8 @@ package code.medconnect.infrastructure.databse.repository;
 
 import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
 import code.medconnect.infrastructure.database.entity.DoctorEntity;
-import code.medconnect.infrastructure.database.repository.jpa.DiseaseJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorAvailabilityJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
-import code.medconnect.infrastructure.database.repository.jpa.PatientJpaRepository;
 import code.medconnect.integration.configuration.PersistenceContainerTestConfiguration;
 import code.medconnect.security.AppUserEntity;
 import code.medconnect.security.AppUserRepository;

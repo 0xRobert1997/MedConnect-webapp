@@ -31,8 +31,8 @@ public class DomainFixtures {
     public static DoctorAvailability someDoctorAvailability() {
         return DoctorAvailability.builder()
                 .day(LocalDate.of(2023, 10, 15))
-                .startTime(LocalTime.of(10,0,0))
-                .endTime(LocalTime.of(16,0,0))
+                .startTime(LocalTime.of(10, 0, 0))
+                .endTime(LocalTime.of(16, 0, 0))
                 .build();
     }
 
@@ -45,7 +45,6 @@ public class DomainFixtures {
                 .roles(Set.of(RoleEntity.builder().id(1).build()))
                 .build();
     }
-
 
 
     public static Note someNote() {
@@ -70,6 +69,7 @@ public class DomainFixtures {
                         .build())
                 .build();
     }
+
     public static Doctor someDoctor2() {
         return Doctor.builder()
                 .name("Doc1")
@@ -86,6 +86,7 @@ public class DomainFixtures {
                         .build())
                 .build();
     }
+
     public static Doctor someDoctorWithAvailability() {
         return Doctor.builder()
                 .name("Doc1")
@@ -102,12 +103,11 @@ public class DomainFixtures {
                         .build())
                 .availabilities(Set.of(DoctorAvailability.builder()
                         .day(LocalDate.of(2023, 9, 9))
-                        .startTime(LocalTime.of(8,0))
+                        .startTime(LocalTime.of(8, 0))
                         .endTime(LocalTime.of(16, 0))
                         .build()))
                 .build();
     }
-
 
 
     public static Patient somePatient() {

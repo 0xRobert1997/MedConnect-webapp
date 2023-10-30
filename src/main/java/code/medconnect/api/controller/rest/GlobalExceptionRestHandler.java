@@ -3,7 +3,6 @@ package code.medconnect.api.controller.rest;
 import code.medconnect.api.dto.ExceptionMessage;
 import code.medconnect.domain.exception.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
@@ -11,6 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,7 +29,8 @@ public class GlobalExceptionRestHandler extends ResponseEntityExceptionHandler {
             ConstraintViolationException.class, HttpStatus.BAD_REQUEST,
             DataIntegrityViolationException.class, HttpStatus.BAD_REQUEST,
             EntityNotFoundException.class, HttpStatus.NOT_FOUND,
-            NotFoundException.class, HttpStatus.NOT_FOUND
+            NotFoundException.class, HttpStatus.NOT_FOUND,
+            MissingServletRequestParameterException.class, HttpStatus.BAD_REQUEST
     );
 
     @Override

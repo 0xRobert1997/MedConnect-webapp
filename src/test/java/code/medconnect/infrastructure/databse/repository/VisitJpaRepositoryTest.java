@@ -50,9 +50,9 @@ public class VisitJpaRepositoryTest {
         DoctorEntity doctorEntity = doctorJpaRepository.saveAndFlush(
                 EntityFixtures.someDoctor1().withAppUser(appUserEntity2));
         visitJpaRepository.saveAndFlush(EntityFixtures.someVisit()
-                        .withDoctorId(doctorEntity.getDoctorId())
-                        .withPatientId(patientEntity.getPatientId())
-                        .withDay(day));
+                .withDoctorId(doctorEntity.getDoctorId())
+                .withPatientId(patientEntity.getPatientId())
+                .withDay(day));
 
         //when
         List<VisitEntity> all = visitJpaRepository.findAll();
@@ -60,6 +60,7 @@ public class VisitJpaRepositoryTest {
         //then
         Assertions.assertEquals(1, result.size());
     }
+
     @Test
     void shouldFindByDoctorIdCorrectly() {
         //given
@@ -72,8 +73,8 @@ public class VisitJpaRepositoryTest {
         DoctorEntity doctorEntity = doctorJpaRepository.saveAndFlush(
                 EntityFixtures.someDoctor1().withAppUser(appUserEntity2));
         visitJpaRepository.saveAndFlush(EntityFixtures.someVisit()
-                        .withDoctorId(doctorEntity.getDoctorId())
-                        .withPatientId(patientEntity.getPatientId()));
+                .withDoctorId(doctorEntity.getDoctorId())
+                .withPatientId(patientEntity.getPatientId()));
 
         //when
         List<VisitEntity> result = visitJpaRepository.findByDoctorId(doctorEntity.getDoctorId());

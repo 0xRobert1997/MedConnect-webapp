@@ -17,16 +17,16 @@ public interface AuthenticationTestSupport {
 
     default ValidatableResponse login(final String username, final String password) {
         return requestSpecificationNoAuthentication()
-            .params(Map.of("username", username, "password", password))
-            .post(LOGIN)
-            .then()
-            .statusCode(HttpStatus.FOUND.value());
+                .params(Map.of("username", username, "password", password))
+                .post(LOGIN)
+                .then()
+                .statusCode(HttpStatus.FOUND.value());
     }
 
     default ValidatableResponse logout() {
         return requestSpecification()
-            .post(LOGOUT)
-            .then()
-            .statusCode(HttpStatus.FOUND.value());
+                .post(LOGOUT)
+                .then()
+                .statusCode(HttpStatus.FOUND.value());
     }
 }

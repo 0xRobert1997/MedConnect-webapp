@@ -1,7 +1,5 @@
 package code.medconnect.business;
 
-import code.medconnect.api.dto.DoctorAvailabilityDTO;
-import code.medconnect.business.PaginationService;
 import code.medconnect.business.dao.DoctorAvailabilityDAO;
 import code.medconnect.domain.DoctorAvailability;
 import code.medconnect.infrastructure.database.entity.DoctorAvailabilityEntity;
@@ -29,7 +27,6 @@ public class PaginationServiceTest {
 
     @InjectMocks
     PaginationService paginationService;
-
 
 
     @Test

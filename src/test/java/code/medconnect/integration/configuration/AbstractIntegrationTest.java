@@ -11,8 +11,8 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 @Import(PersistenceContainerTestConfiguration.class)
 @SpringBootTest(
-    classes = {MedConnectApp.class},
-    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+        classes = {MedConnectApp.class},
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 public abstract class AbstractIntegrationTest {
 
@@ -21,8 +21,6 @@ public abstract class AbstractIntegrationTest {
 
     @Value("${server.servlet.context-path}")
     protected String basePath;
-
-
 
 
 }

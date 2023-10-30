@@ -29,7 +29,7 @@ public class DataInitializerIntegrationTest extends AbstractIntegrationTest {
 
         List<Patient> patients = patientService.findAll();
         Set<Doctor> doctors = doctorService.findAll();
-        List<Visit>visits = visitService.findAll();
+        List<Visit> visits = visitService.findAll();
 
 
         Assertions.assertEquals(2, patients.size());

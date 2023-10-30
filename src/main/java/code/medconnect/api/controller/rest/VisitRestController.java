@@ -36,7 +36,7 @@ public class VisitRestController {
     @PostMapping(VISIT_NEW)
     public VisitDTO makeNewVisit(
             @RequestBody VisitDTO visitDTO
-        ) {
+    ) {
 
         Visit visit = visitService.makeVisit(
                 visitDTO.getPatientId(),
@@ -56,7 +56,6 @@ public class VisitRestController {
 
         return "Successfully canceled visit with ID: " + visitId;
     }
-
 
 
 }

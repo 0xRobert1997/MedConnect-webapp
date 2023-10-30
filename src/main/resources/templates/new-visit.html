@@ -32,7 +32,7 @@
                 <td th:text="${availability.day}"></td>
                 <td>
                 <span th:if="${availability.timeSlots}">
-                    <select th:name="selectedTimeSlot" th:id="${'timeSlot_' + rowStat.index}" >
+                    <select th:name="selectedTimeSlot" th:id="${'timeSlot_' + rowStat.index}">
                         <option value="" disabled selected>Select Time Slot</option>
                         <option th:each="timeSlot : ${availability.timeSlots}"
                                 th:value="${timeSlot.startTime + '-' + timeSlot.endTime}"
@@ -42,7 +42,8 @@
 
                 </td>
                 <td>
-                    <input type="radio" th:name="selectedDay" th:value="${availability.day}" th:id="${'day_' + rowStat.index}"/>
+                    <input type="radio" th:name="selectedDay" th:value="${availability.day}"
+                           th:id="${'day_' + rowStat.index}"/>
                 </td>
 
             </tr>

@@ -15,8 +15,6 @@ public class DoctorRestControllerTest
         extends RestAssuredIntegrationTestBase
         implements DoctorRestControllerTestSupport {
 
-    // do podniesienia contextu musi być włączony docker!
-
 
     @Test
     void allDoctorsCanBeRetrievedCorrectly() {

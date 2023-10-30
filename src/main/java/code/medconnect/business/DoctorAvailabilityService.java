@@ -1,6 +1,5 @@
 package code.medconnect.business;
 
-import code.medconnect.api.dto.DoctorAvailabilityDTO;
 import code.medconnect.business.dao.DoctorDAO;
 import code.medconnect.business.dao.VisitDAO;
 import code.medconnect.domain.Doctor;
@@ -43,7 +42,6 @@ public class DoctorAvailabilityService {
         availability.setTimeSlots(new ArrayList<>(allSlots.values()));
         return removeTakenSlots(availability);
     }
-
 
 
     private DoctorAvailability removeTakenSlots(DoctorAvailability availability) {

@@ -10,7 +10,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -20,7 +23,7 @@ import java.util.Set;
 @RequestMapping(RegisterRestController.REGISTER_API_BASE_PATH)
 public class RegisterRestController {
 
-    static final String REGISTER_API_BASE_PATH = "/api/register";
+    public static final String REGISTER_API_BASE_PATH = "/api/register";
 
     private AppUserService appUserService;
     private PatientService patientService;

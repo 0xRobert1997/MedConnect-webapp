@@ -4,8 +4,6 @@ import code.medconnect.api.dto.DoctorDTO;
 import code.medconnect.api.dto.PatientDTO;
 import code.medconnect.api.dto.VisitDTO;
 import code.medconnect.domain.Address;
-import code.medconnect.domain.Doctor;
-import code.medconnect.domain.Visit;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -28,6 +26,7 @@ public class DtoFixtures {
                         .build())
                 .build();
     }
+
     public static DoctorDTO someDoctorDTO2() {
         return DoctorDTO.builder()
                 .name("Doc1")
@@ -70,6 +69,7 @@ public class DtoFixtures {
                 .endTime(LocalTime.of(10, 30))
                 .build();
     }
+
     public static VisitDTO someVisitDTO2() {
         return VisitDTO.builder()
                 .day(LocalDate.of(2023, 9, 25))

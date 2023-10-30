@@ -1,11 +1,7 @@
 package code.medconnect.infrastructure.databse.repository;
 
-import code.medconnect.infrastructure.database.entity.DoctorEntity;
 import code.medconnect.infrastructure.database.entity.PatientEntity;
-import code.medconnect.infrastructure.database.entity.VisitEntity;
-import code.medconnect.infrastructure.database.repository.jpa.DoctorJpaRepository;
 import code.medconnect.infrastructure.database.repository.jpa.PatientJpaRepository;
-import code.medconnect.infrastructure.database.repository.jpa.VisitJpaRepository;
 import code.medconnect.integration.configuration.PersistenceContainerTestConfiguration;
 import code.medconnect.security.AppUserEntity;
 import code.medconnect.security.AppUserRepository;
@@ -20,7 +16,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.*;
+import java.util.Optional;
 
 @DataJpaTest
 @TestPropertySource(locations = "classpath:application-test.yaml")

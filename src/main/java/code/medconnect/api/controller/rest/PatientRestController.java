@@ -1,7 +1,6 @@
 package code.medconnect.api.controller.rest;
 
 import code.medconnect.api.dto.PatientDTO;
-import code.medconnect.api.dto.VisitDTO;
 import code.medconnect.api.dto.mapper.PatientMapper;
 import code.medconnect.business.ImgurService;
 import code.medconnect.business.PatientService;

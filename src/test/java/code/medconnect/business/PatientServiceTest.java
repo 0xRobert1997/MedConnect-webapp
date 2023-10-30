@@ -1,6 +1,5 @@
 package code.medconnect.business;
 
-import code.medconnect.business.PatientService;
 import code.medconnect.business.dao.PatientDAO;
 import code.medconnect.domain.Disease;
 import code.medconnect.domain.Patient;

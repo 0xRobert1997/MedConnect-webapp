@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.client.RestTemplate;
 
-
 import java.io.IOException;
 import java.util.Optional;
 
@@ -109,17 +108,17 @@ public class ImgurServiceTest {
 
     @Test
     void testGetPhotoWithImageId() throws IOException {
-    //given
-    String photoId = "someFakeId";
-    Patient patient = DomainFixtures.somePatient().withImgurPhotoId(photoId);
-    String imageUrl = "http://example.com/image.jpg";
-    byte[] expected = "photo-content".getBytes();
-    Mockito.when(imageDownloaderService
-            .downloadImage("https://imgur.com/" + photoId + ".jpg")).thenReturn(expected);
-    //when
-    byte[] result = imgurService.getPhoto(patient);
+        //given
+        String photoId = "someFakeId";
+        Patient patient = DomainFixtures.somePatient().withImgurPhotoId(photoId);
+        String imageUrl = "http://example.com/image.jpg";
+        byte[] expected = "photo-content".getBytes();
+        Mockito.when(imageDownloaderService
+                .downloadImage("https://imgur.com/" + photoId + ".jpg")).thenReturn(expected);
+        //when
+        byte[] result = imgurService.getPhoto(patient);
 
-    //then
-    Assertions.assertNotNull(result);
+        //then
+        Assertions.assertNotNull(result);
     }
 }

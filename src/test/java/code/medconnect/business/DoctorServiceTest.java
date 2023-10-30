@@ -18,7 +18,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -107,8 +106,6 @@ public class DoctorServiceTest {
         Assertions.assertEquals(expected, result.size());
 
     }
-
-
 
 
 }

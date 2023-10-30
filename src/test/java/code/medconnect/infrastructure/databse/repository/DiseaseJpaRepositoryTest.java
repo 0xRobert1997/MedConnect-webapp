@@ -19,7 +19,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @DataJpaTest

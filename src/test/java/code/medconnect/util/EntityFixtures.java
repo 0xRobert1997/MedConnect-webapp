@@ -22,6 +22,7 @@ public class EntityFixtures {
                 .active(true)
                 .build();
     }
+
     public static AppUserEntity someAppUserEntityFixture2() {
         return AppUserEntity.builder()
                 .userName("Patient2")
@@ -50,6 +51,7 @@ public class EntityFixtures {
                         .build())
                 .build();
     }
+
     public static PatientEntity somePatient2() {
         return PatientEntity.builder()
                 .name("Y")
@@ -67,6 +69,7 @@ public class EntityFixtures {
                         .build())
                 .build();
     }
+
     public static PatientEntity somePatient3() {
         return PatientEntity.builder()
                 .name("Z")
@@ -130,8 +133,8 @@ public class EntityFixtures {
     public static DoctorAvailabilityEntity someDoctorAvailability() {
         return DoctorAvailabilityEntity.builder()
                 .day(LocalDate.of(2023, 10, 15))
-                .startTime(LocalTime.of(10,0,0))
-                .endTime(LocalTime.of(16,0,0))
+                .startTime(LocalTime.of(10, 0, 0))
+                .endTime(LocalTime.of(16, 0, 0))
                 .build();
     }
 
@@ -139,12 +142,12 @@ public class EntityFixtures {
         return VisitEntity.builder()
                 .day(LocalDate.of(2023, 9, 9))
                 .startTime(LocalTime.of(10, 0))
-                .endTime(LocalTime.of(10,30))
+                .endTime(LocalTime.of(10, 30))
                 .build();
     }
 
     public static NoteEntity someNote() {
-       return NoteEntity.builder()
+        return NoteEntity.builder()
                 .noteContent("bla bla bla")
                 .build();
     }
