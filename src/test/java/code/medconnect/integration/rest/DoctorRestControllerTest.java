@@ -20,7 +20,8 @@ public class DoctorRestControllerTest
     void allDoctorsCanBeRetrievedCorrectly() {
         //given
         String doctorName1 = "Gregory";
-        String doctorName2 = "Johny";
+        String doctorName2 = "John";
+
         //when
         Set<DoctorDTO> result = listDoctors();
 

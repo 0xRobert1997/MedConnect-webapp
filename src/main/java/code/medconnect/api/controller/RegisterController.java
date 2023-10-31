@@ -23,13 +23,12 @@ import java.util.Set;
 @AllArgsConstructor
 public class RegisterController {
 
-    static final String REGISTER_BASE_PATH = "/register";
-    AppUserService appUserService;
-    AppUserMapper appUserMapper;
-    AppUserDTOMapper appUserDTOMapper;
-    RoleRepository roleRepository;
-    PatientService patientService;
-    PatientMapper patientMapper;
+    public static final String REGISTER_BASE_PATH = "/register";
+    private final AppUserService appUserService;
+    private final AppUserMapper appUserMapper;
+    private final AppUserDTOMapper appUserDTOMapper;
+    private final PatientService patientService;
+    private final PatientMapper patientMapper;
 
     @RequestMapping(value = REGISTER_BASE_PATH, method = RequestMethod.GET)
     public String registerPage() {

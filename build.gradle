@@ -45,6 +45,7 @@ dependencies {
 
 	// api
 	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springDocOpenApiVersion}"
+
 	implementation "org.openapitools:jackson-databind-nullable:${jacksonDatabindNullableVersion}"
 	implementation "javax.annotation:javax.annotation-api:${javaxAnnotationApiVersion}"
 	implementation "io.swagger:swagger-annotations:${swaggerAnnotationsVersion}"
@@ -66,10 +67,6 @@ dependencies {
 
 	// for converting photo to byte[]
 	implementation 'commons-io:commons-io:2.13.0'
-
-
-
-
 }
 
 dependencyManagement {
@@ -120,8 +117,8 @@ jacocoTestReport {
 	afterEvaluate {
 		classDirectories.setFrom(files(classDirectories.files.collect {
 			fileTree(dir: it, exclude: [
-					"code/medconnect/**/*DTO.*",
-					"**/generated-sources/**"
+					'code/medconnect/**/*DTO.*',
+					'code/medconnect/**/*MapperImpl.class'
 			])
 		}))
 	}
@@ -140,7 +137,7 @@ jacocoTestCoverageVerification {
 			limit {
 				counter = 'LINE'
 				value = 'COVEREDRATIO'
-				minimum = 0.20
+				minimum = 0.50
 			}
 		}
 	}
