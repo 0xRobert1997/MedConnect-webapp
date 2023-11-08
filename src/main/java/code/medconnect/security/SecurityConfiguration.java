@@ -47,6 +47,8 @@ public class SecurityConfiguration {
         CookieClearingLogoutHandler cookies = new CookieClearingLogoutHandler("JSESSIONID");
 
         return http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**"))
                 .authorizeHttpRequests(auth -> {
                     auth.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll();
                     auth.requestMatchers(
@@ -55,7 +57,6 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/doctor/**").hasAuthority("DOCTOR");
                     auth.anyRequest().permitAll();
                 })
-                .csrf(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessUrl("/"))

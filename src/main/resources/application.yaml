@@ -36,17 +36,15 @@ api:
     albumHash: "k04aa3S"
     clientID: 8ce1a67ee460abc
     clientSecret: 02ec0abcae41871653935fe303043d743085b33d
-    #accessToken expires 05.10.2023
-    accessToken: aff9327d476e94cdc0f4f5432bd4956926422fd4
+    accessToken: 426a4a2fbf05d0a61679d0bdddbcffb5fb020e8c
+    refreshToken: 38a5fe5f69e4d67eee5d470245d1e2d864a1cf71
 
 
-      #logging:
-      #level:
-      # org:
-    # springframework:
-    #  security: DEBUG
+
 
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql: TRACE
+  #  springframework:
+     # security: DEBUG
