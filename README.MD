@@ -1,8 +1,34 @@
-Project contains:
-* Entity RelationShip Diagram - check out ERD.jpg
-* Swagger-UI - after running project localy you can check it out at: http://localhost:8087/medconnect/swagger-ui/index.html or copy contract from Contract.txt and paste it to: https://editor.swagger.io/ 
-* docker-compose.yaml contains instructions for creating container. To create docker container run "gradle build" command and then "docker compose up -d"
- 
+The following technologies and tools were used to build the project:
+   * Java 17
+   * Gradle 8.1
+   * Spring Boot 3.1.2
+   * Swagger
+   * Lombok 
+   * Mapstruct
+   * Flyway 
+   * PostgreSQL 15.0
+   * TestContainers 
+   * Jacoco test report
+   * Thymeleaf
+   * Mockito
+   * WireMock
+   * RestAssured
+   * Docker-compose
+   * API Imgur.com
+
+
+
+Entity RelationShip Diagram
+  ![Tytuł alternatywny](/ERD.jpg)
+* Swagger-UI - after running project localy you can check it out at: http://localhost:8087/medconnect/swagger-ui/index.html or copy contract from Contract.txt and paste it to: https://editor.swagger.io/
+
+
+
+Docker instruction:
+1) Run command "gradle build" (tests are using testcontainers so remember to turn on docker, otherwise integration tests will fail)
+2) Run command "docker-compose -p medconnect up -d"
+3) Now you can open webapp on your web browser URL: http://localhost:8087/medconnect/
+
 
 ![Tytuł alternatywny](screenshots/HomePage.png)
 

@@ -6,7 +6,7 @@ services:
       - 8087:8087
     environment:
       - SPRING_PROFILES_ACTIVE=local
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/med_connect
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://PostgreSQL:5432/medconnect
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
     networks:
@@ -17,9 +17,9 @@ services:
   PostgreSQL:
     image: postgres:15.0
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
-      - POSTGRES_DB=med_connect
+      - POSTGRES_DB=medconnect
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:

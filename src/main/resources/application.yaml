@@ -8,7 +8,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/med_connect
+    url: jdbc:postgresql://localhost:5433/med_connect
     username: postgres
     password: postgres
     hikari:
